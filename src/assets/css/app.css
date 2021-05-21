@@ -1,0 +1,61 @@
+/*// Fonts*/
+/*@import '~@mdi/font/css/materialdesignicons.min.css';*/
+
+/*// Variables*/
+/*@import 'variables';*/
+/*@import './tiptap/main';*/
+/*@import '~vue2-dropzone/dist/vue2Dropzone.min.css';*/
+
+/*// vuetify*/
+/*@import '~vuetify/dist/vuetify.min.css';*/
+
+a{
+    text-decoration: none !important;
+}
+
+.ltr{
+    direction: ltr !important;
+}
+body .v-application {
+    font-family: YekiFaNum, serif !important;
+    letter-spacing: 0 !important;
+}
+body .v-application .display-1,
+body .v-application .display-2,
+body .v-application .display-3,
+body .v-application .display-4,
+body .v-application .headline,
+body .v-application .title,
+body .v-application .subtitle-1,
+body .v-application .subtitle-2,
+body .v-application .body-1,
+body .v-application .body-2,
+body .v-application .caption,
+body .v-application .overline,
+body .v-application .v-btn ,
+body .v-application .v-tab{
+    font-family: YekiFaNum, serif !important;
+    letter-spacing: 0 !important;
+}
+.container {
+    max-width: 1200px;
+}
+.container--fluid {
+    max-width: 100%;
+}
+
+.h-100 {
+    height: 100%;
+}
+
+.h-40 {
+    height: 40%;
+}
+
+.w-100{
+    width: 100%;
+}
+
+.gra-bg {
+    background-image: linear-gradient(to bottom right, #054592 0, #1897d4);
+}

@@ -1,0 +1,45 @@
+@font-face {
+  font-family: YekiFaNum;
+  src: url(../../assets/fonts/YekiFaNum/YekiFaNum-Medium.eot);
+  src: url(../../assets/fonts/YekiFaNum/YekiFaNum-Medium.eot?#iefix) format('embedded-opentype'), url(../../assets/fonts/YekiFaNum/YekiFaNum-Medium.woff2) format('woff2'), url(../../assets/fonts/YekiFaNum/YekiFaNum-Medium.woff) format('woff'), url(../../assets/fonts/YekiFaNum/YekiFaNum-Medium.ttf) format('truetype');
+  font-weight: 500;
+  font-style: normal
+}
+
+@font-face {
+  font-family: YekiFaNum;
+  src: url(../../assets/fonts/YekiFaNum/YekiFaNum-Light.eot);
+  src: url(../../assets/fonts/YekiFaNum/YekiFaNum-Light.eot?#iefix) format('embedded-opentype'), url(../../assets/fonts/YekiFaNum/YekiFaNum-Light.woff2) format('woff2'), url(../../assets/fonts/YekiFaNum/YekiFaNum-Light.woff) format('woff'), url(../../assets/fonts/YekiFaNum/YekiFaNum-Light.ttf) format('truetype');
+  font-weight: 300;
+  font-style: normal
+}
+
+@font-face {
+  font-family: YekiFaNum;
+  src: url(../../assets/fonts/YekiFaNum/YekiFaNum-Regular.eot);
+  src: url(../../assets/fonts/YekiFaNum/YekiFaNum-Regular.eot?#iefix) format('embedded-opentype'), url(../../assets/fonts/YekiFaNum/YekiFaNum-Regular.woff2) format('woff2'), url(../../assets/fonts/YekiFaNum/YekiFaNum-Regular.woff) format('woff'), url(../../assets/fonts/YekiFaNum/YekiFaNum-Regular.ttf) format('truetype');
+  font-weight: 400;
+  font-style: normal
+}
+
+@font-face {
+  font-family: YekiFaNum;
+  src: url(../../assets/fonts/YekiFaNum/YekiFaNum-Bold.eot);
+  src: url(../../assets/fonts/YekiFaNum/YekiFaNum-Bold.eot?#iefix) format('embedded-opentype'), url(../../assets/fonts/YekiFaNum/YekiFaNum-Bold.woff2) format('woff2'), url(../../assets/fonts/YekiFaNum/YekiFaNum-Bold.woff) format('woff'), url(../../assets/fonts/YekiFaNum/YekiFaNum-Bold.ttf) format('truetype');
+  font-weight: 700;
+  font-style: normal
+}
+
+@font-face {
+  font-family: YekiFaNum;
+  src: url(../../assets/fonts/YekiFaNum/YekiFaNum-Heavy.eot);
+  src: url(../../assets/fonts/YekiFaNum/YekiFaNum-Heavy.eot?#iefix) format('embedded-opentype'), url(../../assets/fonts/YekiFaNum/YekiFaNum-Heavy.woff2) format('woff2'), url(../../assets/fonts/YekiFaNum/YekiFaNum-Heavy.woff) format('woff'), url(../../assets/fonts/YekiFaNum/YekiFaNum-Heavy.ttf) format('truetype');
+  font-weight: 900;
+  font-style: normal
+}
+
+* {
+  font-family: YekiFaNum, serif;
+}
+
+
