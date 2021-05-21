@@ -1,16 +1,3 @@
-// =========================================================
-// * Vuetify Material Dashboard - v2.1.0
-// =========================================================
-//
-// * Product Page: https://www.creative-tim.com/product/vuetify-material-dashboard
-// * Copyright 2019 Creative Tim (https://www.creative-tim.com)
-//
-// * Coded by Creative Tim
-//
-// =========================================================
-//
-// * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
@@ -20,7 +7,21 @@ import './plugins/chartist'
 import './plugins/vee-validate'
 import vuetify from './plugins/vuetify'
 import i18n from './i18n'
+import VueCookies from 'vue-cookies'
+import axiosInstance from './plugins/axios'
+import VueToast from 'vue-toast-notification'
+import 'vue-toast-notification/dist/theme-sugar.css'
+import VueConfirmDialog from 'vue-confirm-dialog'
 
+Vue.use(VueConfirmDialog)
+Vue.component('vue-confirm-dialog', VueConfirmDialog.default)
+
+Vue.use(VueToast, {
+  position: 'top',
+})
+
+Vue.use(VueCookies)
+window.axios = axiosInstance
 Vue.config.productionTip = false
 
 new Vue({
