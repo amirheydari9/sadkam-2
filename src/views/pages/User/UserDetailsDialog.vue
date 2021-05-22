@@ -147,7 +147,7 @@
         return this.$store.getters['organization/getOrganizations']
       },
       organizationType () {
-        return this.$store.getters['organization/getOrganizationTypes']
+        return this.$store.getters['staticData/getOrganizationTypes']
       },
       roles () {
         return this.$store.getters['staticData/getRoles']

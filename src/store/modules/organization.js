@@ -4,7 +4,7 @@ export const namespaced = true
 
 export const state = {
     organizations: [],
-    organizationTypes: [],
+    // organizationTypes: [],
     organization: {},
 }
 
@@ -15,9 +15,9 @@ export const mutations = {
     SET_ORGANIZATION (state, payload) {
         state.organization = payload
     },
-    SET_ORGANIZATION_TYPES (state, payload) {
-        state.organizationTypes = payload
-    },
+    // SET_ORGANIZATION_TYPES (state, payload) {
+    //     state.organizationTypes = payload
+    // },
 }
 
 export const getters = {
@@ -27,9 +27,9 @@ export const getters = {
     getOrganization (state) {
         return state.organization
     },
-    getOrganizationTypes (state) {
-        return state.organizationTypes
-    },
+    // getOrganizationTypes (state) {
+    //     return state.organizationTypes
+    // },
 }
 
 export const actions = {
@@ -55,12 +55,12 @@ export const actions = {
             console.log(e)
         }
     },
-    async fetchOrganizationTypes ({ commit }) {
-        try {
-            const { data } = await organizationService().getOrganizationTypes()
-            commit('SET_ORGANIZATION_TYPES', data)
-        } catch (e) {
-            console.log(e)
-        }
-    },
+    // async fetchOrganizationTypes ({ commit }) {
+    //     try {
+    //         const { data } = await organizationService().getOrganizationTypes()
+    //         commit('SET_ORGANIZATION_TYPES', data)
+    //     } catch (e) {
+    //         console.log(e)
+    //     }
+    // },
 }

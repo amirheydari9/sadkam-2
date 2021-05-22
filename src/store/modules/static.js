@@ -5,6 +5,7 @@ export const namespaced = true
 export const state = {
   rulesList: [],
   roles: [],
+  organizationTypes: [],
 }
 
 export const mutations = {
@@ -13,6 +14,9 @@ export const mutations = {
   },
   SET_LIST_OF_USER_ROLES (state, payload) {
     state.roles = payload
+  },
+  SET_ORGANIZATION_TYPES (state, payload) {
+    state.organizationTypes = payload
   },
 }
 
@@ -30,6 +34,9 @@ export const getters = {
   getRoles (state) {
     return state.roles
   },
+  getOrganizationTypes (state) {
+    return state.organizationTypes
+  },
 }
 
 export const actions = {
@@ -45,6 +52,14 @@ export const actions = {
     try {
       const { data } = await staticService().getListOfUserRoles()
       commit('SET_LIST_OF_USER_ROLES', data.data)
+    } catch (e) {
+      console.log(e)
+    }
+  },
+  async fetchOrganizationTypes ({ commit }) {
+    try {
+      const { data } = await staticService().getListOfOrganizationTypes()
+      commit('SET_ORGANIZATION_TYPES', data.data)
     } catch (e) {
       console.log(e)
     }

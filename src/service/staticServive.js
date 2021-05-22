@@ -17,8 +17,17 @@ export function staticService () {
     }
   }
 
+  const getListOfOrganizationTypes = async () => {
+    try {
+      return await axiosInstance.get('/staticData/organizationTypesData')
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
   return {
     getRulesListData,
     getListOfUserRoles,
+    getListOfOrganizationTypes,
   }
 }

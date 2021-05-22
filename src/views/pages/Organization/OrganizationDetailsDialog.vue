@@ -125,7 +125,7 @@
         return this.$store.getters['organization/getOrganization']
       },
       organizationType () {
-        return this.$store.getters['organization/getOrganizationTypes']
+        return this.$store.getters['staticData/getOrganizationTypes']
       },
       formTitle () {
         return this.isCreate ? 'افزودن سازمان' : 'ویرایش سازمان'

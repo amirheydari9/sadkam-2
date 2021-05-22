@@ -110,7 +110,7 @@
         },
       },
       organizationType () {
-        return this.$store.getters['organization/getOrganizationTypes']
+        return this.$store.getters['staticData/getOrganizationTypes']
       },
       formTitle () {
         return this.editedIndex === -1 ? 'افزودن سازمان' : 'ویرایش سازمان'
@@ -118,7 +118,7 @@
     },
     mounted () {
       this.$store.dispatch('organization/fetchOrganizations')
-      this.$store.dispatch('organization/fetchOrganizationTypes')
+      this.$store.dispatch('staticData/fetchOrganizationTypes')
       this.$store.commit('SET_BREADCRUMBS', this.breadcrumbs)
     },
     methods: {

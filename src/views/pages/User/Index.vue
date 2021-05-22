@@ -184,7 +184,7 @@
       this.$store.dispatch('staticData/fetchListOfUserRoles')
       if (this.isSecretariant && this.isUserManager) {
         this.$store.dispatch('organization/fetchOrganizations')
-        this.$store.dispatch('organization/fetchOrganizationTypes')
+        this.$store.dispatch('staticData/fetchOrganizationTypes')
       }
       this.$store.commit('SET_BREADCRUMBS', this.breadcrumbs)
     },

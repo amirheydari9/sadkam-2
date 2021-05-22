@@ -25,18 +25,18 @@ export function userService () {
         }
     }
 
-    const getAllRoles = async () => {
-        try {
-           return await axiosInstance.get('/users/roles')
-        } catch (e) {
-            console.log(e)
-        }
-    }
+    // const getAllRoles = async () => {
+    //     try {
+    //        return await axiosInstance.get('/users/roles')
+    //     } catch (e) {
+    //         console.log(e)
+    //     }
+    // }
 
     return {
         getAllUsers,
         createUser,
         updateUser,
-        getAllRoles,
+        // getAllRoles,
     }
 }
