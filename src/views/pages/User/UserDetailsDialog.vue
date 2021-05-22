@@ -150,7 +150,7 @@
         return this.$store.getters['organization/getOrganizationTypes']
       },
       roles () {
-        return this.$store.getters['user/getAllRoles']
+        return this.$store.getters['staticData/getRoles']
       },
       formTitle () {
         return this.isCreate ? 'افزودن کاربر' : 'ویرایش کاربر'

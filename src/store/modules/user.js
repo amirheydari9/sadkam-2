@@ -4,7 +4,7 @@ export const namespaced = true
 
 export const state = {
     users: [],
-    roles: [],
+    // roles: [],
     user: {},
 }
 
@@ -15,9 +15,9 @@ export const mutations = {
     SET_USER (state, payload) {
         state.user = payload
     },
-    SET_ROLES (state, payload) {
-        state.roles = payload
-    },
+    // SET_ROLES (state, payload) {
+    //     state.roles = payload
+    // },
 }
 
 export const getters = {
@@ -27,9 +27,9 @@ export const getters = {
     getUser (state) {
         return state.user
     },
-    getAllRoles (state) {
-        return state.roles
-    },
+    // getAllRoles (state) {
+    //     return state.roles
+    // },
 }
 
 export const actions = {
@@ -55,12 +55,12 @@ export const actions = {
             console.log(e)
         }
     },
-    async fetchRoles ({ commit }) {
-        try {
-            const { data } = await userService().getAllRoles()
-            commit('SET_ROLES', data)
-        } catch (e) {
-            console.log(e)
-        }
-    },
+    // async fetchRoles ({ commit }) {
+    //     try {
+    //         const { data } = await userService().getAllRoles()
+    //         commit('SET_ROLES', data)
+    //     } catch (e) {
+    //         console.log(e)
+    //     }
+    // },
 }

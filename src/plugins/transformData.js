@@ -10,7 +10,7 @@ Jmoment.loadPersian({
 export const transformRoles = (value) => {
     const roles = []
     value.forEach(item => {
-        const role = store.getters['user/getAllRoles'].find(i => i.role === item)
+        const role = store.getters['staticData/getRoles'].find(i => i.role === item)
         if (role) {
             roles.push(role.fa)
         }

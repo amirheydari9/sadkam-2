@@ -19,7 +19,7 @@
               hide-details
               autofocus
             />
-            <v-spacer />
+            <v-spacer/>
             <v-btn
               color="primary"
               dark
@@ -78,20 +78,58 @@
       isCreate: true,
       search: '',
       headers0: [
-        { text: 'نام کاربری', value: 'nickname' },
-        { text: 'شماره تماس', value: 'phone' },
-        { text: 'سطح دسترسی', value: 'organizationRoles' },
-        { text: 'نوع سازمان', value: 'organizationType' },
-        { text: 'نام سازمان', value: 'organization' },
-        { text: 'فعال بودن', value: 'active' },
-        { text: 'عملیات', value: 'actions', sortable: false },
+        {
+          text: 'نام کاربری',
+          value: 'nickname',
+        },
+        {
+          text: 'شماره تماس',
+          value: 'phone',
+        },
+        {
+          text: 'سطح دسترسی',
+          value: 'organizationRoles',
+        },
+        {
+          text: 'نوع سازمان',
+          value: 'organizationType',
+        },
+        {
+          text: 'نام سازمان',
+          value: 'organization',
+        },
+        {
+          text: 'فعال بودن',
+          value: 'active',
+        },
+        {
+          text: 'عملیات',
+          value: 'actions',
+          sortable: false,
+        },
       ],
       headers1: [
-        { text: 'نام کاربری', value: 'nickname' },
-        { text: 'شماره تماس', value: 'phone' },
-        { text: 'سطح دسترسی', value: 'organizationRoles' },
-        { text: 'فعال بودن', value: 'active' },
-        { text: 'عملیات', value: 'actions', sortable: false },
+        {
+          text: 'نام کاربری',
+          value: 'nickname',
+        },
+        {
+          text: 'شماره تماس',
+          value: 'phone',
+        },
+        {
+          text: 'سطح دسترسی',
+          value: 'organizationRoles',
+        },
+        {
+          text: 'فعال بودن',
+          value: 'active',
+        },
+        {
+          text: 'عملیات',
+          value: 'actions',
+          sortable: false,
+        },
       ],
       editedIndex: -1,
       defaultItem: {
@@ -143,7 +181,7 @@
     },
     mounted () {
       this.$store.dispatch('user/fetchUsers')
-      this.$store.dispatch('user/fetchRoles')
+      this.$store.dispatch('staticData/fetchListOfUserRoles')
       if (this.isSecretariant && this.isUserManager) {
         this.$store.dispatch('organization/fetchOrganizations')
         this.$store.dispatch('organization/fetchOrganizationTypes')

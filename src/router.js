@@ -47,7 +47,7 @@ const routes = new Router({
           path: '/users',
           component: () => import('@/views/pages/User/Index.vue'),
           meta: {
-            permission: 'user_manager',
+            permission: 'USER_MANAGER',
           },
         },
         {
@@ -63,7 +63,7 @@ const routes = new Router({
           path: '/products',
           component: () => import('@/views/pages/Product/Index.vue'),
           meta: {
-            permission: 'orders',
+            permission: 'ORDERS',
           },
         },
         {
@@ -71,7 +71,7 @@ const routes = new Router({
           path: '/episodes',
           component: () => import('@/views/pages/Episode/Index.vue'),
           meta: {
-            permission: 'orders',
+            permission: 'ORDERS',
           },
         },
         {
@@ -95,7 +95,7 @@ const routes = new Router({
           path: '/viewAssessmentRequest',
           component: () => import('@/views/pages/ViewAssessmentRequest/Index.vue'),
           meta: {
-            permission: 'orders',
+            permission: 'ORDERS',
           },
         },
 

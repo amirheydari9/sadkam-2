@@ -1,29 +1,29 @@
 export const organizationTypes = [
     {
-        type: 'secretariant',
+        type: 'SECRETARIAT',
         fa: 'دبیرخانه ساترا',
     },
     {
-        type: 'platform',
+        type: 'PLATFORM',
         fa: 'رسانه فراگیر',
     },
     {
-        type: 'brokerage',
+        type: 'BROKERAGE',
         fa: 'کارگزاری',
     },
 ]
 
 export const organizationRoles = [
     {
-        role: 'user_manager',
+        role: 'USER_MANAGER',
         fa: 'مدیر کاربران و سیستم',
     },
     {
-        role: 'financial',
+        role: 'FINANCIAL',
         fa: 'مدیریت مالی',
     },
     {
-        role: 'orders',
+        role: 'ORDERS',
         fa: 'مدیریت سفارش و محصولات',
     },
 ]
