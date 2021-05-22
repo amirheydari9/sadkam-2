@@ -1,61 +1,63 @@
 <template>
-  <div class="w-100">
-    <v-data-table
-      :headers="headers"
-      :items="organizations"
-      :search="search"
-      no-results-text="اطلاعاتی یافت نشد"
-      class="elevation-1 w-100"
-    >
-      <template v-slot:top>
-        <v-toolbar
-          flat
-        >
-          <v-text-field
-            v-model="search"
-            label="جست جو"
-            single-line
-            hide-details
-            autofocus
-          />
-          <v-spacer />
-          <v-btn
-            color="primary"
-            dark
-            class="mb-2"
-            @click="createItem"
+  <v-container>
+    <div class="w-100">
+      <v-data-table
+        :headers="headers"
+        :items="organizations"
+        :search="search"
+        no-results-text="اطلاعاتی یافت نشد"
+        class="elevation-1 w-100"
+      >
+        <template v-slot:top>
+          <v-toolbar
+            flat
           >
-            افزودن سازمان جدید
-          </v-btn>
-        </v-toolbar>
-      </template>
-      <template v-slot:item.isActive="{ item }">
-        <v-simple-checkbox
-          v-model="item.isActive"
-          disabled
-        />
-      </template>
-      <template v-slot:item.organizationType="{ item }">
-        {{ transformOrganizationType(item.organizationType) }}
-      </template>
-      <template v-slot:item.actions="{ item }">
-        <v-icon
-          small
-          class="mr-2"
-          @click="editItem(item)"
-        >
-          mdi-pencil
-        </v-icon>
-      </template>
-    </v-data-table>
-    <organization-details-dialog
-      v-if="showDialog"
-      :show-dialog="showDialog"
-      :is-create="isCreate"
-      @closeDialog="closeDialog"
-      @handleSave="handleSave"
-    />
-  </div>
+            <v-text-field
+              v-model="search"
+              label="جست جو"
+              single-line
+              hide-details
+              autofocus
+            />
+            <v-spacer />
+            <v-btn
+              color="primary"
+              dark
+              class="mb-2"
+              @click="createItem"
+            >
+              افزودن سازمان جدید
+            </v-btn>
+          </v-toolbar>
+        </template>
+        <template v-slot:item.isActive="{ item }">
+          <v-simple-checkbox
+            v-model="item.isActive"
+            disabled
+          />
+        </template>
+        <template v-slot:item.organizationType="{ item }">
+          {{ transformOrganizationType(item.organizationType) }}
+        </template>
+        <template v-slot:item.actions="{ item }">
+          <v-icon
+            small
+            class="mr-2"
+            @click="editItem(item)"
+          >
+            mdi-pencil
+          </v-icon>
+        </template>
+      </v-data-table>
+      <organization-details-dialog
+        v-if="showDialog"
+        :show-dialog="showDialog"
+        :is-create="isCreate"
+        @closeDialog="closeDialog"
+        @handleSave="handleSave"
+      />
+    </div>
+  </v-container>
 </template>
 
 <script>
@@ -70,13 +72,35 @@
       isCreate: true,
       search: '',
       headers: [
-        { text: 'نام سازمان', value: 'title' },
-        { text: 'نام واسط', value: 'agentName' },
-        { text: 'شماره واسط', value: 'agentPhone' },
-        { text: 'نوع سازمان', value: 'organizationType' },
-        { text: 'آدرس', value: 'address' },
-        { text: 'فعال بودن', value: 'isActive' },
-        { text: 'عملیات', value: 'actions', sortable: false },
+        {
+          text: 'نام سازمان',
+          value: 'title',
+        },
+        {
+          text: 'نام واسط',
+          value: 'agentName',
+        },
+        {
+          text: 'شماره واسط',
+          value: 'agentPhone',
+        },
+        {
+          text: 'نوع سازمان',
+          value: 'organizationType',
+        },
+        {
+          text: 'آدرس',
+          value: 'address',
+        },
+        {
+          text: 'فعال بودن',
+          value: 'isActive',
+        },
+        {
+          text: 'عملیات',
+          value: 'actions',
+          sortable: false,
+        },
       ],
       editedIndex: -1,
       defaultItem: {
@@ -140,9 +164,11 @@
           await this.$store.dispatch('organization/updateOrganization', organization)
           Object.assign(this.organizations[this.editedIndex], organization)
           this.editedIndex = -1
+          this.$toast.success('عملیات با موفقیت انجام شد')
         } else {
           await this.$store.dispatch('organization/createOrganization', organization)
           await this.$store.dispatch('organization/fetchOrganizations')
+          this.$toast.success('عملیات با موفقیت انجام شد')
         }
       },
       closeDialog () {

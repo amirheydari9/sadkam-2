@@ -19,7 +19,7 @@
               hide-details
               autofocus
             />
-            <v-spacer />
+            <v-spacer/>
             <v-btn
               color="primary"
               dark
@@ -32,9 +32,9 @@
         <template v-slot:item.organizationRoles="{ item }">
           {{ transformRoles(item.organizationRoles) }}
         </template>
-<!--        <template v-slot:item.organizationType="{ item }">-->
-<!--          {{ transformOrganizationType(item.organizationType) }}-->
-<!--        </template>-->
+        <!--        <template v-slot:item.organizationType="{ item }">-->
+        <!--          {{ transformOrganizationType(item.organizationType) }}-->
+        <!--        </template>-->
         <template v-slot:item.organization="{ item }">
           {{ transformOrganization(item.organization) }}
         </template>
@@ -200,9 +200,11 @@
           await this.$store.dispatch('user/updateUser', user)
           Object.assign(this.users[this.editedIndex], user)
           this.editedIndex = -1
+          this.$toast.success('عملیات با موفقیت انجام شد')
         } else {
           await this.$store.dispatch('user/createUser', user)
           await this.$store.dispatch('user/fetchUsers')
+          this.$toast.success('عملیات با موفقیت انجام شد')
         }
       },
       closeDialog () {
