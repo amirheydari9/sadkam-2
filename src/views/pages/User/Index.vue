@@ -19,7 +19,7 @@
               hide-details
               autofocus
             />
-            <v-spacer/>
+            <v-spacer />
             <v-btn
               color="primary"
               dark
