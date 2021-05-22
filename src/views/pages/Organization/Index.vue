@@ -29,9 +29,9 @@
           </v-btn>
         </v-toolbar>
       </template>
-      <template v-slot:item.active="{ item }">
+      <template v-slot:item.isActive="{ item }">
         <v-simple-checkbox
-          v-model="item.active"
+          v-model="item.isActive"
           disabled
         />
       </template>
@@ -70,11 +70,12 @@
       isCreate: true,
       search: '',
       headers: [
-        { text: 'نام سازمان', value: 'name' },
-        { text: 'شماره معرف', value: 'agent_phone' },
+        { text: 'نام سازمان', value: 'title' },
+        { text: 'نام واسط', value: 'agentName' },
+        { text: 'شماره واسط', value: 'agentPhone' },
         { text: 'نوع سازمان', value: 'organizationType' },
         { text: 'آدرس', value: 'address' },
-        { text: 'فعال بودن', value: 'active' },
+        { text: 'فعال بودن', value: 'isActive' },
         { text: 'عملیات', value: 'actions', sortable: false },
       ],
       editedIndex: -1,

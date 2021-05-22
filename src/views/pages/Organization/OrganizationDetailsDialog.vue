@@ -18,7 +18,7 @@
                 sm="6"
               >
                 <v-text-field
-                  v-model="organization.name"
+                  v-model="organization.title"
                   :rules="[
                     required('این فیلد الزامی است'),
                   ]"
@@ -30,7 +30,19 @@
                 sm="6"
               >
                 <v-text-field
-                  v-model="organization.agent_phone"
+                  v-model="organization.agentName"
+                  :rules="[
+                    required('این فیلد الزامی است'),
+                  ]"
+                  label="نام واسط"
+                />
+              </v-col>
+              <v-col
+                cols="12"
+                sm="6"
+              >
+                <v-text-field
+                  v-model="organization.agentPhone"
                   :rules="[
                     required('این فیلد الزامی است'),
                     verifyMobilePhone()
@@ -51,7 +63,6 @@
                   :items="organizationType"
                   item-text="fa"
                   item-value="type"
-                  dense
                 />
               </v-col>
               <v-col
