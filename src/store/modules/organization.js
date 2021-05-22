@@ -1,66 +1,66 @@
-import {organizationService} from "../../service/organizationService";
+import { organizationService } from '../../service/organizationService'
 
-export const namespaced = true;
+export const namespaced = true
 
 export const state = {
     organizations: [],
     organizationTypes: [],
-    organization: {}
-};
+    organization: {},
+}
 
 export const mutations = {
-    SET_ORGANIZATIONS(state, payload) {
+    SET_ORGANIZATIONS (state, payload) {
         state.organizations = payload
     },
-    SET_ORGANIZATION(state, payload) {
+    SET_ORGANIZATION (state, payload) {
         state.organization = payload
     },
-    SET_ORGANIZATION_TYPES(state, payload) {
-        state.organizationTypes = payload;
+    SET_ORGANIZATION_TYPES (state, payload) {
+        state.organizationTypes = payload
     },
-};
+}
 
 export const getters = {
-    getOrganizations(state) {
+    getOrganizations (state) {
         return state.organizations
     },
-    getOrganization(state) {
+    getOrganization (state) {
         return state.organization
     },
-    getOrganizationTypes(state) {
+    getOrganizationTypes (state) {
         return state.organizationTypes
     },
 }
 
 export const actions = {
-    async fetchOrganizations({commit}) {
+    async fetchOrganizations ({ commit }) {
         try {
-            const {data} = await organizationService().getAllOrganization()
+            const { data } = await organizationService().getAllOrganization()
             commit('SET_ORGANIZATIONS', data.data)
         } catch (e) {
             console.log(e)
         }
     },
-    async createOrganization(context, organization) {
+    async createOrganization (context, organization) {
         try {
             return await organizationService().createOrganization(organization)
         } catch (e) {
             console.log(e)
         }
     },
-    async updateOrganization(context, organization) {
+    async updateOrganization (context, organization) {
         try {
             return await organizationService().updateOrganization(organization)
         } catch (e) {
             console.log(e)
         }
     },
-    async fetchOrganizationTypes({commit}) {
+    async fetchOrganizationTypes ({ commit }) {
         try {
-            const {data} = await organizationService().getOrganizationTypes()
+            const { data } = await organizationService().getOrganizationTypes()
             commit('SET_ORGANIZATION_TYPES', data)
         } catch (e) {
             console.log(e)
         }
-    }
-};
+    },
+}

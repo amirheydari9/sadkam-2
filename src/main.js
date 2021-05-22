@@ -12,6 +12,8 @@ import axiosInstance from './plugins/axios'
 import VueToast from 'vue-toast-notification'
 import 'vue-toast-notification/dist/theme-sugar.css'
 import VueConfirmDialog from 'vue-confirm-dialog'
+import VueLoading from 'vue-loading-overlay'
+import 'vue-loading-overlay/dist/vue-loading.css'
 
 Vue.use(VueConfirmDialog)
 Vue.component('vue-confirm-dialog', VueConfirmDialog.default)
@@ -19,6 +21,8 @@ Vue.component('vue-confirm-dialog', VueConfirmDialog.default)
 Vue.use(VueToast, {
   position: 'top',
 })
+
+Vue.use(VueLoading)
 
 Vue.use(VueCookies)
 window.axios = axiosInstance

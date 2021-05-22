@@ -1,13 +1,13 @@
 <template>
-  <v-app>
-    <dashboard-core-app-bar />
+    <v-app>
+      <dashboard-core-app-bar />
 
-    <dashboard-core-drawer />
+      <dashboard-core-drawer />
 
-    <dashboard-core-view />
+      <dashboard-core-view />
 
-    <dashboard-core-settings />
-  </v-app>
+      <dashboard-core-settings />
+    </v-app>
 </template>
 
 <script>

@@ -11,7 +11,25 @@ const routes = new Router({
   base: process.env.BASE_URL,
   routes: [
     {
+      path: '/login',
+      name: 'Login',
+      component: () => import('@/views/Auth/Login'),
+      meta: {
+        guest: true,
+      },
+    },
+    {
+      path: '/verify-code',
+      name: 'LoginCheck',
+      component: () => import('@/views/Auth/LoginCheck'),
+      meta: {
+        guest: true,
+        phoneVerified: true,
+      },
+    },
+    {
       path: '/',
+      name: 'Panel',
       component: () => import('@/views/dashboard/Index'),
       meta: {
         auth: true,
@@ -93,6 +111,7 @@ routes.beforeEach(async (to, from, next) => {
 
   if ((to.meta.guest || to.matched.some(parent => parent.meta.guest)) &&
     authService().existToken()) {
+    console.log('hi')
     return next({ name: 'Panel' })
   }
 

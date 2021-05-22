@@ -1,12 +1,11 @@
 import Vue from 'vue'
-import jwt_decode from "jwt-decode";
+import jwtDecode from 'jwt-decode'
 import axiosInstance from '../plugins/axios'
 
-export function authService() {
-
+export function authService () {
     const login = async (phone) => {
         try {
-            await axiosInstance.post('/users/login', {phone})
+            await axiosInstance.post('/users/login', { phone })
         } catch (e) {
             console.log(e)
         }
@@ -14,19 +13,19 @@ export function authService() {
 
     const loginCheck = async (phone, code) => {
         try {
-            return await axiosInstance.post('/users/login_check', {phone, code})
+            return await axiosInstance.post('/users/login_check', { phone, code })
         } catch (e) {
             console.log(e)
         }
     }
 
     const decodeToken = (token) => {
-        return jwt_decode(token);
+        return jwtDecode(token)
     }
 
     const setToken = (token) => {
         const decodedToken = decodeToken(token)
-        Vue.$cookies.set('sadKamToken', token, decodedToken['expires_in'])
+        Vue.$cookies.set('sadKamToken', token, decodedToken.expires_in)
     }
 
     const removeToken = () => {

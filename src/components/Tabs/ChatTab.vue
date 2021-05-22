@@ -1,5 +1,8 @@
 <template>
-  <v-tab-item class="mt-1" value="chat">
+  <v-tab-item
+    class="mt-1"
+    value="chat"
+  >
     <v-container>
       <p>Chat</p>
       <!--      <v-form ref="dialogForm">-->
@@ -64,28 +67,27 @@
     <!--      </template>-->
     <!--    </v-data-table>-->
   </v-tab-item>
-
 </template>
 
 <script>
-export default {
-  name: "ChatTab",
-  computed: {
-    assessmentRequest() {
-      return this.$store.getters['assessmentRequest/getAssessmentRequest']
-    }
-  },
-  mounted() {
-    this.$emit('getData')
-  },
-  methods: {
+  export default {
+    name: 'ChatTab',
+    computed: {
+      assessmentRequest () {
+        return this.$store.getters['assessmentRequest/getAssessmentRequest']
+      },
+    },
+    mounted () {
+      this.$emit('getData')
+    },
+    methods: {
     // createAssessmentRequest() {
     //   this.$store.dispatch('assessmentRequest/createAssessmentRequest', this.episode._id).then(({data}) => {
     //     this.$store.dispatch('assessmentRequest/fetchAssessmentRequest', data.data.id)
     //   })
     // }
+    },
   }
-}
 </script>
 
 <style scoped>

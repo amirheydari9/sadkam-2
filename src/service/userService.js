@@ -1,7 +1,6 @@
 import axiosInstance from '../plugins/axios'
 
-export function userService() {
-
+export function userService () {
     const getAllUsers = async () => {
         try {
             return await axiosInstance.get('/users?count=100')
@@ -38,6 +37,6 @@ export function userService() {
         getAllUsers,
         createUser,
         updateUser,
-        getAllRoles
+        getAllRoles,
     }
 }

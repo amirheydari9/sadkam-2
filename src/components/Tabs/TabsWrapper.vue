@@ -1,28 +1,34 @@
 <template>
   <v-dialog
-      v-model="show"
-      persistent
+    v-model="show"
+    persistent
   >
     <v-card>
       <v-card-text>
-        <v-tabs class="mt-5" color="grey darken-3" v-model="tabsMenu">
+        <v-tabs
+          v-model="tabsMenu"
+          class="mt-5"
+          color="grey darken-3"
+        >
           <v-tab
-              href="#assessment"
-          >ارزیابی
+            href="#assessment"
+          >
+            ارزیابی
           </v-tab>
           <v-tab
-              href="#chat"
-          >گفتگوها
+            href="#chat"
+          >
+            گفتگوها
           </v-tab>
           <v-tab
-              href="#file"
-          >فایل
+            href="#file"
+          >
+            فایل
           </v-tab>
         </v-tabs>
-        <v-divider></v-divider>
+        <v-divider />
 
         <v-tabs-items v-model="tabsMenu">
-
           <!--          <v-tab-item class="mt-5" value="assessment">-->
           <!--            <v-col cols="12">-->
           <!--              <template v-if="assessmentRequestInfoObject">-->
@@ -246,25 +252,25 @@
           <!--                  </v-data-table>-->
           <!--                </v-tab-item>-->
 
-          <assessment-tab/>
+          <assessment-tab />
           <chat-tab
-              v-if="assessmentRequest"
-              @getData="getData"
+            v-if="assessmentRequest"
+            @getData="getData"
           />
           <assessment-request-tab
-              v-if="assessmentRequest"
-              @getData="getData"
+            v-if="assessmentRequest"
+            @getData="getData"
           />
 
           <!--        </v-tabs-items>-->
 
           <!--      </v-card-text>-->
           <v-card-actions>
-            <v-spacer></v-spacer>
+            <v-spacer />
             <v-btn
-                color="blue darken-1"
-                text
-                @click="close"
+              color="blue darken-1"
+              text
+              @click="close"
             >
               انصراف
             </v-btn>
@@ -276,54 +282,54 @@
 </template>
 
 <script>
-import AssessmentTab from "./AssessmentTab";
-import ChatTab from "./ChatTab";
-import AssessmentRequestTab from "./AssessmentRequestTab";
+  import AssessmentTab from './AssessmentTab'
+  import ChatTab from './ChatTab'
+  import AssessmentRequestTab from './AssessmentRequestTab'
 
-export default {
-  name: "TabsWrapper",
-  components: {AssessmentTab, ChatTab, AssessmentRequestTab},
-  props: {
-    showDialog: {Boolean, isRequired: true},
-  },
-  data() {
-    return {
-      tabsMenu: null
-    }
-  },
-  computed: {
-    show() {
-      return this.showDialog
+  export default {
+    name: 'TabsWrapper',
+    components: { AssessmentTab, ChatTab, AssessmentRequestTab },
+    props: {
+      showDialog: { Boolean, isRequired: true },
     },
-    episode() {
-      return this.$store.getters['episode/getEpisode']
+    data () {
+      return {
+        tabsMenu: null,
+      }
     },
-    assessmentRequestInfoByEpisodeId() {
-      return this.$store.getters['assessmentRequest/getAssessmentRequestInfoByEpisodeId']
+    computed: {
+      show () {
+        return this.showDialog
+      },
+      episode () {
+        return this.$store.getters['episode/getEpisode']
+      },
+      assessmentRequestInfoByEpisodeId () {
+        return this.$store.getters['assessmentRequest/getAssessmentRequestInfoByEpisodeId']
+      },
+      assessmentRequest () {
+        return this.$store.getters['assessmentRequest/getAssessmentRequest']
+      },
     },
-    assessmentRequest() {
-      return this.$store.getters['assessmentRequest/getAssessmentRequest']
-    }
-  },
-  mounted() {
-    this.getData()
-  },
-  methods: {
-    getData() {
-      this.$store.dispatch('assessmentRequest/fetchAssessmentRequestByEpisodeId', this.episode._id).then(() => {
-        this.$store.dispatch('assessmentRequest/fetchAssessmentRequest', this.assessmentRequestInfoByEpisodeId._id)
-      }).catch(() => {
-        this.$toast.error('خظا در دریافت اطلاعات')
-        this.close()
-      })
+    mounted () {
+      this.getData()
     },
-    close() {
-      this.$store.commit('assessmentRequest/SET_ASSESSMENT_REQUEST_INFO_BY_EPISODE_ID', null)
-      this.$store.commit('assessmentRequest/SET_ASSESSMENT_REQUEST', null)
-      this.$emit('closeDialog')
-    }
+    methods: {
+      getData () {
+        this.$store.dispatch('assessmentRequest/fetchAssessmentRequestByEpisodeId', this.episode._id).then(() => {
+          this.$store.dispatch('assessmentRequest/fetchAssessmentRequest', this.assessmentRequestInfoByEpisodeId._id)
+        }).catch(() => {
+          this.$toast.error('خظا در دریافت اطلاعات')
+          this.close()
+        })
+      },
+      close () {
+        this.$store.commit('assessmentRequest/SET_ASSESSMENT_REQUEST_INFO_BY_EPISODE_ID', null)
+        this.$store.commit('assessmentRequest/SET_ASSESSMENT_REQUEST', null)
+        this.$emit('closeDialog')
+      },
+    },
   }
-}
 </script>
 
 <style scoped>

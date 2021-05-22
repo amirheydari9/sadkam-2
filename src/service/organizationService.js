@@ -1,7 +1,6 @@
 import axiosInstance from '../plugins/axios'
 
-export function organizationService() {
-
+export function organizationService () {
     const getAllOrganization = async () => {
         try {
             return await axiosInstance.get('/organizations?count=100')
@@ -38,6 +37,6 @@ export function organizationService() {
         getAllOrganization,
         getOrganizationTypes,
         createOrganization,
-        updateOrganization
+        updateOrganization,
     }
 }

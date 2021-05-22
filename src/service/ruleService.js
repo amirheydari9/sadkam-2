@@ -1,7 +1,6 @@
 import axiosInstance from '../plugins/axios'
 
-export function ruleService() {
-
+export function ruleService () {
     const getListRuleOfFile = async (fileId) => {
         try {
             return await axiosInstance.get(`/rules/find/byFile/${fileId}?count=100`)
@@ -28,7 +27,7 @@ export function ruleService() {
 
     const createRuleForAssessmentRequest = async (rule) => {
         try {
-            return await axiosInstance.post(`/rules/forAssessmentRequest`, rule)
+            return await axiosInstance.post('/rules/forAssessmentRequest', rule)
         } catch (e) {
             console.log(e)
         }
@@ -36,7 +35,7 @@ export function ruleService() {
 
     const createRuleForAssessment = async (rule) => {
         try {
-            return await axiosInstance.post(`/rules/forAssessment`, rule)
+            return await axiosInstance.post('/rules/forAssessment', rule)
         } catch (e) {
             console.log(e)
         }
@@ -44,7 +43,7 @@ export function ruleService() {
 
     const updateRule = async (rule) => {
         try {
-            return await axiosInstance.put(`/rules`, rule)
+            return await axiosInstance.put('/rules', rule)
         } catch (e) {
             console.log(e)
         }
@@ -65,6 +64,6 @@ export function ruleService() {
         deleteRule,
         getListRulesOfAssessmentRequest,
         getListRulesOfAssessment,
-        createRuleForAssessment
+        createRuleForAssessment,
     }
 }

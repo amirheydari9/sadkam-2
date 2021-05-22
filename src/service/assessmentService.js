@@ -1,7 +1,6 @@
 import axiosInstance from '../plugins/axios'
 
-export function assessmentService() {
-
+export function assessmentService () {
     const createAssessment = async (assessment) => {
         try {
             return await axiosInstance.post('/assessment', assessment)
@@ -29,6 +28,6 @@ export function assessmentService() {
     return {
         createAssessment,
         findAssessmentByEpisodeId,
-        getRulesByAssessmentId
+        getRulesByAssessmentId,
     }
 }

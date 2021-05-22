@@ -1,10 +1,10 @@
-import store from "../store/store";
-import {entryType, assessmentRequestStatus} from './constant';
+import store from '../store/store'
+import { entryType, assessmentRequestStatus } from './constant'
 import Jmoment from 'moment-jalaali'
 import moment from 'moment'
 
 Jmoment.loadPersian({
-    usePersianDigits: true
+    usePersianDigits: true,
 })
 
 export const transformRoles = (value) => {
@@ -49,7 +49,7 @@ export const transformVideoTimeFormat = (seconds) => {
 }
 
 export const transformVideoTimeToSecond = (format) => {
-    return moment.duration(format).asSeconds();
+    return moment.duration(format).asSeconds()
 }
 
 export const transformAssessmentRequestStatus = (status) => {

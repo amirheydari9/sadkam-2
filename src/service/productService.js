@@ -1,7 +1,6 @@
 import axiosInstance from '../plugins/axios'
 
-export function productService() {
-
+export function productService () {
     const searchProduct = async (search) => {
         try {
             return await axiosInstance.get(`/products/search/${search}`)
@@ -64,6 +63,6 @@ export function productService() {
         createProduct,
         updateProduct,
         getAllGeneres,
-        getAllTitleType
+        getAllTitleType,
     }
 }

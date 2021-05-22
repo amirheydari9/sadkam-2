@@ -1,21 +1,19 @@
-import store from "../store/store";
+import store from '../store/store'
 
-export function permission() {
-
+export function permission () {
     const can = (permission) => {
-        if (store.getters['getCurrentUser']) {
-            return store.getters['getCurrentUser'].organizationRoles.indexOf(permission) !== -1;
+        if (store.getters.getCurrentUser) {
+            return store.getters.getCurrentUser.organizationRoles.indexOf(permission) !== -1
         } else {
             return false
         }
     }
 
     const isSuperAdmin = () => {
-        if (store.getters['getCurrentUser']) {
+        if (store.getters.getCurrentUser) {
             return (
-                store.getters['getCurrentUser'].organizationRoles.length === 3
-                &&
-                store.getters['getCurrentUser'].organizationType === 'secretariant'
+                store.getters.getCurrentUser.organizationRoles.length === 3 &&
+                store.getters.getCurrentUser.organizationType === 'secretariant'
             )
         } else {
             return false
@@ -23,44 +21,40 @@ export function permission() {
     }
 
     const isAdmin = () => {
-        if (store.getters['getCurrentUser']) {
+        if (store.getters.getCurrentUser) {
             return (
-                store.getters['getCurrentUser'].organizationRoles.length === 3
-                &&
-                store.getters['getCurrentUser'].organizationType !== 'secretariant'
+                store.getters.getCurrentUser.organizationRoles.length === 3 &&
+                store.getters.getCurrentUser.organizationType !== 'secretariant'
             )
         } else {
             return false
         }
-
     }
 
     const isUserManager = () => {
-        if (store.getters['getCurrentUser']) {
+        if (store.getters.getCurrentUser) {
             return (
-                store.getters['getCurrentUser'].organizationRoles.indexOf('user_manager') !== -1
+                store.getters.getCurrentUser.organizationRoles.indexOf('user_manager') !== -1
             )
         } else {
             return false
         }
-
     }
 
     const isFinancial = () => {
-        if (store.getters['getCurrentUser']) {
+        if (store.getters.getCurrentUser) {
             return (
-                store.getters['getCurrentUser'].organizationRoles.indexOf('financial') !== -1
+                store.getters.getCurrentUser.organizationRoles.indexOf('financial') !== -1
             )
         } else {
             return false
         }
-
     }
 
     const isOrders = () => {
-        if (store.getters['getCurrentUser']) {
+        if (store.getters.getCurrentUser) {
             return (
-                store.getters['getCurrentUser'].organizationRoles.indexOf('orders') !== -1
+                store.getters.getCurrentUser.organizationRoles.indexOf('orders') !== -1
             )
         } else {
             return false
@@ -68,9 +62,9 @@ export function permission() {
     }
 
     const isSecretariant = () => {
-        if (store.getters['getCurrentUser']) {
+        if (store.getters.getCurrentUser) {
             return (
-                store.getters['getCurrentUser'].organizationType === 'secretariant'
+                store.getters.getCurrentUser.organizationType === 'secretariant'
             )
         } else {
             return false
@@ -78,9 +72,9 @@ export function permission() {
     }
 
     const isPlatform = () => {
-        if (store.getters['getCurrentUser']) {
+        if (store.getters.getCurrentUser) {
             return (
-                store.getters['getCurrentUser'].organizationType === 'platform'
+                store.getters.getCurrentUser.organizationType === 'platform'
             )
         } else {
             return false
@@ -88,9 +82,9 @@ export function permission() {
     }
 
     const isBrokerage = () => {
-        if (store.getters['getCurrentUser']) {
+        if (store.getters.getCurrentUser) {
             return (
-                store.getters['getCurrentUser'].organizationType === 'brokerage'
+                store.getters.getCurrentUser.organizationType === 'brokerage'
             )
         } else {
             return false
@@ -98,11 +92,10 @@ export function permission() {
     }
 
     const hasAssessmentRequestPermission = () => {
-        if (store.getters['getCurrentUser']) {
+        if (store.getters.getCurrentUser) {
             return (
-                store.getters['getCurrentUser'].organizationType !== 'secretariant'
-                &&
-                store.getters['getCurrentUser'].organizationRoles.indexOf('orders') !== -1
+                store.getters.getCurrentUser.organizationType !== 'secretariant' &&
+                store.getters.getCurrentUser.organizationRoles.indexOf('orders') !== -1
             )
         } else {
             return false
@@ -119,6 +112,6 @@ export function permission() {
         isSecretariant,
         isPlatform,
         isBrokerage,
-        hasAssessmentRequestPermission
+        hasAssessmentRequestPermission,
     }
 }

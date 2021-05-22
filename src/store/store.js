@@ -116,9 +116,9 @@ export default new Vuex.Store({
     async loginCheck ({ state, commit }, code) {
       try {
         const { data } = await authService().loginCheck(state.loginPhone, code)
-        commit('SET_CURRENT_USER', authService().decodeToken(data.token))
+        commit('SET_CURRENT_USER', authService().decodeToken(data.data.token))
         commit('SET_LOGIN_PHONE', null)
-        await authService().setToken(data.token)
+        await authService().setToken(data.data.token)
       } catch (e) {
         console.log(e)
       }

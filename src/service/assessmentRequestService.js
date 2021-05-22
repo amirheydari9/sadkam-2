@@ -1,7 +1,6 @@
 import axiosInstance from '../plugins/axios'
 
-export function assessmentRequestService() {
-
+export function assessmentRequestService () {
     const getAllAssessmentRequests = async () => {
         try {
             return await axiosInstance.get('/assessmentRequest')
@@ -58,7 +57,7 @@ export function assessmentRequestService() {
 
     const assignAssessmentRequestToBrokerage = async (assign) => {
         try {
-            return await axiosInstance.patch(`/assessmentRequest/assign`, assign)
+            return await axiosInstance.patch('/assessmentRequest/assign', assign)
         } catch (e) {
             console.log(e)
         }
@@ -66,7 +65,7 @@ export function assessmentRequestService() {
 
     const unAssignAssessmentRequestToBrokerage = async (assessmentRequestId) => {
         try {
-            return await axiosInstance.patch(`/assessmentRequest/unassign`, assessmentRequestId)
+            return await axiosInstance.patch('/assessmentRequest/unassign', assessmentRequestId)
         } catch (e) {
             console.log(e)
         }
@@ -74,7 +73,7 @@ export function assessmentRequestService() {
 
     const setStatusOfAssessmentRequest = async (status) => {
         try {
-            return await axiosInstance.patch(`/assessmentRequest/status`, status)
+            return await axiosInstance.patch('/assessmentRequest/status', status)
         } catch (e) {
             console.log(e)
         }
@@ -90,6 +89,6 @@ export function assessmentRequestService() {
         getAssessmentListByStatus,
         assignAssessmentRequestToBrokerage,
         setStatusOfAssessmentRequest,
-        unAssignAssessmentRequestToBrokerage
+        unAssignAssessmentRequestToBrokerage,
     }
 }

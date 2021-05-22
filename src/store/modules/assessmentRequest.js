@@ -1,6 +1,6 @@
-import {assessmentRequestService} from "../../service/assessmentRequestService";
+import { assessmentRequestService } from '../../service/assessmentRequestService'
 
-export const namespaced = true;
+export const namespaced = true
 
 export const state = {
     assessmentRequestInfoByEpisodeId: null,
@@ -12,81 +12,81 @@ export const state = {
     confirmed: [],
     working: [],
     completed: [],
-};
+}
 
 export const mutations = {
-    SET_ASSESSMENT_REQUEST_INFO_BY_EPISODE_ID(state, payload) {
+    SET_ASSESSMENT_REQUEST_INFO_BY_EPISODE_ID (state, payload) {
         state.assessmentRequestInfoByEpisodeId = payload
     },
-    SET_ASSESSMENT_REQUEST(state, payload) {
+    SET_ASSESSMENT_REQUEST (state, payload) {
         state.assessmentRequest = payload
     },
-    SET_ASSESSMENT_REQUESTS(state, payload) {
+    SET_ASSESSMENT_REQUESTS (state, payload) {
         state.assessmentRequests = payload
     },
-    SET_SUBMITTED(state, payload) {
+    SET_SUBMITTED (state, payload) {
         state.submitted = payload
     },
-    SET_INQUEU(state, payload) {
+    SET_INQUEU (state, payload) {
         state.inqueu = payload
     },
-    SET_ASSIGNED(state, payload) {
+    SET_ASSIGNED (state, payload) {
         state.assigned = payload
     },
-    SET_CONFIRMED(state, payload) {
+    SET_CONFIRMED (state, payload) {
         state.confirmed = payload
     },
-    SET_WORKING(state, payload) {
+    SET_WORKING (state, payload) {
         state.working = payload
     },
-    SET_COMPLETED(state, payload) {
+    SET_COMPLETED (state, payload) {
         state.completed = payload
     },
-};
+}
 
 export const getters = {
-    getAssessmentRequestInfoByEpisodeId(state) {
+    getAssessmentRequestInfoByEpisodeId (state) {
         return state.assessmentRequestInfoByEpisodeId
     },
-    getAssessmentRequest(state) {
+    getAssessmentRequest (state) {
         return state.assessmentRequest
     },
-    getAssessmentRequests(state) {
+    getAssessmentRequests (state) {
         return state.assessmentRequests
     },
-    getSubmitted(state) {
+    getSubmitted (state) {
         return state.submitted
     },
-    getInqueu(state) {
+    getInqueu (state) {
         return state.inqueu
     },
-    getAssigned(state) {
+    getAssigned (state) {
         return state.assigned
     },
-    getConfirmed(state) {
+    getConfirmed (state) {
         return state.confirmed
     },
-    getWorking(state) {
+    getWorking (state) {
         return state.working
     },
-    getCompleted(state) {
+    getCompleted (state) {
         return state.completed
     },
 
 }
 
 export const actions = {
-    async fetchAllAssessmentRequests({commit}) {
+    async fetchAllAssessmentRequests ({ commit }) {
         try {
-            const {data} = await assessmentRequestService().getAllAssessmentRequests()
+            const { data } = await assessmentRequestService().getAllAssessmentRequests()
             commit('SET_ASSESSMENT_REQUESTS', data.data)
         } catch (e) {
             console.log(e)
         }
     },
-    async fetchAssessmentRequest({commit}, assessmentRequestId) {
+    async fetchAssessmentRequest ({ commit }, assessmentRequestId) {
         try {
-            const {data} = await assessmentRequestService().getAssessmentRequest(assessmentRequestId)
+            const { data } = await assessmentRequestService().getAssessmentRequest(assessmentRequestId)
             if (data.data) {
                 commit('SET_ASSESSMENT_REQUEST', data.data)
             } else {
@@ -97,9 +97,9 @@ export const actions = {
         }
     },
 
-    async fetchAssessmentRequestByEpisodeId({commit}, id) {
+    async fetchAssessmentRequestByEpisodeId ({ commit }, id) {
         try {
-            const {data} = await assessmentRequestService().getAssessmentRequestByEpisode(id)
+            const { data } = await assessmentRequestService().getAssessmentRequestByEpisode(id)
             if (data.data && data.data.length > 0) {
                 commit('SET_ASSESSMENT_REQUEST_INFO_BY_EPISODE_ID', data.data[0])
             } else {
@@ -110,7 +110,7 @@ export const actions = {
         }
     },
 
-    async createAssessmentRequest(context, assessmentRequests) {
+    async createAssessmentRequest (context, assessmentRequests) {
         try {
             return await assessmentRequestService().createAssessmentRequest(assessmentRequests)
         } catch (e) {
@@ -118,9 +118,9 @@ export const actions = {
         }
     },
 
-    async fetchAssessmentListByStatus({commit}, status) {
+    async fetchAssessmentListByStatus ({ commit }, status) {
         try {
-            const {data} = await assessmentRequestService().getAssessmentListByStatus(status)
+            const { data } = await assessmentRequestService().getAssessmentListByStatus(status)
             switch (status) {
                 case 0:
                     commit('SET_SUBMITTED', data.data)
@@ -146,7 +146,7 @@ export const actions = {
         }
     },
 
-    async assignAssessmentRequestToBrokerage(context, assign) {
+    async assignAssessmentRequestToBrokerage (context, assign) {
         try {
             return await assessmentRequestService().assignAssessmentRequestToBrokerage(assign)
         } catch (e) {
@@ -154,7 +154,7 @@ export const actions = {
         }
     },
 
-    async unAssignAssessmentRequestToBrokerage(context, assessmentRequestId) {
+    async unAssignAssessmentRequestToBrokerage (context, assessmentRequestId) {
         try {
             return await assessmentRequestService().unAssignAssessmentRequestToBrokerage(assessmentRequestId)
         } catch (e) {
@@ -162,7 +162,7 @@ export const actions = {
         }
     },
 
-    async setStatusOfAssessmentRequest(context, status) {
+    async setStatusOfAssessmentRequest (context, status) {
         try {
             return await assessmentRequestService().setStatusOfAssessmentRequest(status)
         } catch (e) {
@@ -170,4 +170,4 @@ export const actions = {
         }
     },
 
-};
+}
