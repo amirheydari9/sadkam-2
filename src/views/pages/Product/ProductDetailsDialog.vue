@@ -221,7 +221,7 @@
                     required('این فیلد الزامی است'),
                   ]"
                   label="عنوان ورودی"
-                  :items="titleTypes"
+                  :items="productCategoryData"
                   item-text="fa"
                   item-value="en"
                 />
@@ -271,9 +271,19 @@
   export default {
     name: 'ProductDetailsDialog',
     props: {
-      showDialog: { Boolean, isRequired: true },
-      isCreate: { Boolean, isRequired: true },
-      jusTCreate: { Boolean, isRequired: false, default: false },
+      showDialog: {
+        Boolean,
+        isRequired: true,
+      },
+      isCreate: {
+        Boolean,
+        isRequired: true,
+      },
+      jusTCreate: {
+        Boolean,
+        isRequired: false,
+        default: false,
+      },
     },
     data () {
       return {
@@ -295,10 +305,10 @@
       //   return permission().isSuperAdmin()
       // },
       generes () {
-        return this.$store.getters['product/getGeneres']
+        return this.$store.getters['staticData/getGeneres']
       },
-      titleTypes () {
-        return this.$store.getters['product/getTitleTypes']
+      productCategoryData () {
+        return this.$store.getters['staticData/getProductCategoryData']
       },
       // organizationList() {
       //   return this.$store.getters['organization/getOrganizations']
@@ -308,8 +318,8 @@
       },
     },
     mounted () {
-      this.$store.dispatch('product/fetchAllGeneres')
-      this.$store.dispatch('product/fetchAllTitleTypes')
+      this.$store.dispatch('staticData/fetchAllGeneres')
+      this.$store.dispatch('staticData/fetchListOfCategoryData')
     },
     methods: {
       close () {

@@ -40,21 +40,21 @@ export function productService () {
         }
     }
 
-    const getAllGeneres = async () => {
-        try {
-            return await axiosInstance.get('/products/related/generes')
-        } catch (e) {
-            console.log(e)
-        }
-    }
+    // const getAllGeneres = async () => {
+    //     try {
+    //         return await axiosInstance.get('/products/related/generes')
+    //     } catch (e) {
+    //         console.log(e)
+    //     }
+    // }
 
-    const getAllTitleType = async () => {
-        try {
-            return await axiosInstance.get('/products/related/types')
-        } catch (e) {
-            console.log(e)
-        }
-    }
+    // const getAllTitleType = async () => {
+    //     try {
+    //         return await axiosInstance.get('/products/related/types')
+    //     } catch (e) {
+    //         console.log(e)
+    //     }
+    // }
 
     return {
         searchProduct,
@@ -62,7 +62,7 @@ export function productService () {
         getProduct,
         createProduct,
         updateProduct,
-        getAllGeneres,
-        getAllTitleType,
+        // getAllGeneres,
+        // getAllTitleType,
     }
 }

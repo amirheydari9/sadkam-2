@@ -33,7 +33,7 @@ export const transformEntryType = (value) => {
   return enType ? enType.fa : value
 }
 export const transformTitleType = (value) => {
-  const titleType = store.getters['product/getTitleTypes'].find(item => item.en === value)
+  const titleType = store.getters['staticData/getProductCategoryData'].find(item => item.en === value)
   return titleType ? titleType.fa : value
 }
 

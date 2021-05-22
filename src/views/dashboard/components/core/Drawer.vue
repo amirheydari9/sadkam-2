@@ -55,7 +55,7 @@
       <!-- https://github.com/vuetifyjs/vuetify/pull/8574 -->
       <div />
 
-      <template v-for="(item, i) in computedItems">
+      <template v-for="(item, i) in items">
         <base-item-group
           v-if="item.children"
           :key="`group-${i}`"
@@ -153,6 +153,12 @@
           title: 'مشاهده درخواست ارزیابی',
           icon: 'mdi-account-circle',
           to: '/viewAssessmentRequest',
+          permission: 'USER_MANAGER',
+        },
+        {
+          title: 'مدیریت تیکت',
+          icon: 'mdi-account-circle',
+          to: '/ticket',
           permission: 'USER_MANAGER',
         },
       ],

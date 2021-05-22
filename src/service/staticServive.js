@@ -33,10 +33,19 @@ export function staticService () {
     }
   }
 
+  const getListOfProductCategoryData = async () => {
+    try {
+      return await axiosInstance.get('/staticData/productCategoryData')
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
   return {
     getRulesListData,
     getListOfUserRoles,
     getListOfOrganizationTypes,
     getListOfGeneresData,
+    getListOfProductCategoryData,
   }
 }
