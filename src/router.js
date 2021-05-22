@@ -106,24 +106,7 @@ const routes = new Router({
         {
           name: 'StaticData',
           path: '/staticData',
-          component: () => import('@/views/pages/StaticData/RulesData.vue'),
-          children: [
-            {
-              name: 'RulesData',
-              path: 'rulesData',
-              component: () => import('@/views/pages/StaticData/RulesData.vue'),
-            },
-            {
-              name: 'GeneresData',
-              path: 'generesData',
-              component: () => import('@/views/pages/StaticData/GeneresData.vue'),
-            },
-            {
-              name: 'ProductCategoryData',
-              path: 'productCategoryData',
-              component: () => import('@/views/pages/StaticData/ProductCategoryData.vue'),
-            },
-          ],
+          component: () => import('@/views/pages/StaticData/Index.vue'),
         },
       ],
     },

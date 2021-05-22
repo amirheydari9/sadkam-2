@@ -166,23 +166,6 @@
           icon: 'mdi-account-circle',
           permission: 'USER_MANAGER',
           to: '/staticData',
-          children: [
-            {
-              title: 'مدیریت رول ها',
-              icon: 'mdi-account-circle',
-              to: '/rulesData',
-            },
-            {
-              title: 'مدیریت ژانرها',
-              icon: 'mdi-account-circle',
-              to: '/staticData/generesData',
-            },
-            {
-              title: 'مدیریت دسته بندی محصولات',
-              icon: 'mdi-account-circle',
-              to: '/staticData/productCategory',
-            },
-          ],
         },
       ],
     }),

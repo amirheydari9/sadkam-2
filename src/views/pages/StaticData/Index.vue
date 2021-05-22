@@ -1,10 +1,10 @@
 <template>
-  <p>RulesData</p>
+<p>dd</p>
 </template>
 
 <script>
   export default {
-    name: 'GeneresData',
+    name: 'Index',
   }
 </script>
 

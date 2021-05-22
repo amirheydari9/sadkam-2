@@ -201,7 +201,7 @@
                 sm="4"
               >
                 <v-autocomplete
-                  v-model="product.entryType"
+                  v-model="product.episodeCountType"
                   :rules="[
                     required('این فیلد الزامی است'),
                   ]"
@@ -216,7 +216,7 @@
                 sm="4"
               >
                 <v-autocomplete
-                  v-model="product.titleType"
+                  v-model="product.category"
                   :rules="[
                     required('این فیلد الزامی است'),
                   ]"

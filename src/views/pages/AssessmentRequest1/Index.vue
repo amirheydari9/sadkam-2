@@ -1,69 +1,71 @@
 <template>
-  <div class="w-100 d-flex flex-column justify-start">
-    <v-col
-      cols="12"
-      sm="5"
-      class="d-flex flex-row justify-end"
-    >
-      <v-text-field
-        v-model="productSearch"
-        label="جستجو در محصولات"
-        :loading="isLoading"
-        outlined
+  <v-container>
+    <div class="w-100 d-flex flex-column justify-start">
+      <v-col
+        cols="12"
+        sm="5"
+        class="d-flex flex-row justify-end"
+      >
+        <v-text-field
+          v-model="productSearch"
+          label="جستجو در محصولات"
+          :loading="isLoading"
+          outlined
+        />
+        <add-product-btn />
+      </v-col>
+      <v-data-table
+        :headers="headers"
+        :items="products"
+        :search="search"
+        no-results-text="اطلاعاتی یافت نشد"
+        class="elevation-1 w-100"
+      >
+        <template v-slot:top>
+          <v-toolbar
+            flat
+          >
+            <v-text-field
+              v-model="search"
+              label="جست جو"
+              single-line
+              hide-details
+              autofocus
+            />
+            <v-spacer />
+          </v-toolbar>
+        </template>
+        <template v-slot:item.episodeCountType="{ item }">
+          {{ transformEntryType(item.episodeCountType) }}
+        </template>
+        <template v-slot:item.category="{ item }">
+          {{ transformTitleType(item.category) }}
+        </template>
+<!--        <template v-slot:item.lastUpdate="{ item }">-->
+<!--          {{ transformDateToJalali(item.lastUpdate) }}-->
+<!--        </template>-->
+        <template v-slot:item.actions="{ item }">
+          <v-icon
+            small
+            class="mr-2"
+            @click="goToAssessmentTabsOrSeeEpisodes(item)"
+          >
+            mdi-pencil
+          </v-icon>
+        </template>
+      </v-data-table>
+      <dialog-list-episode
+        v-if="showEpisodesListDialog"
+        :show-dialog="showEpisodesListDialog"
+        @closeDialog="closeEpisodeListDialog"
       />
-      <add-product-btn />
-    </v-col>
-    <v-data-table
-      :headers="headers"
-      :items="products"
-      :search="search"
-      no-results-text="اطلاعاتی یافت نشد"
-      class="elevation-1 w-100"
-    >
-      <template v-slot:top>
-        <v-toolbar
-          flat
-        >
-          <v-text-field
-            v-model="search"
-            label="جست جو"
-            single-line
-            hide-details
-            autofocus
-          />
-          <v-spacer />
-        </v-toolbar>
-      </template>
-      <template v-slot:item.entryType="{ item }">
-        {{ transformEntryType(item.entryType) }}
-      </template>
-      <template v-slot:item.titleType="{ item }">
-        {{ transformTitleType(item.titleType) }}
-      </template>
-      <template v-slot:item.lastUpdate="{ item }">
-        {{ transformDateToJalali(item.lastUpdate) }}
-      </template>
-      <template v-slot:item.actions="{ item }">
-        <v-icon
-          small
-          class="mr-2"
-          @click="goToAssessmentTabsOrSeeEpisodes(item)"
-        >
-          mdi-pencil
-        </v-icon>
-      </template>
-    </v-data-table>
-    <dialog-list-episode
-      v-if="showEpisodesListDialog"
-      :show-dialog="showEpisodesListDialog"
-      @closeDialog="closeEpisodeListDialog"
-    />
-    <tabs-wrapper
-      v-if="showTabs"
-      :show-dialog="showTabs"
-      @closeDialog="closeTabsDialog"
-    />
-  </div>
+      <tabs-wrapper
+        v-if="showTabs"
+        :show-dialog="showTabs"
+        @closeDialog="closeTabsDialog"
+      />
+    </div>
+  </v-container>
 </template>
 <script>
   import {
@@ -87,15 +89,35 @@
       productSearch: null,
       filteredProducts: [],
       headers: [
-        { text: 'نام انگلسیی', value: 'enTitle' },
-        { text: 'نام فارسی', value: 'faTitle' },
-        { text: 'زمان شروع', value: 'startYear' },
-        { text: 'زمان پایان', value: 'endYear' },
-        { text: 'آی دی imdb', value: 'imdbId' },
-        { text: 'نوع ورودی', value: 'entryType' },
-        { text: 'عنوان ورودی', value: 'titleType' },
-        { text: 'آخرین ویرایش', value: 'lastUpdate' },
-        { text: 'عملیات', value: 'actions', sortable: false },
+        {
+          text: 'نام انگلسیی',
+          value: 'enTitle',
+        },
+        {
+          text: 'نام فارسی',
+          value: 'faTitle',
+        },
+        {
+          text: 'زمان شروع',
+          value: 'startYear',
+        },
+        {
+          text: 'آی دی imdb',
+          value: 'imdbId',
+        },
+        {
+          text: 'نوع ورودی',
+          value: 'episodeCountType',
+        },
+        {
+          text: 'عنوان ورودی',
+          value: 'category',
+        },
+        {
+          text: 'عملیات',
+          value: 'actions',
+          sortable: false,
+        },
       ],
       search: '',
       defaultItem: {
@@ -109,10 +131,9 @@
         endYear: [],
         writers: [],
         actors: [],
-        submittedBy: '',
         imdbId: '',
-        entryType: '',
-        titleType: '',
+        episodeCountType: '',
+        category: '',
         rate: '',
         description: '',
       },
@@ -170,6 +191,7 @@
       },
     },
     mounted () {
+      this.$store.dispatch('staticData/fetchListOfCategoryData')
       this.$store.commit('SET_BREADCRUMBS', this.breadcrumbs)
     },
     beforeDestroy () {
@@ -177,7 +199,7 @@
     },
     methods: {
       async goToAssessmentTabsOrSeeEpisodes (item) {
-        if (item.entryType === 'single') {
+        if (item.episodeCountType === 'single') {
           this.$store.commit('episode/SET_EPISODE', item)
           this.showTabs = true
         } else {
