@@ -25,9 +25,18 @@ export function staticService () {
     }
   }
 
+  const getListOfGeneresData = async () => {
+    try {
+      return await axiosInstance.get('/staticData/generesData')
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
   return {
     getRulesListData,
     getListOfUserRoles,
     getListOfOrganizationTypes,
+    getListOfGeneresData,
   }
 }

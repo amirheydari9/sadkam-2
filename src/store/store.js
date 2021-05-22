@@ -11,6 +11,7 @@ import * as rule from './modules/rule'
 import * as assessment from './modules/assessment'
 import * as user from './modules/user'
 import * as organization from './modules/organization'
+import * as ticket from './modules/ticket'
 
 Vue.use(Vuex)
 
@@ -181,5 +182,6 @@ export default new Vuex.Store({
     staticData,
     rule,
     assessment,
+    ticket
   },
 })
