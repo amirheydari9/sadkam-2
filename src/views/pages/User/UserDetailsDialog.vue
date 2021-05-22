@@ -27,6 +27,16 @@
                 sm="6"
               >
                 <v-text-field
+                  v-model="user.title"
+                  :rules="[required('این فیلد الزامی است'),]"
+                  label="عنوان"
+                />
+              </v-col>
+              <v-col
+                cols="12"
+                sm="6"
+              >
+                <v-text-field
                   v-model="user.phone"
                   :rules="[required('این فیلد الزامی است'),verifyMobilePhone()]"
                   label="شماره تماس"
@@ -42,7 +52,7 @@
                   :rules="[ required('این فیلد الزامی است'),]"
                   label="نام سازمان"
                   :items="organizationList"
-                  item-text="name"
+                  item-text="title"
                   item-value="_id"
                 />
               </v-col>
@@ -73,15 +83,6 @@
                   label="سطح دسترسی"
                   multiple
                   deletable-chips
-                />
-              </v-col>
-              <v-col
-                cols="12"
-                sm="6"
-              >
-                <v-switch
-                  v-model="user.active"
-                  label="فعال است"
                 />
               </v-col>
             </v-row>

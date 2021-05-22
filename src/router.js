@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-// import { authService } from './service/authService'
+import { authService } from './service/authService'
 // import { permission } from './plugins/permission'
-// import store from './store/store'
+import store from './store/store'
 
 Vue.use(Router)
 
@@ -103,58 +103,80 @@ const routes = new Router({
           path: '/ticket',
           component: () => import('@/views/pages/Ticket/Index.vue'),
         },
+        {
+          name: 'StaticData',
+          path: '/staticData',
+          component: () => import('@/views/pages/StaticData/RulesData.vue'),
+          children: [
+            {
+              name: 'RulesData',
+              path: 'rulesData',
+              component: () => import('@/views/pages/StaticData/RulesData.vue'),
+            },
+            {
+              name: 'GeneresData',
+              path: 'generesData',
+              component: () => import('@/views/pages/StaticData/GeneresData.vue'),
+            },
+            {
+              name: 'ProductCategoryData',
+              path: 'productCategoryData',
+              component: () => import('@/views/pages/StaticData/ProductCategoryData.vue'),
+            },
+          ],
+        },
       ],
     },
   ],
 })
 
-// routes.beforeEach(async (to, from, next) => {
-//   if (authService().existToken() && !store.getters.getCurrentUser) {
-//     await store.dispatch('handleCurrentUser', authService().decodeToken(authService().getToken()))
-//   }
-//
-//   if ((to.meta.guest || to.matched.some(parent => parent.meta.guest)) &&
-//     authService().existToken()) {
-//     console.log('hi')
-//     return next({ name: 'Panel' })
-//   }
-//
-//   if ((to.meta.auth || to.matched.some(parent => parent.meta.auth)) &&
-//     !authService().existToken()) {
-//     return next({ name: 'Login' })
-//   }
-//
-//   if (store.getters.getCurrentUser && to.meta.permission) {
-//     if (permission().can(to.meta.permission)) {
-//       return next()
-//     } else {
-//       await store.dispatch('logout')
-//       return next({ name: 'Login' })
-//     }
-//   }
-//
-//   if (store.getters.getCurrentUser && to.meta.isSuperAdmin) {
-//     if (permission().isSuperAdmin()) {
-//       return next()
-//     } else {
-//       await store.dispatch('logout')
-//       return next({ name: 'Login' })
-//     }
-//   }
-//   if (store.getters.getCurrentUser && to.meta.hasAssessmentRequestPermission) {
-//     if (permission().hasAssessmentRequestPermission()) {
-//       return next()
-//     } else {
-//       await store.dispatch('logout')
-//       return next({ name: 'Login' })
-//     }
-//   }
-//   // if ((to.meta.phoneVerified || to.matched.some(parent => parent.meta.phoneVerified))
-//   //     && !store.state.loginPhone) {
-//   //     console.log(store.state.loginPhone)
-//   //     return next({name: 'Login'});
-//   // }
-//   return next()
-// })
+routes.beforeEach(async (to, from, next) => {
+  if (authService().existToken() && !store.getters.getCurrentUser) {
+    await store.dispatch('handleCurrentUser', authService().decodeToken(authService().getToken()))
+  }
+
+  // if ((to.meta.guest || to.matched.some(parent => parent.meta.guest)) &&
+  //   authService().existToken()) {
+  //   console.log('hi')
+  //   return next({ name: 'Panel' })
+  // }
+  //
+  // if ((to.meta.auth || to.matched.some(parent => parent.meta.auth)) &&
+  //   !authService().existToken()) {
+  //   return next({ name: 'Login' })
+  // }
+  //
+  // if (store.getters.getCurrentUser && to.meta.permission) {
+  //   if (permission().can(to.meta.permission)) {
+  //     return next()
+  //   } else {
+  //     await store.dispatch('logout')
+  //     return next({ name: 'Login' })
+  //   }
+  // }
+  //
+  // if (store.getters.getCurrentUser && to.meta.isSuperAdmin) {
+  //   if (permission().isSuperAdmin()) {
+  //     return next()
+  //   } else {
+  //     await store.dispatch('logout')
+  //     return next({ name: 'Login' })
+  //   }
+  // }
+  // if (store.getters.getCurrentUser && to.meta.hasAssessmentRequestPermission) {
+  //   if (permission().hasAssessmentRequestPermission()) {
+  //     return next()
+  //   } else {
+  //     await store.dispatch('logout')
+  //     return next({ name: 'Login' })
+  //   }
+  // }
+  // if ((to.meta.phoneVerified || to.matched.some(parent => parent.meta.phoneVerified))
+  //     && !store.state.loginPhone) {
+  //     console.log(store.state.loginPhone)
+  //     return next({name: 'Login'});
+  // }
+  return next()
+})
 
 export default routes

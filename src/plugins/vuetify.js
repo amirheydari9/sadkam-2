@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuetify from 'vuetify/lib'
-import i18n from '@/i18n'
+// import i18n from '@/i18n'
 import '@/sass/overrides.sass'
 import fa from 'vuetify/es5/locale/fa'
 
@@ -16,7 +16,7 @@ const theme = {
 export default new Vuetify({
   rtl: true,
   lang: {
-    t: (key, ...params) => i18n.t(key, params),
+    // t: (key, ...params) => i18n.t(key, params),
     locales: { fa },
     current: 'fa',
   },

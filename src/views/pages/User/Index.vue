@@ -32,17 +32,11 @@
         <template v-slot:item.organizationRoles="{ item }">
           {{ transformRoles(item.organizationRoles) }}
         </template>
-        <template v-slot:item.organizationType="{ item }">
-          {{ transformOrganizationType(item.organizationType) }}
-        </template>
+<!--        <template v-slot:item.organizationType="{ item }">-->
+<!--          {{ transformOrganizationType(item.organizationType) }}-->
+<!--        </template>-->
         <template v-slot:item.organization="{ item }">
           {{ transformOrganization(item.organization) }}
-        </template>
-        <template v-slot:item.active="{ item }">
-          <v-simple-checkbox
-            v-model="item.active"
-            disabled
-          />
         </template>
         <template v-slot:item.actions="{ item }">
           <v-icon
@@ -90,17 +84,17 @@
           text: 'سطح دسترسی',
           value: 'organizationRoles',
         },
-        {
-          text: 'نوع سازمان',
-          value: 'organizationType',
-        },
+        // {
+        //   text: 'نوع سازمان',
+        //   value: 'organizationType',
+        // },
         {
           text: 'نام سازمان',
-          value: 'organization',
+          value: 'organization.title',
         },
         {
-          text: 'فعال بودن',
-          value: 'active',
+          text: 'شماره تماس',
+          value: 'phone',
         },
         {
           text: 'عملیات',
@@ -122,8 +116,8 @@
           value: 'organizationRoles',
         },
         {
-          text: 'فعال بودن',
-          value: 'active',
+          text: 'شماره تماس',
+          value: 'phone',
         },
         {
           text: 'عملیات',

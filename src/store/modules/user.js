@@ -36,7 +36,7 @@ export const actions = {
     async fetchUsers ({ commit }) {
         try {
             const { data } = await userService().getAllUsers()
-            commit('SET_USERS', data.data)
+            commit('SET_USERS', data.data.data)
         } catch (e) {
             console.log(e)
         }

@@ -55,7 +55,7 @@
       <!-- https://github.com/vuetifyjs/vuetify/pull/8574 -->
       <div />
 
-      <template v-for="(item, i) in items">
+      <template v-for="(item, i) in computedItems">
         <base-item-group
           v-if="item.children"
           :key="`group-${i}`"
@@ -76,15 +76,15 @@
       <div />
     </v-list>
 
-    <template v-slot:append>
-      <base-item
-        :item="{
-          title: $t('upgrade'),
-          icon: 'mdi-package-up',
-          to: '/upgrade',
-        }"
-      />
-    </template>
+    <!--    <template v-slot:append>-->
+    <!--      <base-item-->
+    <!--        :item="{-->
+    <!--          title: $t('upgrade'),-->
+    <!--          icon: 'mdi-package-up',-->
+    <!--          to: '/upgrade',-->
+    <!--        }"-->
+    <!--      />-->
+    <!--    </template>-->
   </v-navigation-drawer>
 </template>
 
@@ -161,6 +161,29 @@
           to: '/ticket',
           permission: 'USER_MANAGER',
         },
+        {
+          title: 'مدیریت اطلاعات پایه',
+          icon: 'mdi-account-circle',
+          permission: 'USER_MANAGER',
+          to: '/staticData',
+          children: [
+            {
+              title: 'مدیریت رول ها',
+              icon: 'mdi-account-circle',
+              to: '/rulesData',
+            },
+            {
+              title: 'مدیریت ژانرها',
+              icon: 'mdi-account-circle',
+              to: '/staticData/generesData',
+            },
+            {
+              title: 'مدیریت دسته بندی محصولات',
+              icon: 'mdi-account-circle',
+              to: '/staticData/productCategory',
+            },
+          ],
+        },
       ],
     }),
 
@@ -198,58 +221,58 @@
 </script>
 
 <style lang="sass">
-  @import '~vuetify/src/styles/tools/_rtl.sass'
+@import '~vuetify/src/styles/tools/_rtl.sass'
 
-  #core-navigation-drawer
-    .v-list-group__header.v-list-item--active:before
-      opacity: .24
+#core-navigation-drawer
+  .v-list-group__header.v-list-item--active:before
+    opacity: .24
 
+  .v-list-item
+    &__icon--text,
+    &__icon:first-child
+      justify-content: center
+      text-align: center
+      width: 20px
+
+      +ltr()
+        margin-right: 24px
+        margin-left: 12px !important
+
+      +rtl()
+        margin-left: 24px
+        margin-right: 12px !important
+
+  .v-list--dense
     .v-list-item
       &__icon--text,
       &__icon:first-child
-        justify-content: center
-        text-align: center
-        width: 20px
+        margin-top: 10px
+
+  .v-list-group--sub-group
+    .v-list-item
+      +ltr()
+        padding-left: 8px
+
+      +rtl()
+        padding-right: 8px
+
+    .v-list-group__header
+      +ltr()
+        padding-right: 0
+
+      +rtl()
+        padding-right: 0
+
+      .v-list-item__icon--text
+        margin-top: 19px
+        order: 0
+
+      .v-list-group__header__prepend-icon
+        order: 2
 
         +ltr()
-          margin-right: 24px
-          margin-left: 12px !important
+          margin-right: 8px
 
         +rtl()
-          margin-left: 24px
-          margin-right: 12px !important
-
-    .v-list--dense
-      .v-list-item
-        &__icon--text,
-        &__icon:first-child
-          margin-top: 10px
-
-    .v-list-group--sub-group
-      .v-list-item
-        +ltr()
-          padding-left: 8px
-
-        +rtl()
-          padding-right: 8px
-
-      .v-list-group__header
-        +ltr()
-          padding-right: 0
-
-        +rtl()
-          padding-right: 0
-
-        .v-list-item__icon--text
-          margin-top: 19px
-          order: 0
-
-        .v-list-group__header__prepend-icon
-          order: 2
-
-          +ltr()
-            margin-right: 8px
-
-          +rtl()
-            margin-left: 8px
+          margin-left: 8px
 </style>

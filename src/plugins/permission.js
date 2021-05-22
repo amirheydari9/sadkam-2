@@ -33,7 +33,7 @@ export function permission () {
 
     const isUserManager = () => {
         if (store.getters.getCurrentUser) {
-            return (
+          return (
                 store.getters.getCurrentUser.organizationRoles.indexOf('USER_MANAGER') !== -1
             )
         } else {
