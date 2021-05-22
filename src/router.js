@@ -98,7 +98,11 @@ const routes = new Router({
             permission: 'ORDERS',
           },
         },
-
+        {
+          name: 'Ticket',
+          path: '/ticket',
+          component: () => import('@/views/pages/Ticket/Index.vue'),
+        },
       ],
     },
   ],

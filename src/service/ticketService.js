@@ -1,7 +1,6 @@
 import axiosInstance from '../plugins/axios'
 
 export function ticketService () {
-
   const getAllTickets = async () => {
     return await axiosInstance.get('/ticket')
   }

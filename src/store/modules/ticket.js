@@ -42,14 +42,14 @@ export const actions = {
       console.log(e)
     }
   },
-  async createTicket ({ commit }, ticket) {
+  async createTicket (context, ticket) {
     try {
       return await ticketService().createTicket(ticket)
     } catch (e) {
       console.log(e)
     }
   },
-  async createMessage ({ commit }, message) {
+  async createMessage (context, message) {
     try {
       return await ticketService().createMessage(message)
     } catch (e) {

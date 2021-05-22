@@ -182,6 +182,6 @@ export default new Vuex.Store({
     staticData,
     rule,
     assessment,
-    ticket
+    ticket,
   },
 })
