@@ -1,36 +1,40 @@
 <template>
-  <v-container
-    fluid
-    class="pa-0 ma-0"
-    :class="$vuetify.breakpoint.mdAndUp ? 'h-100' : 'h-40' "
-  >
-    <v-row :class="$vuetify.breakpoint.mdAndUp ? 'h-100' : 'h-40'">
-      <auth-banner />
+  <div class="parent d-flex align-center justify-center">
+    <v-col
+      cols="6"
+      class="login-container d-flex flex-row align-center pa-3"
+    >
       <v-col
-        cols="12"
-        md="4"
-        class="d-flex align-center"
+        cols="6"
+      >
+        <v-img src="/big-satra.jpg" />
+      </v-col>
+      <v-col
+        cols="6"
+        style="border-right: 1px solid #152070; padding-right: 30px"
       >
         <v-form
           ref="verifyCodeForm"
-          class="w-100 mx-5"
         >
-          <span class="blue--text font-weight-bold">ارسال کد</span>
+          <span
+            class="font-weight-bold"
+            style="color: #152070"
+          >ارسال کد</span>
           <v-text-field
             v-model="form.code"
             label="کد تاییده"
             outlined
             readonly
             rounded
-            class="mt-9"
+            class="mt-9 w-100"
             :rules="[
               required('این فیلد الزامی است'),
             ]"
           />
           <div class="d-flex justify-space-between align-center">
             <v-btn
-              color="info"
-              class="px-6"
+              color="#152070"
+              class="px-6 ma-0"
               rounded
               @click="loginCheck"
             >
@@ -38,7 +42,7 @@
               <v-icon>mdi-chevron-left</v-icon>
             </v-btn>
             <v-btn
-              color="info"
+              color="#152070"
               class="px-6 mr-auto"
               rounded
               @click="$router.push({name:'Login'})"
@@ -49,19 +53,15 @@
           </div>
         </v-form>
       </v-col>
-    </v-row>
-  </v-container>
+    </v-col>
+  </div>
 </template>
 
 <script>
-  import AuthBanner from '../../components/AuthBanner'
   import { required } from '../../plugins/rule'
 
   export default {
     name: 'LoginCheck',
-    components: {
-      AuthBanner,
-    },
     data () {
       return {
         form: {
@@ -83,5 +83,14 @@
 </script>
 
 <style scoped>
+.parent {
+  background-color: #eee;
+  width: 100%;
+  height: 100%;
+}
 
+.login-container {
+  background-color: white;
+  border-radius: 10px;
+}
 </style>

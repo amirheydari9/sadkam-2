@@ -1,21 +1,26 @@
 <template>
-  <v-container
-    fluid
-    class="pa-0 ma-0"
-    :class="$vuetify.breakpoint.mdAndUp ? 'h-100' : 'h-40'"
-  >
-    <v-row :class="$vuetify.breakpoint.mdAndUp ? 'h-100' : 'h-40'">
-      <auth-banner />
+  <div class="parent d-flex align-center justify-center">
+    <v-col
+      cols="6"
+      class="login-container d-flex flex-row align-center pa-3"
+    >
       <v-col
-        cols="12"
-        md="4"
-        class="d-flex align-center"
+        cols="6"
+      >
+        <v-img src="/big-satra.jpg" />
+      </v-col>
+      <v-col
+        cols="6"
+        style="border-right: 1px solid #152070; padding-right: 30px"
       >
         <v-form
           ref="loginForm"
-          class="w-100 mx-5"
+          class="w-100"
         >
-          <span class="blue--text font-weight-bold">ورود به حساب کاربری</span>
+          <span
+            class="font-weight-bold"
+            style="color: #152070"
+          >ورود به حساب کاربری</span>
           <v-text-field
             v-model="form.phone"
             label="شماره موبایل"
@@ -28,8 +33,8 @@
           />
           <div class="d-flex justify-space-between align-center">
             <v-btn
-              color="info"
-              class="px-6"
+              color="#152070"
+              class="px-6 ma-0"
               rounded
               @click="login"
             >
@@ -43,19 +48,15 @@
           </div>
         </v-form>
       </v-col>
-    </v-row>
-  </v-container>
+    </v-col>
+  </div>
 </template>
 
 <script>
   import { required, moreThan } from '../../plugins/rule'
-  import AuthBanner from '../../components/AuthBanner'
 
   export default {
     name: 'Login',
-    components: {
-      AuthBanner,
-    },
     data () {
       return {
         form: {
@@ -79,5 +80,14 @@
 </script>
 
 <style scoped>
+.parent {
+  background-color: #eee;
+  width: 100%;
+  height: 100%;
+}
 
+.login-container {
+  background-color: white;
+  border-radius: 10px;
+}
 </style>
