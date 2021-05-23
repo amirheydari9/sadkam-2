@@ -22,7 +22,12 @@ Vue.use(VueToast, {
   position: 'top',
 })
 
-Vue.use(VueLoading)
+Vue.use(VueLoading, {
+  width: 80,
+  height: 80,
+  backgroundColor: '#eee',
+  color: 'blue',
+})
 
 Vue.use(VueCookies)
 window.axios = axiosInstance
