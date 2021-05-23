@@ -51,9 +51,7 @@
 </template>
 
 <script>
-  import { transformOrganizationType, transformRoles, transformOrganization } from '../../../plugins/transformData'
   import CreateTicket from './CreateTicket'
-
   export default {
     name: 'Index',
     components: { CreateTicket },
@@ -106,9 +104,6 @@
           exact: true,
         },
       ],
-      transformOrganizationType,
-      transformRoles,
-      transformOrganization,
     }),
     computed: {
       tickets: {

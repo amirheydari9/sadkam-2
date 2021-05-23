@@ -94,4 +94,25 @@ export const actions = {
       console.log(e)
     }
   },
+  async updateRulesData (context, data) {
+    try {
+      await staticService().updateRulesData(data)
+    } catch (e) {
+      console.log(e)
+    }
+  },
+  async updateGeneresData (context, data) {
+    try {
+      await staticService().updateGeneresData(data)
+    } catch (e) {
+      console.log(e)
+    }
+  },
+  async updateProductCategoryData (context, data) {
+    try {
+      await staticService().updateProductCategoryData(data)
+    } catch (e) {
+      console.log(e)
+    }
+  },
 }

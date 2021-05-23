@@ -41,11 +41,38 @@ export function staticService () {
     }
   }
 
+  const updateRulesData = async (data) => {
+    try {
+      return await axiosInstance.put('/staticData/rulesData', data)
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+  const updateGeneresData = async (data) => {
+    try {
+      return await axiosInstance.put('/staticData/generesData', data)
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+  const updateProductCategoryData = async (data) => {
+    try {
+      return await axiosInstance.get('/staticData/productCategoryData', data)
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
   return {
     getRulesListData,
     getListOfUserRoles,
     getListOfOrganizationTypes,
     getListOfGeneresData,
     getListOfProductCategoryData,
+    updateRulesData,
+    updateGeneresData,
+    updateProductCategoryData,
   }
 }
