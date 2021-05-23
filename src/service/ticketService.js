@@ -6,10 +6,10 @@ export function ticketService () {
   }
 
   const createMessage = async (message) => {
-    return await axiosInstance.get('/ticket/message', message)
+    return await axiosInstance.post('/ticket/message', message)
   }
 
-  const getTicket = async (ticketId) => {
+  const getSingleTicket = async (ticketId) => {
     return await axiosInstance.get(`/ticket/${ticketId}`)
   }
   const createTicket = async (ticket) => {
@@ -19,7 +19,7 @@ export function ticketService () {
   return {
     getAllTickets,
     createMessage,
-    getTicket,
+    getSingleTicket,
     createTicket,
   }
 }

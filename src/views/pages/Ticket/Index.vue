@@ -29,6 +29,12 @@
             </v-btn>
           </v-toolbar>
         </template>
+        <template v-slot:item.createdAt="{ item }">
+          {{ transformDateToJalali(item.createdAt) }}
+        </template>
+        <template v-slot:item.originalOwner="{ item }">
+          {{ transformOrganization(item.originalOwner) }}
+        </template>
         <template v-slot:item.actions="{ item }">
           <v-icon
             small
@@ -52,6 +58,8 @@
 
 <script>
   import CreateTicket from './CreateTicket'
+  import { transformOrganization, transformDateToJalali } from '../../../plugins/transformData'
+
   export default {
     name: 'Index',
     components: { CreateTicket },
@@ -61,20 +69,24 @@
       search: '',
       headers: [
         {
-          text: 'نام کاربری',
-          value: 'nickname',
+          text: 'عنوان',
+          value: 'title',
         },
         {
-          text: 'شماره تماس',
-          value: 'phone',
+          text: 'کاربر',
+          value: 'user',
         },
         {
-          text: 'سطح دسترسی',
-          value: 'organizationRoles',
+          text: 'شناسه سازمان',
+          value: 'originalOwner.title',
         },
         {
-          text: 'شماره تماس',
-          value: 'phone',
+          text: 'وضعیت',
+          value: 'status',
+        },
+        {
+          text: 'تاریخ ایجاد',
+          value: 'createdAt',
         },
         {
           text: 'عملیات',
@@ -104,6 +116,8 @@
           exact: true,
         },
       ],
+      transformOrganization,
+      transformDateToJalali,
     }),
     computed: {
       tickets: {
@@ -117,11 +131,12 @@
     },
     mounted () {
       this.$store.dispatch('ticket/fetchAllTickets')
+      this.$store.dispatch('organization/fetchOrganizations')
       this.$store.commit('SET_BREADCRUMBS', this.breadcrumbs)
     },
     methods: {
       async createMessage (item) {
-        await this.$store.commit('ticket/SET_TICKET', { ...item })
+        await this.$store.dispatch('ticket/fetchTicket', item._id)
         this.ticketId = item._id
         this.isCreate = false
         this.showDialog = true

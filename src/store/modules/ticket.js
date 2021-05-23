@@ -28,7 +28,7 @@ export const getters = {
 export const actions = {
   async fetchAllTickets ({ commit }) {
     try {
-      const { data } = await ticketService().getTickets()
+      const { data } = await ticketService().getAllTickets()
       commit('SET_TICKETS', data.data)
     } catch (e) {
       console.log(e)
@@ -36,7 +36,7 @@ export const actions = {
   },
   async fetchTicket ({ commit }, ticketId) {
     try {
-      const { data } = await ticketService().getTicket(ticketId)
+      const { data } = await ticketService().getSingleTicket(ticketId)
       commit('SET_TICKET', data.data)
     } catch (e) {
       console.log(e)
