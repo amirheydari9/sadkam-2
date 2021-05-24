@@ -56,16 +56,15 @@
       <div />
 
       <template v-for="(item, i) in computedItems">
-        <base-item-group
-          v-if="item.children"
-          :key="`group-${i}`"
-          :item="item"
-        >
+<!--        <base-item-group-->
+<!--          v-if="item.children"-->
+<!--          :key="`group-${i}`"-->
+<!--          :item="item"-->
+<!--        >-->
           <!--  -->
-        </base-item-group>
+<!--        </base-item-group>-->
 
         <base-item
-          v-else
           :key="`item-${i}`"
           :item="item"
         />
@@ -137,24 +136,24 @@
           to: '/episodes',
           permission: 'USER_MANAGER',
         },
-        {
-          title: 'درخواست ارزیابی',
-          icon: 'mdi-account-circle',
-          to: '/assessmentRequest',
-          permission: 'USER_MANAGER',
-        },
-        {
-          title: 'درخواست ارزیابی 1',
-          icon: 'mdi-account-circle',
-          to: '/assessmentRequest1',
-          permission: 'USER_MANAGER',
-        },
-        {
-          title: 'مشاهده درخواست ارزیابی',
-          icon: 'mdi-account-circle',
-          to: '/viewAssessmentRequest',
-          permission: 'USER_MANAGER',
-        },
+        // {
+        //   title: 'درخواست ارزیابی',
+        //   icon: 'mdi-account-circle',
+        //   to: '/assessmentRequest',
+        //   permission: 'USER_MANAGER',
+        // },
+        // {
+        //   title: 'درخواست ارزیابی 1',
+        //   icon: 'mdi-account-circle',
+        //   to: '/assessmentRequest1',
+        //   permission: 'USER_MANAGER',
+        // },
+        // {
+        //   title: 'مشاهده درخواست ارزیابی',
+        //   icon: 'mdi-account-circle',
+        //   to: '/viewAssessmentRequest',
+        //   permission: 'USER_MANAGER',
+        // },
         {
           title: 'مدیریت تیکت',
           icon: 'mdi-clipboard-check',
