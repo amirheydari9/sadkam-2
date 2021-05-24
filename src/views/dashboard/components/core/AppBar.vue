@@ -179,7 +179,9 @@
         setDrawer: 'SET_DRAWER',
       }),
       logout () {
-        this.$router.push({ name: 'Login' })
+        this.$store.dispatch('logout').then(() => {
+          this.$router.push({ name: 'Login' })
+        })
       },
     },
   }
