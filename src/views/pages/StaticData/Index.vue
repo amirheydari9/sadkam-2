@@ -50,6 +50,7 @@
           </v-col>
           <v-col cols="4">
             <v-data-table
+              :items-per-page="5"
               :headers="headers"
               :items="typeRule"
               no-results-text="اطلاعاتی یافت نشد"
