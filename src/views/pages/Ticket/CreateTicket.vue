@@ -39,6 +39,7 @@
               v-else
               :headers="headers"
               :items="ticket[0].messages"
+              :items-per-page="5"
               :search="search"
               no-results-text="اطلاعاتی یافت نشد"
               class="elevation-1 w-100"

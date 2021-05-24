@@ -195,7 +195,7 @@
     methods: {
       loginCheck () {
         if (!this.disableForm) {
-          this.$store.dispatch('loginCheck', this.form.code).then(() => {
+          this.$store.dispatch('loginCheck', this.code).then(() => {
             this.$router.push({ name: 'Dashboard' })
           })
         }

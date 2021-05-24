@@ -56,13 +56,13 @@
       <div />
 
       <template v-for="(item, i) in computedItems">
-<!--        <base-item-group-->
-<!--          v-if="item.children"-->
-<!--          :key="`group-${i}`"-->
-<!--          :item="item"-->
-<!--        >-->
-          <!--  -->
-<!--        </base-item-group>-->
+        <!--        <base-item-group-->
+        <!--          v-if="item.children"-->
+        <!--          :key="`group-${i}`"-->
+        <!--          :item="item"-->
+        <!--        >-->
+        <!--  -->
+        <!--        </base-item-group>-->
 
         <base-item
           :key="`item-${i}`"
@@ -190,6 +190,9 @@
       },
     },
 
+    mounted () {
+      console.log(this.$store.getters.getCurrentUser)
+    },
     methods: {
       mapItem (item) {
         return {

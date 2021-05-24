@@ -108,7 +108,7 @@
       @handleSave="handleSaveGenere"
       @closeDialog="closeGenere"
     />
-    <genere
+    <product-category
       v-if="showProductCategoryDialog"
       :show-dialog="showProductCategoryDialog"
       :product-category="productCategory"
@@ -121,10 +121,11 @@
 <script>
   import Genere from './genere'
   import Breadcrumbs from '../../../components/Breadcrumbs'
+  import ProductCategory from './productCategory'
 
   export default {
     name: 'Index',
-    components: { Genere, Breadcrumbs },
+    components: { ProductCategory, Genere, Breadcrumbs },
     data () {
       return {
         breadcrumbs: [
@@ -241,7 +242,7 @@
       },
       editProductCategory (item) {
         this.productCategory = { ...item }
-        this.ProductCategoryIndex = this.productCategory.indexOf(item)
+        this.ProductCategoryIndex = this.listOfProductCategory.indexOf(item)
         this.showProductCategoryDialog = true
       },
       closeProductCategory () {
