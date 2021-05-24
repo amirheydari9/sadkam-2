@@ -32,7 +32,7 @@
         width="300"
       >
         <v-card-text>
-          <strong class="mb-3 d-inline-block">SIDEBAR FILTERS</strong>
+          <strong class="mb-3 d-inline-block">فیلتر های سایدبار</strong>
 
           <v-item-group v-model="color">
             <v-item
@@ -59,7 +59,7 @@
             no-gutters
           >
             <v-col cols="auto">
-              Dark Mode
+             حالت شب
             </v-col>
 
             <v-spacer />
@@ -81,7 +81,7 @@
             no-gutters
           >
             <v-col cols="auto">
-              Sidebar Image
+              تصویر ساید بار
             </v-col>
 
             <v-spacer />
@@ -98,7 +98,7 @@
 
           <v-divider class="my-4 secondary" />
 
-          <strong class="mb-3 d-inline-block">IMAGES</strong>
+          <strong class="mb-3 d-inline-block">تصاویر</strong>
 
           <v-item-group
             v-model="image"
