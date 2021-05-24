@@ -9,14 +9,14 @@
       <v-card-text>
         <v-container>
           <v-form
-            ref="genereForm"
+            ref="productCategoryForm"
           >
             <v-row>
               <v-col
                 cols="6"
               >
                 <v-text-field
-                  v-model="genere.fa"
+                  v-model="productCategory.fa"
                   :rules="[required('این فیلد الزامی است'),]"
                   label="عنوان فارسی"
                 />
@@ -25,9 +25,9 @@
                 cols="6"
               >
                 <v-text-field
-                  v-model="genere.en"
+                  v-model="productCategory.en"
                   :rules="[required('این فیلد الزامی است'),]"
-                  label="عنوان انگلیسی"
+                  label="عنوان فارسی"
                 />
               </v-col>
             </v-row>
@@ -60,14 +60,14 @@
   import DialogHeadline from '../../../components/DialogHeadline'
 
   export default {
-    name: 'Genere',
+    name: 'productCategory',
     components: { DialogHeadline },
     props: {
       showDialog: {
         Boolean,
         isRequired: true,
       },
-      genere: {
+      productCategory: {
         Object,
         isRequired: true,
       },
@@ -84,19 +84,18 @@
     },
     methods: {
       close () {
-        this.$refs.genereForm.resetValidation()
+        this.$refs.productCategoryForm.resetValidation()
         this.$emit('closeDialog')
       },
       save () {
-        if (this.$refs.genereForm.validate()) {
-          this.$emit('handleSave', this.genere)
+        if (this.$refs.productCategoryForm.validate()) {
+          this.$emit('handleSave', this.productCategory)
           this.close()
         }
       },
     },
   }
 </script>
-
 <style scoped>
 
 </style>

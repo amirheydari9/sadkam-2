@@ -108,6 +108,13 @@
       @handleSave="handleSaveGenere"
       @closeDialog="closeGenere"
     />
+    <genere
+      v-if="showProductCategoryDialog"
+      :show-dialog="showProductCategoryDialog"
+      :product-category="productCategory"
+      @handleSave="handleSaveProductCategory"
+      @closeDialog="closeProductCategory"
+    />
   </v-container>
 </template>
 
@@ -170,6 +177,9 @@
         showGenereDialog: false,
         genere: null,
         genereIndex: -1,
+        showProductCategoryDialog: false,
+        productCategory: null,
+        ProductCategoryIndex: -1,
       }
     },
     computed: {
@@ -190,8 +200,13 @@
           return this.$store.commit('staticData/SET_GENERES', value)
         },
       },
-      listOfProductCategory () {
-        return this.$store.getters['staticData/getProductCategoryData']
+      listOfProductCategory: {
+        get () {
+          return this.$store.getters['staticData/getProductCategoryData']
+        },
+        set (value) {
+          return this.$store.commit('staticData/SET_PRODUCT_CATEGORY_DATA', value)
+        },
       },
     },
     mounted () {
@@ -223,6 +238,23 @@
         await this.$store.dispatch('staticData/fetchAllGeneres')
         this.genere = null
         this.genereIndex = -1
+      },
+      editProductCategory (item) {
+        this.productCategory = { ...item }
+        this.ProductCategoryIndex = this.productCategory.indexOf(item)
+        this.showProductCategoryDialog = true
+      },
+      closeProductCategory () {
+        this.productCategory = null
+        this.ProductCategoryIndex = -1
+        this.showProductCategoryDialog = false
+      },
+      async handleSaveProductCategory (productCategory) {
+        Object.assign(this.listOfProductCategory[this.productCategoryIndex], productCategory)
+        await this.$store.dispatch('staticData/updateProductCategoryData', this.listOfProductCategory)
+        await this.$store.dispatch('staticData/fetchListOfCategoryData')
+        this.productCategory = null
+        this.productCategoryIndex = -1
       },
     },
   }
