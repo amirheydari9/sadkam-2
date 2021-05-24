@@ -126,7 +126,11 @@
 
   export default {
     name: 'Index',
-    components: { ProductCategory, Genere, Breadcrumbs },
+    components: {
+      ProductCategory,
+      Genere,
+      Breadcrumbs,
+    },
     data () {
       return {
         breadcrumbs: [
@@ -144,7 +148,10 @@
         ],
         tabsMenu: null,
         headers: [
-          { text: 'عنوان' },
+          {
+            text: 'عنوان',
+            value: 'fa',
+          },
         ],
         generesHeader: [
           {
@@ -186,13 +193,13 @@
     },
     computed: {
       subjectsRule () {
-        return this.$store.getters['staticData/getSubjectsRule']
+        return this.$store.getters['staticData/getSubjectRuleForStaticData']
       },
       actionRule () {
-        return this.$store.getters['staticData/getActionsRule']
+        return this.$store.getters['staticData/getActionRuleForStaticData']
       },
       typeRule () {
-        return this.$store.getters['staticData/getTypesRule']
+        return this.$store.getters['staticData/getTypeRuleForStaticData']
       },
       generes: {
         get () {
