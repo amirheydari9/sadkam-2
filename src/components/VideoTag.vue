@@ -49,7 +49,7 @@
                     >
                       <v-row>
                         <v-btn
-                          color="success"
+                          color="primary"
                           @click="handleEndTimeRule"
                         >
                           زمان پایان

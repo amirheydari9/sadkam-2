@@ -119,7 +119,6 @@ const routes = new Router({
 })
 
 routes.beforeEach(async (to, from, next) => {
-
   if (authService().existToken() && !store.getters.getCurrentUser) {
     await store.dispatch('handleCurrentUser', authService().decodeToken(authService().getToken()))
   }

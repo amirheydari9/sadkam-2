@@ -5,9 +5,7 @@
     persistent
   >
     <v-card>
-      <v-card-title>
-        <span class="text-h5">ویرایش ژانر</span>
-      </v-card-title>
+      <dialog-headline title="ویرایش ژانر" />
       <v-card-text>
         <v-container>
           <v-form
@@ -39,14 +37,14 @@
       <v-card-actions>
         <v-spacer />
         <v-btn
-          color="blue darken-1"
-          text
+          color="primary"
+          rounded
           @click="save"
         >
           ذخیره
         </v-btn>
         <v-btn
-          color="blue darken-1"
+          color="warning"
           text
           @click="close"
         >
@@ -59,9 +57,11 @@
 
 <script>
   import { required } from '../../../plugins/rule'
+  import DialogHeadline from '../../../components/DialogHeadline'
 
   export default {
     name: 'Genere',
+    components: { DialogHeadline },
     props: {
       showDialog: {
         Boolean,

@@ -80,7 +80,7 @@
         <base-material-chart-card
           :data="dailySalesChart.data"
           :options="dailySalesChart.options"
-          color="success"
+          color="primary"
           hover-reveal
           type="Line"
         >
