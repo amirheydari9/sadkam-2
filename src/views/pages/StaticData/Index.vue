@@ -1,5 +1,6 @@
 <template>
   <v-container>
+    <breadcrumbs :items="breadcrumbs" />
     <v-tabs
       v-model="tabsMenu"
       class="mt-5"
@@ -112,12 +113,26 @@
 
 <script>
   import Genere from './genere'
+  import Breadcrumbs from '../../../components/Breadcrumbs'
 
   export default {
     name: 'Index',
-    components: { Genere },
+    components: { Genere, Breadcrumbs },
     data () {
       return {
+        breadcrumbs: [
+          {
+            text: 'داشبورد',
+            disabled: false,
+            to: { name: 'Panel' },
+            exact: true,
+          },
+          {
+            text: 'مدیریت اطلاعات پایه',
+            disabled: true,
+            exact: true,
+          },
+        ],
         tabsMenu: null,
         headers: [
           { text: 'عنوان' },

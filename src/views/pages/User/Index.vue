@@ -1,6 +1,7 @@
 <template>
   <v-container>
     <div class="w-100">
+      <breadcrumbs :items="breadcrumbs" />
       <v-data-table
         :headers="headers"
         :items="users"
@@ -63,10 +64,11 @@
   import { transformOrganizationType, transformRoles, transformOrganization } from '../../../plugins/transformData'
   import UserDetailsDialog from './UserDetailsDialog'
   import { permission } from '../../../plugins/permission'
+  import Breadcrumbs from '../../../components/Breadcrumbs'
 
   export default {
     name: 'Index',
-    components: { UserDetailsDialog },
+    components: { Breadcrumbs, UserDetailsDialog },
     data: () => ({
       showDialog: false,
       isCreate: true,

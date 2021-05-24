@@ -23,33 +23,33 @@
       </v-icon>
     </v-btn>
 
-    <v-toolbar-title
-      class="hidden-sm-and-down font-weight-light"
-      v-text="$route.name"
-    />
+    <!--    <v-toolbar-title-->
+    <!--      class="hidden-sm-and-down font-weight-light"-->
+    <!--      v-text="$route.name"-->
+    <!--    />-->
 
     <v-spacer />
 
-    <v-text-field
-      :label="$t('search')"
-      color="secondary"
-      hide-details
-      style="max-width: 165px;"
-    >
-      <template
-        v-if="$vuetify.breakpoint.mdAndUp"
-        v-slot:append-outer
-      >
-        <v-btn
-          class="mt-n2"
-          elevation="1"
-          fab
-          small
-        >
-          <v-icon>mdi-magnify</v-icon>
-        </v-btn>
-      </template>
-    </v-text-field>
+    <!--    <v-text-field-->
+    <!--      :label="$t('search')"-->
+    <!--      color="secondary"-->
+    <!--      hide-details-->
+    <!--      style="max-width: 165px;"-->
+    <!--    >-->
+    <!--      <template-->
+    <!--        v-if="$vuetify.breakpoint.mdAndUp"-->
+    <!--        v-slot:append-outer-->
+    <!--      >-->
+    <!--        <v-btn-->
+    <!--          class="mt-n2"-->
+    <!--          elevation="1"-->
+    <!--          fab-->
+    <!--          small-->
+    <!--        >-->
+    <!--          <v-icon>mdi-magnify</v-icon>-->
+    <!--        </v-btn>-->
+    <!--      </template>-->
+    <!--    </v-text-field>-->
 
     <div class="mx-3" />
 
@@ -110,9 +110,9 @@
       class="ml-2"
       min-width="0"
       text
-      to="/pages/user"
+      @click="logout"
     >
-      <v-icon>mdi-account</v-icon>
+      <v-icon>mdi-logout</v-icon>
     </v-btn>
   </v-app-bar>
 </template>
@@ -178,6 +178,9 @@
       ...mapMutations({
         setDrawer: 'SET_DRAWER',
       }),
+      logout () {
+        this.$router.push({ name: 'Login' })
+      },
     },
   }
 </script>

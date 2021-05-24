@@ -1,26 +1,29 @@
 <template>
-  <div class="w-100 d-flex flex-column justify-start">
-    <v-col
-      cols="12"
-      sm="4"
-    >
-      <v-autocomplete
-        :items="filteredProducts"
-        :loading="isLoading"
-        :search-input.sync="productSearch"
-        item-text="enTitle"
-        item-value="_id"
-        label="جستجو در محصولات"
-        return-object
-        outlined
-        @change="findEpisodes"
+  <v-container>
+    <div class="w-100 d-flex flex-column justify-start">
+      <breadcrumbs :items="breadcrumbs" />
+      <v-col
+        cols="12"
+        sm="4"
+      >
+        <v-autocomplete
+          :items="filteredProducts"
+          :loading="isLoading"
+          :search-input.sync="productSearch"
+          item-text="enTitle"
+          item-value="_id"
+          label="جستجو در محصولات"
+          return-object
+          outlined
+          @change="findEpisodes"
+        />
+      </v-col>
+      <episode-table
+        v-if="productIsAvailable"
+        class="w-100"
       />
-    </v-col>
-    <episode-table
-      v-if="productIsAvailable"
-      class="w-100"
-    />
-  </div>
+    </div>
+  </v-container>
 </template>
 
 <script>
@@ -30,11 +33,13 @@
   } from '../../../plugins/transformData'
 
   import EpisodeTable from './EpisodeTable'
+  import Breadcrumbs from '../../../components/Breadcrumbs'
 
   export default {
     name: 'Index',
     components: {
       EpisodeTable,
+      Breadcrumbs,
     },
     data: () => ({
       isLoading: false,

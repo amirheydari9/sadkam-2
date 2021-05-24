@@ -1,5 +1,6 @@
 <template>
   <v-container>
+    <breadcrumbs :items="breadcrumbs" />
     <div class="w-100">
       <v-data-table
         :headers="headers"
@@ -59,10 +60,11 @@
 <script>
   import CreateTicket from './CreateTicket'
   import { transformOrganization, transformDateToJalali } from '../../../plugins/transformData'
+  import Breadcrumbs from '../../../components/Breadcrumbs'
 
   export default {
     name: 'Index',
-    components: { CreateTicket },
+    components: { CreateTicket, Breadcrumbs },
     data: () => ({
       showDialog: false,
       isCreate: true,

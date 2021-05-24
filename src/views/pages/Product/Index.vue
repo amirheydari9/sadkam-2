@@ -1,6 +1,7 @@
 <template>
   <v-container>
     <div class="w-100">
+      <breadcrumbs :items="breadcrumbs" />
       <v-data-table
         :headers="headers"
         :items="products"
@@ -86,12 +87,14 @@
   } from '../../../plugins/transformData'
   import ProductDetailsDialog from './ProductDetailsDialog'
   import DialogListEpisode from '../Episode/DialogListEpisode'
+  import Breadcrumbs from '../../../components/Breadcrumbs'
 
   export default {
     name: 'Index',
     components: {
       DialogListEpisode,
       ProductDetailsDialog,
+      Breadcrumbs,
     },
     data: () => ({
       showProductDetailsDialog: false,
