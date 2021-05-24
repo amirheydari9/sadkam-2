@@ -59,7 +59,7 @@ export function staticService () {
 
   const updateProductCategoryData = async (data) => {
     try {
-      return await axiosInstance.get('/staticData/productCategoryData', data)
+      return await axiosInstance.put('/staticData/productCategoryData', data)
     } catch (e) {
       console.log(e)
     }

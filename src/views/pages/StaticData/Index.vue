@@ -38,7 +38,17 @@
               :headers="headers"
               :items="subjectsRule"
               no-results-text="اطلاعاتی یافت نشد"
-            />
+            >
+              <template v-slot:item.actions="{ item }">
+                <v-icon
+                  small
+                  class="mr-2"
+                  @click="editRule(item,'subject')"
+                >
+                  mdi-pencil
+                </v-icon>
+              </template>
+            </v-data-table>
           </v-col>
           <v-col cols="4">
             <v-data-table
@@ -46,7 +56,17 @@
               :headers="headers"
               :items="actionRule"
               no-results-text="اطلاعاتی یافت نشد"
-            />
+            >
+              <template v-slot:item.actions="{ item }">
+                <v-icon
+                  small
+                  class="mr-2"
+                  @click="editRule(item,'action')"
+                >
+                  mdi-pencil
+                </v-icon>
+              </template>
+            </v-data-table>
           </v-col>
           <v-col cols="4">
             <v-data-table
@@ -54,7 +74,17 @@
               :headers="headers"
               :items="typeRule"
               no-results-text="اطلاعاتی یافت نشد"
-            />
+            >
+              <template v-slot:item.actions="{ item }">
+                <v-icon
+                  small
+                  class="mr-2"
+                  @click="editRule(item,'type')"
+                >
+                  mdi-pencil
+                </v-icon>
+              </template>
+            </v-data-table>
           </v-col>
         </div>
       </v-tab-item>
@@ -102,6 +132,13 @@
         </v-data-table>
       </v-tab-item>
     </v-tabs-items>
+    <rule
+      v-if="showRuleDialog"
+      :show-dialog="showRuleDialog"
+      :rule="rule"
+      @handleSave="handleRuleSave"
+      @closeDialog="closeRule"
+    />
     <genere
       v-if="showGenereDialog"
       :show-dialog="showGenereDialog"
@@ -123,6 +160,7 @@
   import Genere from './genere'
   import Breadcrumbs from '../../../components/Breadcrumbs'
   import ProductCategory from './productCategory'
+  import rule from './rule'
 
   export default {
     name: 'Index',
@@ -130,6 +168,7 @@
       ProductCategory,
       Genere,
       Breadcrumbs,
+      rule,
     },
     data () {
       return {
@@ -151,6 +190,11 @@
           {
             text: 'عنوان',
             value: 'fa',
+          },
+          {
+            text: 'عملیات',
+            value: 'actions',
+            sortable: false,
           },
         ],
         generesHeader: [
@@ -183,12 +227,16 @@
             sortable: false,
           },
         ],
+        showRuleDialog: false,
+        rule: null,
+        ruleType: null,
+        ruleIndex: -1,
         showGenereDialog: false,
         genere: null,
         genereIndex: -1,
         showProductCategoryDialog: false,
         productCategory: null,
-        ProductCategoryIndex: -1,
+        productCategoryIndex: -1,
       }
     },
     computed: {
@@ -220,6 +268,8 @@
     },
     mounted () {
       this.$store.dispatch('staticData/fetchRulesList')
+      this.$store.dispatch('staticData/fetchAllGeneres')
+      this.$store.dispatch('staticData/fetchListOfCategoryData')
     },
     methods: {
       handleTab1 () {
@@ -230,6 +280,60 @@
       },
       handleTab3 () {
         this.$store.dispatch('staticData/fetchListOfCategoryData')
+      },
+      editRule (item, ruleType) {
+        this.rule = { ...item }
+        this.ruleType = ruleType
+        switch (ruleType) {
+          case 'subject':
+            this.ruleIndex = this.subjectsRule.indexOf(item)
+            break
+          case 'action':
+            this.ruleIndex = this.actionRule.indexOf(item)
+            break
+          case 'type':
+            this.ruleIndex = this.typeRule.indexOf(item)
+            break
+        }
+        this.showRuleDialog = true
+      },
+      closeRule () {
+        this.rule = null
+        this.ruleType = null
+        this.ruleIndex = -1
+        this.showRuleDialog = false
+      },
+      async handleRuleSave (rule) {
+        const data = {
+          subjects: this.subjectsRule,
+          actions: this.actionRule,
+          type: this.typeRule,
+        }
+        switch (this.ruleType) {
+          case 'subject':
+            Object.assign(this.subjectsRule[this.ruleIndex], rule)
+            break
+          case 'action':
+            Object.assign(this.actionRule[this.ruleIndex], rule)
+            break
+          case 'type':
+            Object.assign(this.typeRule[this.ruleIndex], rule)
+            break
+        }
+        const finalData = {
+          subjects: [],
+          actions: [],
+          type: [],
+        }
+        data.subjects.forEach(item => finalData.subjects.push(item.fa))
+        data.actions.forEach(item => finalData.actions.push(item.fa))
+        data.type.forEach(item => finalData.type.push(item.fa))
+        await this.$store.dispatch('staticData/updateRulesData', finalData)
+        await this.$store.dispatch('staticData/fetchRulesList')
+        this.rule = null
+        this.ruleType = null
+        this.ruleIndex = -1
+        this.$toast.success('عملیات با موفقیت انجام شد')
       },
       editGenere (item) {
         this.genere = { ...item }
@@ -247,15 +351,16 @@
         await this.$store.dispatch('staticData/fetchAllGeneres')
         this.genere = null
         this.genereIndex = -1
+        this.$toast.success('عملیات با موفقیت انجام شد')
       },
       editProductCategory (item) {
         this.productCategory = { ...item }
-        this.ProductCategoryIndex = this.listOfProductCategory.indexOf(item)
+        this.productCategoryIndex = this.listOfProductCategory.indexOf(item)
         this.showProductCategoryDialog = true
       },
       closeProductCategory () {
         this.productCategory = null
-        this.ProductCategoryIndex = -1
+        this.productCategoryIndex = -1
         this.showProductCategoryDialog = false
       },
       async handleSaveProductCategory (productCategory) {
@@ -264,6 +369,7 @@
         await this.$store.dispatch('staticData/fetchListOfCategoryData')
         this.productCategory = null
         this.productCategoryIndex = -1
+        this.$toast.success('عملیات با موفقیت انجام شد')
       },
     },
   }

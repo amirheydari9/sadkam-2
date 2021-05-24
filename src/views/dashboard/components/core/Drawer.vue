@@ -31,15 +31,14 @@
           contain
         >
           <v-img
-            src="https://demos.creative-tim.com/vuetify-material-dashboard/favicon.ico"
-            max-height="30"
+            src="/user.png"
           />
         </v-list-item-avatar>
 
         <v-list-item-content>
           <v-list-item-title
             class="text-h4"
-            v-text="profile.title"
+            v-text="currentUser.nickname"
           />
         </v-list-item-content>
       </v-list-item>
