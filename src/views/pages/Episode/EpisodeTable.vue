@@ -129,9 +129,11 @@
           await this.$store.dispatch('episode/updateEpisode', episode)
           Object.assign(this.episodes[this.editedIndex], episode)
           this.editedIndex = -1
+          this.$toast.success('عملیات با موفقیت انجام شد')
         } else {
           await this.$store.dispatch('episode/createEpisode', episode)
           await this.$store.dispatch('episode/fetchAllEpisodes', this.$store.getters['episode/getParentId'])
+          this.$toast.success('عملیات با موفقیت انجام شد')
         }
       },
       closeDialog () {

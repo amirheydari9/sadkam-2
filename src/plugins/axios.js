@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { authService } from '../service/authService'
 import store from '../store/store'
-// import router from '../router'
+import router from '../router'
 
 const axiosInstance = axios.create({
   baseURL: 'http://sadkam.lincast.ir/api',
@@ -23,16 +23,13 @@ axiosInstance.interceptors.response.use(response => {
   }, 1500)
   return response
 }, error => {
-  if (error.response.status === 401) {
-    // TODO 401 generator for test it
-    // authService().removeToken()
-    // router.push({ name: 'Login' })
+  if (error.response.status === 401 || error.response.status === 403) {
+    store.dispatch('logout').then(() => {
+      router.push({ name: 'Login' })
+    })
   }
   if (error.response.status === 404) {
     // router.push({name: 'not-found'})
-  }
-  if (error.response.status === 403) {
-    // router.push({name: 'access-denied'})
   }
   setTimeout(() => {
       store.commit('SET_OVERLAY', false)

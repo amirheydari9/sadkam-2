@@ -32,59 +32,101 @@
         value="rules"
       >
         <div class="d-flex flex-row">
-          <v-col cols="4">
-            <v-data-table
-              :items-per-page="5"
-              :headers="headers"
-              :items="subjectsRule"
-              no-results-text="اطلاعاتی یافت نشد"
+          <v-col
+            cols="4"
+          >
+            <base-material-card
+              color="primary"
+              class="pa-0"
             >
-              <template v-slot:item.actions="{ item }">
-                <v-icon
-                  small
-                  class="mr-2"
-                  @click="editRule(item,'subject')"
-                >
-                  mdi-pencil
-                </v-icon>
+              <template v-slot:heading>
+                <div class="font-weight-light">
+                  مدیریت موضوعات
+                </div>
               </template>
-            </v-data-table>
+              <v-card-text>
+                <v-data-table
+                  :items-per-page="5"
+                  :headers="headers"
+                  :items="subjectsRule"
+                  no-results-text="اطلاعاتی یافت نشد"
+                >
+                  <template v-slot:item.actions="{ item }">
+                    <v-icon
+                      small
+                      class="mr-2"
+                      @click="editRule(item,'subject')"
+                    >
+                      mdi-pencil
+                    </v-icon>
+                  </template>
+                </v-data-table>
+              </v-card-text>
+            </base-material-card>
           </v-col>
-          <v-col cols="4">
-            <v-data-table
-              :items-per-page="5"
-              :headers="headers"
-              :items="actionRule"
-              no-results-text="اطلاعاتی یافت نشد"
+          <v-col
+            cols="4"
+          >
+            <base-material-card
+              color="primary"
+              class="pa-0"
             >
-              <template v-slot:item.actions="{ item }">
-                <v-icon
-                  small
-                  class="mr-2"
-                  @click="editRule(item,'action')"
-                >
-                  mdi-pencil
-                </v-icon>
+              <template v-slot:heading>
+                <div class="font-weight-light">
+                  مدیریت اکشن ها
+                </div>
               </template>
-            </v-data-table>
+              <v-card-text>
+                <v-data-table
+                  :items-per-page="5"
+                  :headers="headers"
+                  :items="actionRule"
+                  no-results-text="اطلاعاتی یافت نشد"
+                >
+                  <template v-slot:item.actions="{ item }">
+                    <v-icon
+                      small
+                      class="mr-2"
+                      @click="editRule(item,'action')"
+                    >
+                      mdi-pencil
+                    </v-icon>
+                  </template>
+                </v-data-table>
+              </v-card-text>
+            </base-material-card>
           </v-col>
-          <v-col cols="4">
-            <v-data-table
-              :items-per-page="5"
-              :headers="headers"
-              :items="typeRule"
-              no-results-text="اطلاعاتی یافت نشد"
+          <v-col
+            cols="4"
+          >
+            <base-material-card
+              color="primary"
+              class="pa-0"
             >
-              <template v-slot:item.actions="{ item }">
-                <v-icon
-                  small
-                  class="mr-2"
-                  @click="editRule(item,'type')"
-                >
-                  mdi-pencil
-                </v-icon>
+              <template v-slot:heading>
+                <div class="font-weight-light">
+                  مدیریت نوع
+                </div>
               </template>
-            </v-data-table>
+              <v-card-text>
+                <v-data-table
+                  :items-per-page="5"
+                  :headers="headers"
+                  :items="typeRule"
+                  no-results-text="اطلاعاتی یافت نشد"
+                >
+                  <template v-slot:item.actions="{ item }">
+                    <v-icon
+                      small
+                      class="mr-2"
+                      @click="editRule(item,'type')"
+                    >
+                      mdi-pencil
+                    </v-icon>
+                  </template>
+                </v-data-table>
+              </v-card-text>
+            </base-material-card>
           </v-col>
         </div>
       </v-tab-item>
