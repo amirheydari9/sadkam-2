@@ -65,6 +65,7 @@
         <!--        </base-item-group>-->
 
         <base-item
+          v-if="canShowLink(item.roles,item.organizationTypes,item.isSuperAdmin)"
           :key="`item-${i}`"
           :item="item"
         />
@@ -109,32 +110,42 @@
           title: 'داشبورد',
           icon: 'mdi-view-dashboard',
           to: '/',
-          permission: 'USER_MANAGER',
+          roles: [],
+          organizationTypes: [],
+          isSuperAdmin: false,
         },
         {
           title: 'مدیریت کاربران',
           icon: 'mdi-account-circle',
           to: '/users',
-          permission: 'USER_MANAGER',
+          roles: ['USER_MANAGER'],
+          organizationTypes: ['SECRETARIAT', 'PLATFORM', 'BROKERAGE'],
+          isSuperAdmin: false,
         },
 
         {
           title: 'مدیریت سازمان ها',
           icon: 'mdi-office-building',
           to: '/organizations',
-          permission: 'USER_MANAGER',
+          roles: ['USER_MANAGER', 'FINANCIAL', 'ORDERS'],
+          organizationTypes: ['SECRETARIAT'],
+          isSuperAdmin: true,
         },
         {
           title: 'مدیریت محصولات',
           icon: 'mdi-video',
           to: '/products',
-          permission: 'USER_MANAGER',
+          roles: ['ORDERS'],
+          organizationTypes: ['SECRETARIAT', 'PLATFORM'],
+          isSuperAdmin: false,
         },
         {
           title: 'مدیریت اپیزودها',
           icon: 'mdi-account-circle',
           to: '/episodes',
-          permission: 'USER_MANAGER',
+          roles: ['ORDERS'],
+          organizationTypes: ['SECRETARIAT', 'PLATFORM'],
+          isSuperAdmin: false,
         },
         // {
         //   title: 'درخواست ارزیابی',
@@ -158,13 +169,17 @@
           title: 'مدیریت تیکت',
           icon: 'mdi-clipboard-check',
           to: '/ticket',
-          permission: 'USER_MANAGER',
+          roles: ['USER_MANAGER', 'FINANCIAL', 'ORDERS'],
+          organizationTypes: ['SECRETARIAT', 'PLATFORM', 'BROKERAGE'],
+          isSuperAdmin: false,
         },
         {
           title: 'مدیریت اطلاعات پایه',
           icon: 'mdi-database',
-          permission: 'USER_MANAGER',
           to: '/staticData',
+          roles: ['ORDERS'],
+          organizationTypes: ['SECRETARIAT'],
+          isSuperAdmin: false,
         },
       ],
     }),
@@ -188,10 +203,9 @@
           title: this.$t('avatar'),
         }
       },
-    },
-
-    mounted () {
-      console.log(this.$store.getters.getCurrentUser)
+      currentUser () {
+        return this.$store.getters.getCurrentUser
+      },
     },
     methods: {
       mapItem (item) {
@@ -200,6 +214,20 @@
           children: item.children ? item.children.map(this.mapItem) : undefined,
           title: this.$t(item.title),
         }
+      },
+      canShowLink (roles, organizationTypes, isSuperAdmin) {
+        if (isSuperAdmin) {
+          if (this.currentUser.organizationRoles.length === 3 && this.currentUser.organizationType === 'SECRETARIAT') {
+            return true
+          } else {
+            return false
+          }
+        }
+        if (roles.length === 0 && organizationTypes.length === 0) return true
+        return (
+          roles.some(role => this.currentUser.organizationRoles.includes(role)) &&
+          organizationTypes.indexOf(this.currentUser.organizationType) > -1
+        )
       },
     },
   }

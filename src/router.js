@@ -128,7 +128,7 @@ routes.beforeEach(async (to, from, next) => {
     console.log('hi')
     return next({ name: 'Panel' })
   }
-  //
+
   if ((to.meta.auth || to.matched.some(parent => parent.meta.auth)) &&
     !authService().existToken()) {
     return next({ name: 'Login' })
