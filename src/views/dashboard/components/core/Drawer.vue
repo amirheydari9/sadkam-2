@@ -121,13 +121,13 @@
 
         {
           title: 'مدیریت سازمان ها',
-          icon: 'mdi-account-circle',
+          icon: 'mdi-office-building',
           to: '/organizations',
           permission: 'USER_MANAGER',
         },
         {
           title: 'مدیریت محصولات',
-          icon: 'mdi-account-circle',
+          icon: 'mdi-video',
           to: '/products',
           permission: 'USER_MANAGER',
         },
@@ -157,13 +157,13 @@
         },
         {
           title: 'مدیریت تیکت',
-          icon: 'mdi-account-circle',
+          icon: 'mdi-clipboard-check',
           to: '/ticket',
           permission: 'USER_MANAGER',
         },
         {
           title: 'مدیریت اطلاعات پایه',
-          icon: 'mdi-account-circle',
+          icon: 'mdi-database',
           permission: 'USER_MANAGER',
           to: '/staticData',
         },

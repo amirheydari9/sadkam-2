@@ -3,14 +3,14 @@
     <v-card
       id="settings"
       class="py-2 px-4"
-      color="rgba(0, 0, 0, .3)"
+      color="primary"
       dark
       flat
       link
       min-width="100"
       style="position: fixed; top: 115px; left: -35px; border-radius: 8px;"
     >
-      <v-icon large>
+      <v-icon  size="25">
         mdi-cog
       </v-icon>
     </v-card>
@@ -195,11 +195,11 @@
     mixins: [Proxyable],
 
     data: () => ({
-      color: '#E91E63',
+      color: '#9C27b0',
       colors: [
+        '#152070',
+        '#4bae4e',
         '#9C27b0',
-        '#00CAE3',
-        '#4CAF50',
         '#ff9800',
         '#E91E63',
         '#FF5252',
