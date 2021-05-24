@@ -5,7 +5,7 @@
     persistent
   >
     <v-card>
-      <dialog-headline title="ویرایش ژانر" />
+      <dialog-headline title="ویرایش دسته بندی محصول" />
       <v-card-text>
         <v-container>
           <v-form
