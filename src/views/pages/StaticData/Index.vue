@@ -4,7 +4,7 @@
     <v-tabs
       v-model="tabsMenu"
       class="mt-5"
-      color="grey darken-3"
+      color="primary"
     >
       <v-tab
         href="#rules"
