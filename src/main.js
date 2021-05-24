@@ -14,7 +14,9 @@ import 'vue-toast-notification/dist/theme-sugar.css'
 import VueConfirmDialog from 'vue-confirm-dialog'
 import VueLoading from 'vue-loading-overlay'
 import 'vue-loading-overlay/dist/vue-loading.css'
+import VueMask from 'v-mask'
 
+Vue.use(VueMask)
 Vue.use(VueConfirmDialog)
 Vue.component('vue-confirm-dialog', VueConfirmDialog.default)
 
