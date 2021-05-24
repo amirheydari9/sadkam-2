@@ -308,11 +308,6 @@
         },
       },
     },
-    mounted () {
-      this.$store.dispatch('staticData/fetchRulesList')
-      this.$store.dispatch('staticData/fetchAllGeneres')
-      this.$store.dispatch('staticData/fetchListOfCategoryData')
-    },
     methods: {
       handleTab1 () {
         this.$store.dispatch('staticData/fetchRulesList')

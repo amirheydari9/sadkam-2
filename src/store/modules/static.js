@@ -33,41 +33,41 @@ export const getters = {
   getSubjectsRule (state) {
     return state.rulesList.subjects
   },
-  getSubjectRuleForStaticData (state, getters) {
-    const data = []
-    getters.getSubjectsRule.forEach(item => {
-      const row = {
-        fa: item,
-      }
-      data.push(row)
-    })
-    return data
+  getSubjectRuleForStaticData (state) {
+      const data = []
+      state.rulesList.subjects.forEach(item => {
+        const row = {
+          fa: item,
+        }
+        data.push(row)
+      })
+      return data
   },
   getActionsRule (state) {
     return state.rulesList.actions
   },
-  getActionRuleForStaticData (state, getters) {
-    const data = []
-    getters.getActionsRule.forEach(item => {
-      const row = {
-        fa: item,
-      }
-      data.push(row)
-    })
-    return data
+  getActionRuleForStaticData (state) {
+     const data = []
+    state.rulesList.actions.forEach(item => {
+       const row = {
+         fa: item,
+       }
+       data.push(row)
+     })
+     return data
   },
   getTypesRule (state) {
     return state.rulesList.type
   },
-  getTypeRuleForStaticData (state, getters) {
-    const data = []
-    getters.getTypesRule.forEach(item => {
-      const row = {
-        fa: item,
-      }
-      data.push(row)
-    })
-    return data
+  getTypeRuleForStaticData (state) {
+     const data = []
+    state.rulesList.type.forEach(item => {
+       const row = {
+         fa: item,
+       }
+       data.push(row)
+     })
+     return data
   },
   getRoles (state) {
     return state.roles

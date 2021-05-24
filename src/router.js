@@ -112,6 +112,10 @@ const routes = new Router({
           name: 'StaticData',
           path: '/staticData',
           component: () => import('@/views/pages/StaticData/Index.vue'),
+          beforeEnter: async (to, from, next) => {
+            await store.dispatch('staticData/fetchRulesList')
+            next()
+          },
         },
       ],
     },
