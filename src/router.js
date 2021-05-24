@@ -118,9 +118,7 @@ const routes = new Router({
   ],
 })
 
-// let loading = null
 routes.beforeEach(async (to, from, next) => {
-  // loading = Vue.$loading.show()
 
   if (authService().existToken() && !store.getters.getCurrentUser) {
     await store.dispatch('handleCurrentUser', authService().decodeToken(authService().getToken()))
@@ -168,12 +166,6 @@ routes.beforeEach(async (to, from, next) => {
   //     return next({name: 'Login'});
   // }
   return next()
-})
-
-routes.afterEach(() => {
-  // setTimeout(() => {
-  //   loading.hide()
-  // }, 1000)
 })
 
 export default routes
