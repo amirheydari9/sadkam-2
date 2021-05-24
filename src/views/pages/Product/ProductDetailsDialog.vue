@@ -41,7 +41,11 @@
                 <v-text-field
                   v-model="product.startYear"
                   label="سال شروع"
+                  :rules="[
+                    required('این فیلد الزامی است'),
+                  ]"
                   type="number"
+                  v-mask="'####'"
                 />
               </v-col>
               <v-col
@@ -51,7 +55,11 @@
                 <v-text-field
                   v-model="product.endYear"
                   label="سال پایان"
+                  :rules="[
+                    required('این فیلد الزامی است'),
+                  ]"
                   type="number"
+                  v-mask="'####'"
                 />
               </v-col>
               <v-col

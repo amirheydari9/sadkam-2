@@ -120,23 +120,6 @@
         },
       ],
       search: '',
-      defaultItem: {
-        enTitle: '',
-        faTitle: '',
-        directors: [],
-        language: [],
-        duration: '',
-        genres: [],
-        startYear: [],
-        endYear: [],
-        writers: [],
-        actors: [],
-        imdbId: '',
-        episodeCountType: '',
-        category: '',
-        rate: '',
-        description: '',
-      },
       breadcrumbs: [
         {
           text: 'داشبورد',
