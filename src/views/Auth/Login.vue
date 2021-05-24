@@ -128,7 +128,7 @@
             <span
               class="font-weight-bold"
               style="display:block ;color: white ; margin-bottom: 20px"
-            >جهت ورود شماره تماس خود را وارد کنید</span>
+            >جهت ورود شماره موبایل خود را وارد کنید</span>
             <div class="inputBx password">
               <input
                 id="password-input"
@@ -301,7 +301,7 @@ section {
 
 .container {
   position: relative;
-  padding: 10px;
+  padding: 15px;
   width: 300px;
   min-height: 300px;
   display: flex;

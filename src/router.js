@@ -79,30 +79,30 @@ const routes = new Router({
             permission: 'ORDERS',
           },
         },
-        {
-          name: 'AssessmentRequest',
-          path: '/assessmentRequest',
-          component: () => import('@/views/pages/AssessmentRequest/Index.vue'),
-          meta: {
-            hasAssessmentRequestPermission: true,
-          },
-        },
-        {
-          name: 'AssessmentRequest1',
-          path: '/assessmentRequest1',
-          component: () => import('@/views/pages/AssessmentRequest1/Index.vue'),
-          meta: {
-            hasAssessmentRequestPermission: true,
-          },
-        },
-        {
-          name: 'ViewAssessmentRequest',
-          path: '/viewAssessmentRequest',
-          component: () => import('@/views/pages/ViewAssessmentRequest/Index.vue'),
-          meta: {
-            permission: 'ORDERS',
-          },
-        },
+        // {
+        //   name: 'AssessmentRequest',
+        //   path: '/assessmentRequest',
+        //   component: () => import('@/views/pages/AssessmentRequest/Index.vue'),
+        //   meta: {
+        //     hasAssessmentRequestPermission: true,
+        //   },
+        // },
+        // {
+        //   name: 'AssessmentRequest1',
+        //   path: '/assessmentRequest1',
+        //   component: () => import('@/views/pages/AssessmentRequest1/Index.vue'),
+        //   meta: {
+        //     hasAssessmentRequestPermission: true,
+        //   },
+        // },
+        // {
+        //   name: 'ViewAssessmentRequest',
+        //   path: '/viewAssessmentRequest',
+        //   component: () => import('@/views/pages/ViewAssessmentRequest/Index.vue'),
+        //   meta: {
+        //     permission: 'ORDERS',
+        //   },
+        // },
         {
           name: 'Ticket',
           path: '/ticket',
@@ -123,16 +123,16 @@ routes.beforeEach(async (to, from, next) => {
     await store.dispatch('handleCurrentUser', authService().decodeToken(authService().getToken()))
   }
 
-  // if ((to.meta.guest || to.matched.some(parent => parent.meta.guest)) &&
-  //   authService().existToken()) {
-  //   console.log('hi')
-  //   return next({ name: 'Panel' })
-  // }
+  if ((to.meta.guest || to.matched.some(parent => parent.meta.guest)) &&
+    authService().existToken()) {
+    console.log('hi')
+    return next({ name: 'Panel' })
+  }
   //
-  // if ((to.meta.auth || to.matched.some(parent => parent.meta.auth)) &&
-  //   !authService().existToken()) {
-  //   return next({ name: 'Login' })
-  // }
+  if ((to.meta.auth || to.matched.some(parent => parent.meta.auth)) &&
+    !authService().existToken()) {
+    return next({ name: 'Login' })
+  }
   //
   // if (store.getters.getCurrentUser && to.meta.permission) {
   //   if (permission().can(to.meta.permission)) {

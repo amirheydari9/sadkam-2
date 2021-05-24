@@ -315,7 +315,7 @@ section {
 
 .container {
   position: relative;
-  padding: 10px;
+  padding: 15px;
   width: 300px;
   min-height: 300px;
   display: flex;
