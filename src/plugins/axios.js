@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { authService } from '../service/authService'
+import store from '../store/store'
 // import router from '../router'
 
 const axiosInstance = axios.create({
@@ -10,12 +11,16 @@ axiosInstance.interceptors.request.use(function (config) {
   if (token) {
     config.headers.Authorization = `Bearer ${token}`
   }
+  store.commit('SET_OVERLAY', true)
   return config
 }, function (err) {
   return Promise.reject(err)
 })
 
 axiosInstance.interceptors.response.use(response => {
+  setTimeout(() => {
+      store.commit('SET_OVERLAY', false)
+  }, 1500)
   return response
 }, error => {
   if (error.response.status === 401) {
@@ -29,7 +34,9 @@ axiosInstance.interceptors.response.use(response => {
   if (error.response.status === 403) {
     // router.push({name: 'access-denied'})
   }
-
+  setTimeout(() => {
+      store.commit('SET_OVERLAY', false)
+  }, 1500)
   return Promise.reject(error)
 })
 

@@ -20,7 +20,7 @@ export default new Vuex.Store({
     barColor: 'rgba(0, 0, 0, .8), rgba(0, 0, 0, .8)',
     barImage: 'https://demos.creative-tim.com/material-dashboard/assets/img/sidebar-1.jpg',
     drawer: null,
-
+    overlay: false,
     // Sidebar_drawer: null,
     // Customizer_drawer: false,
     // SidebarColor: 'white',
@@ -35,6 +35,9 @@ export default new Vuex.Store({
     roles: [],
   },
   getters: {
+    getOverlay (state) {
+      return state.overlay
+    },
     getLoginPhone (state) {
       return state.loginPhone
     },
@@ -69,6 +72,9 @@ export default new Vuex.Store({
     },
     SET_DRAWER (state, payload) {
       state.drawer = payload
+    },
+    SET_OVERLAY (state, payload) {
+      state.overlay = payload
     },
 
     // SET_SIDEBAR_DRAWER (state, payload) {
