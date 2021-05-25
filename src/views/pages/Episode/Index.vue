@@ -85,7 +85,7 @@
         this.isLoading = true
         this.$store.dispatch('product/searchProduct', value).then(({ data }) => {
           if (data.data && data.data.length) {
-            const result = data.data.filter(item => item.entryType === 'multiple')
+            const result = data.data.filter(item => item.episodeCountType === 'multiple')
             // if (result.length > 0) {
             //   result.forEach(item => {
             //     console.log(item)
