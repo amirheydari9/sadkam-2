@@ -140,7 +140,7 @@
         },
         {
           title: 'مدیریت اپیزودها',
-          icon: 'mdi-account-circle',
+          icon: 'mdi-play',
           to: '/episodes',
           roles: ['ORDERS'],
           organizationTypes: ['SECRETARIAT', 'PLATFORM'],
