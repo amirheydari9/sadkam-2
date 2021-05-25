@@ -40,6 +40,9 @@
         <template v-slot:item.organizationType="{ item }">
           {{ transformOrganizationType(item.organizationType) }}
         </template>
+        <template v-slot:item.createdAt="{ item }">
+          {{transformDateToJalali(item.createdAt) }}
+        </template>
         <template v-slot:item.actions="{ item }">
           <v-icon
             small
@@ -62,7 +65,7 @@
 </template>
 
 <script>
-  import { transformOrganizationType } from '../../../plugins/transformData'
+  import { transformOrganizationType ,transformDateToJalali } from '../../../plugins/transformData'
   import OrganizationDetailsDialog from './OrganizationDetailsDialog'
   import Breadcrumbs from '../../../components/Breadcrumbs'
 
@@ -91,8 +94,12 @@
           value: 'organizationType',
         },
         {
-          text: 'آدرس',
-          value: 'address',
+          text: 'محدودیت تعریف کاربران',
+          value: 'usersLimitCount',
+        },
+        {
+          text: 'تاریخ ایجاد',
+          value: 'createdAt',
         },
         {
           text: 'فعال بودن',
@@ -106,11 +113,12 @@
       ],
       editedIndex: -1,
       defaultItem: {
-        name: '',
-        agent_phone: '',
+        title: '',
+        agentName: '',
+        agentPhone: '',
         organizationType: '',
-        address: '',
-        active: false,
+        usersLimitCount:'',
+        isActive: false,
       },
       breadcrumbs: [
         {
@@ -126,6 +134,7 @@
         },
       ],
       transformOrganizationType,
+      transformDateToJalali,
     }),
     computed: {
       organizations: {

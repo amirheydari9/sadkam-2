@@ -40,6 +40,7 @@
               >
                 <v-text-field
                   v-model="organization.agentPhone"
+                  type="number"
                   :rules="[
                     required('این فیلد الزامی است'),
                     verifyMobilePhone()
@@ -66,8 +67,21 @@
                 cols="12"
                 sm="6"
               >
+                <v-text-field
+                  v-model="organization.usersLimitCount"
+                  :rules="[
+                    required('این فیلد الزامی است'),
+                  ]"
+                  label="محدودیت تعریف کاربران"
+                  type="number"
+                />
+              </v-col>
+              <v-col
+                cols="12"
+                sm="6"
+              >
                 <v-switch
-                  v-model="organization.active"
+                  v-model="organization.isActive"
                   label="فعال است"
                 />
               </v-col>
