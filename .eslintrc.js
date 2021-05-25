@@ -12,7 +12,10 @@ module.exports = {
     'vue/html-closing-bracket-spacing':'off',
     'comma-spacing':'off',
     'no-multiple-empty-lines':'off',
-    'key-spacing':'off'
+    'key-spacing':'off',
+    'space-before-function-paren':'off',
+    'space-before-blocks':'off',
+    'comma-dangle':'off',
   },
   parserOptions: {
     parser: 'babel-eslint',

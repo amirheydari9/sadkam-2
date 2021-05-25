@@ -5,7 +5,7 @@
     persistent
   >
     <v-card>
-      <dialog-headline :title="formTitle" />
+      <dialog-headline :title="formTitle"/>
       <v-card-text>
         <v-container>
           <v-form ref="userForm">
@@ -47,11 +47,12 @@
               >
                 <v-autocomplete
                   v-model="user.organization"
-                  :rules="[ required('این فیلد الزامی است'),]"
+                  :rules="[ required('این فیلد الزامی است')]"
                   label="نام سازمان"
                   :items="organizationList"
                   item-text="title"
                   item-value="_id"
+                  @change="checkUsersLimitCount"
                 />
               </v-col>
               <v-col
@@ -88,11 +89,12 @@
         </v-container>
       </v-card-text>
       <v-card-actions>
-        <v-spacer />
+        <v-spacer/>
         <v-btn
           color="primary"
           rounded
           @click="save"
+          :disabled="disableSave"
         >
           ذخیره
         </v-btn>
@@ -117,11 +119,18 @@
     name: 'UserDetailsDialog',
     components: { DialogHeadline },
     props: {
-      showDialog: { Boolean, isRequired: true },
-      isCreate: { Boolean, isRequired: true },
+      showDialog: {
+        Boolean,
+        isRequired: true,
+      },
+      isCreate: {
+        Boolean,
+        isRequired: true,
+      },
     },
     data () {
       return {
+        disableSave:false,
         required,
         verifyMobilePhone,
         verifyUserName,
@@ -175,6 +184,15 @@
           }
           this.$emit('handleSave', data)
           this.close()
+        }
+      },
+      checkUsersLimitCount (value) {
+        const organization = this.organizationList.find(item => item._id === value)
+        if (organization.usersLimitCount && organization.users.length >= organization.usersLimitCount) {
+          this.$toast.error('محدودیت تعریف کاربر برای این سازمان به پایان رسیده است')
+          this.disableSave = true
+        } else {
+          this.disableSave = false
         }
       },
     },
