@@ -179,10 +179,8 @@
       ...mapMutations({
         setDrawer: 'SET_DRAWER',
       }),
-      logout () {
-        this.$store.dispatch('logout').then(() => {
-          this.$router.push({ name: 'Login' })
-        })
+      async logout () {
+        await this.$store.dispatch('logout')
       },
     },
   }

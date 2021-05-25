@@ -5,10 +5,7 @@
     persistent
   >
     <v-card>
-      <v-card-title>
-        <span class="text-h5">{{ formTitle }}</span>
-      </v-card-title>
-
+      <dialog-headline :title="formTitle" />
       <v-card-text>
         <v-container>
           <v-form ref="episodeForm">
@@ -93,17 +90,19 @@
                 cols="12"
                 sm="6"
               >
-                <!--                <v-text-field-->
-                <!--                    id="my-custom-input"-->
-                <!--                    persistent-hint-->
-                <!--                    readonly-->
-                <!--                    v-model="releaseDate"-->
-                <!--                    label="زمان انتشار"-->
-                <!--                    :rules="[required('این فیلد الزامی است')]"-->
-                <!--                ></v-text-field>-->
+                <v-text-field
+                  id="my-custom-input"
+                  persistent-hint
+                  readonly
+                  v-model="episode.releaseDate"
+                  label="زمان انتشار"
+                  :rules="[required('این فیلد الزامی است')]"
+                ></v-text-field>
                 <v-date-picker
-                  v-model="releaseDate"
+                  v-model="episode.releaseDate"
                   auto-submit
+                  element="my-custom-input"
+                  format="jYYYY/jMM/jDD"
                 />
               </v-col>
 
@@ -140,14 +139,14 @@
       <v-card-actions>
         <v-spacer />
         <v-btn
-          color="blue darken-1"
-          text
+          color="primary"
+          rounded
           @click="save"
         >
           ذخیره
         </v-btn>
         <v-btn
-          color="blue darken-1"
+          color="warning"
           text
           @click="close"
         >
@@ -164,11 +163,13 @@
   import VuePersianDatetimePicker from 'vue-persian-datetime-picker'
   import { entryType } from '../../../plugins/constant'
   import { transformDateToJalali, transformJalaliDateToGeorgian } from '../../../plugins/transformData'
+  import DialogHeadline from '../../../components/DialogHeadline'
 
   export default {
     name: 'EpisodeDetailsDialog',
     components: {
       vDatePicker: VuePersianDatetimePicker,
+      DialogHeadline,
     },
     props: {
       showDialog: { Boolean, isRequired: true },
@@ -193,14 +194,14 @@
       episode () {
         return this.$store.getters['episode/getEpisode']
       },
-      releaseDate: {
-        get () {
-          return transformDateToJalali(this.episode.releaseDate)
-        },
-        set (value) {
-          console.log(value)
-        },
-      },
+      // releaseDate: {
+      //   get () {
+      //     return transformDateToJalali(this.episode.releaseDate)
+      //   },
+      //   set (value) {
+      //     console.log(value)
+      //   },
+      // },
       formTitle () {
         return this.isCreate ? 'افزودن اپیزود' : 'ویرایش اپیزود'
       },
@@ -241,10 +242,9 @@
       },
       save () {
         if (this.$refs.episodeForm.validate()) {
-          console.log(this.episode)
           let data = {
             ...this.episode,
-            releaseDate: new Date(transformJalaliDateToGeorgian(this.releaseDate)).getTime(),
+            releaseDate: new Date(transformJalaliDateToGeorgian(this.episode.releaseDate)).getTime(),
           }
           if (this.isCreate) {
             data = {
@@ -252,8 +252,6 @@
               parent: this.$store.getters['episode/getParentId'],
             }
           }
-          console.log(data)
-          console.log(this.$store.getters['episode/getParentId'])
           this.$emit('handleSave', data)
           this.close()
         }

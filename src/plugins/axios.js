@@ -14,6 +14,7 @@ axiosInstance.interceptors.request.use(function (config) {
   store.commit('SET_OVERLAY', true)
   return config
 }, function (err) {
+  store.commit('SET_OVERLAY', true)
   return Promise.reject(err)
 })
 
@@ -22,11 +23,9 @@ axiosInstance.interceptors.response.use(response => {
       store.commit('SET_OVERLAY', false)
   }, 1500)
   return response
-}, error => {
+}, async error => {
   if (error.response.status === 401 || error.response.status === 403) {
-    store.dispatch('logout').then(() => {
-      router.push({ name: 'Login' })
-    })
+   await store.dispatch('logout')
   }
   if (error.response.status === 404) {
     // router.push({name: 'not-found'})
