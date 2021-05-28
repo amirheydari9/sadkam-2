@@ -127,6 +127,10 @@ routes.beforeEach(async (to, from, next) => {
     await store.dispatch('handleCurrentUser', authService().decodeToken(authService().getToken()))
   }
 
+  if ((to.meta.phoneVerified || to.matched.some(parent => parent.meta.phoneVerified))
+    && !store.getters['getLoginPhone']) {
+    return next({ name: 'Login' })
+  }
   if ((to.meta.guest || to.matched.some(parent => parent.meta.guest)) &&
     authService().existToken()) {
     console.log('hi')
