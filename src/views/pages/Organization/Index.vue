@@ -8,6 +8,14 @@
         :search="search"
         no-results-text="اطلاعاتی یافت نشد"
         class="elevation-1 w-100"
+        :items-per-page="5"
+        :footer-props="{
+      showFirstLastPage: true,
+      firstIcon: 'mdi-arrow-collapse-left',
+      lastIcon: 'mdi-arrow-collapse-right',
+      prevIcon: 'mdi-plus',
+      nextIcon: 'mdi-minus'
+    }"
       >
         <template v-slot:top>
           <v-toolbar
