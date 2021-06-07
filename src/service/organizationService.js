@@ -3,7 +3,7 @@ import axiosInstance from '../plugins/axios'
 export function organizationService () {
     const getAllOrganization = async () => {
         try {
-            return await axiosInstance.get('/organizations?count=100')
+            return await axiosInstance.get('/organizations?count=10000')
         } catch (e) {
             console.log(e)
         }
