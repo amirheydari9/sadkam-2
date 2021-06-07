@@ -3,11 +3,24 @@
     <div class="w-100">
       <breadcrumbs :items="breadcrumbs" />
       <v-data-table
+        :page="page"
+        :pageCount="numberOfPages"
+        :options.sync="options"
+        :server-items-length="totalProducts"
+        :loading="loading"
         :headers="headers"
         :items="products"
         :search="search"
         no-results-text="اطلاعاتی یافت نشد"
         class="elevation-1 w-100"
+        :items-per-page="5"
+        :footer-props="{
+      showFirstLastPage: true,
+      firstIcon: 'mdi-arrow-collapse-left',
+      lastIcon: 'mdi-arrow-collapse-right',
+      prevIcon: 'mdi-plus',
+      nextIcon: 'mdi-minus'
+    }"
       >
         <template v-slot:top>
           <v-toolbar
@@ -97,6 +110,11 @@
       Breadcrumbs,
     },
     data: () => ({
+      page: 1,
+      totalProducts: 0,
+      numberOfPages: 0,
+      loading: true,
+      options: {},
       showProductDetailsDialog: false,
       isCreate: true,
       showEpisodesListDialog: false,
@@ -178,9 +196,18 @@
         },
       },
     },
+    watch: {
+      options: {
+        handler () {
+          this.readDataFromAPI()
+        },
+      },
+      deep: true,
+    },
     mounted () {
       this.$store.dispatch('organization/fetchOrganizations')
-      this.$store.dispatch('product/fetchAllProducts')
+      // this.$store.dispatch('product/fetchAllProducts')
+      this.readDataFromAPI()
       this.$store.dispatch('staticData/fetchListOfCategoryData')
       this.$store.commit('SET_BREADCRUMBS', this.breadcrumbs)
     },
@@ -188,6 +215,21 @@
       return this.$store.commit('product/SET_PRODUCTS', [])
     },
     methods: {
+      async readDataFromAPI () {
+        this.loading = true
+        const {
+          page,
+          itemsPerPage,
+        } = this.options
+        let data = await this.$store.dispatch('product/fetchAllProducts', {
+          page: page,
+          size: itemsPerPage,
+        })
+        this.loading = false
+        this.products = data.data.items
+        this.totalProducts = data.data.paginator.itemCount
+        this.numberOfPages = data.data.paginator.totalPages
+      },
       async editItem (item) {
         this.editedIndex = this.products.indexOf(item)
         await this.$store.dispatch('product/getProduct', item._id)
@@ -208,7 +250,8 @@
           this.$toast.success('عملیات با موفقیت اننجام شد')
         } else {
           await this.$store.dispatch('product/createProduct', product)
-          await this.$store.dispatch('product/fetchAllProducts')
+          // await this.$store.dispatch('product/fetchAllProducts')
+          await this.readDataFromAPI()
           this.$toast.success('عملیات با موفقیت اننجام شد')
         }
       },

@@ -9,9 +9,9 @@ export function productService () {
         }
     }
 
-    const getAllProducts = async () => {
+    const getAllProducts = async (page, size) => {
         try {
-            return await axiosInstance.get('/products')
+            return await axiosInstance.get(`/products?page=${page}&count=${size}`)
         } catch (e) {
             console.log(e)
         }
