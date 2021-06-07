@@ -4,7 +4,7 @@ import store from '../store/store'
 import router from '../router'
 
 const axiosInstance = axios.create({
-  baseURL: 'http://sadkam.lincast.ir/api',
+  baseURL: 'https://sadkam.hkhoshraftar.ir/api',
 })
 axiosInstance.interceptors.request.use(function (config) {
   const token = authService().getToken()
