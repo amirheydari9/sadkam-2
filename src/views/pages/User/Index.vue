@@ -1,13 +1,26 @@
 <template>
   <v-container>
     <div class="w-100">
-      <breadcrumbs :items="breadcrumbs" />
+      <breadcrumbs :items="breadcrumbs"/>
       <v-data-table
+        :page="page"
+        :pageCount="numberOfPages"
+        :options.sync="options"
+        :server-items-length="totalUsers"
+        :loading="loading"
         :headers="headers"
         :items="users"
         :search="search"
         no-results-text="اطلاعاتی یافت نشد"
         class="elevation-1 w-100"
+        :items-per-page="5"
+        :footer-props="{
+      showFirstLastPage: true,
+      firstIcon: 'mdi-arrow-collapse-left',
+      lastIcon: 'mdi-arrow-collapse-right',
+      prevIcon: 'mdi-plus',
+      nextIcon: 'mdi-minus'
+    }"
       >
         <template v-slot:top>
           <v-toolbar
@@ -20,7 +33,7 @@
               hide-details
               autofocus
             />
-            <v-spacer />
+            <v-spacer/>
             <v-btn
               color="primary"
               dark
@@ -33,9 +46,6 @@
         <template v-slot:item.organizationRoles="{ item }">
           {{ transformRoles(item.organizationRoles) }}
         </template>
-        <!--        <template v-slot:item.organizationType="{ item }">-->
-        <!--          {{ transformOrganizationType(item.organizationType) }}-->
-        <!--        </template>-->
         <template v-slot:item.organization="{ item }">
           {{ transformOrganization(item.organization) }}
         </template>
@@ -68,8 +78,16 @@
 
   export default {
     name: 'Index',
-    components: { Breadcrumbs, UserDetailsDialog },
+    components: {
+      Breadcrumbs,
+      UserDetailsDialog,
+    },
     data: () => ({
+      page: 1,
+      totalUsers: 0,
+      numberOfPages: 0,
+      loading: true,
+      options: {},
       showDialog: false,
       isCreate: true,
       search: '',
@@ -175,16 +193,40 @@
         return (this.isUserManager && this.isSecretariant) ? this.headers0 : this.headers1
       },
     },
+    watch: {
+      options: {
+        handler () {
+          this.readDataFromAPI()
+        },
+      },
+      deep: true,
+    },
     mounted () {
-      this.$store.dispatch('user/fetchUsers')
+      // this.$store.dispatch('user/fetchUsers')
+      this.readDataFromAPI()
       this.$store.dispatch('staticData/fetchListOfUserRoles')
       if (this.isSecretariant && this.isUserManager) {
         this.$store.dispatch('organization/fetchOrganizations')
-        this.$store.dispatch('staticData/fetchOrganizationTypes')
+        // this.$store.dispatch('staticData/fetchOrganizationTypes')
       }
       this.$store.commit('SET_BREADCRUMBS', this.breadcrumbs)
     },
     methods: {
+      async readDataFromAPI () {
+        this.loading = true
+        const {
+          page,
+          itemsPerPage,
+        } = this.options
+        let data = await this.$store.dispatch('user/fetchUsers', {
+          page: page,
+          size: itemsPerPage,
+        })
+        this.loading = false
+        this.users = data.data.items
+        this.totalUsers = data.data.paginator.itemCount
+        this.numberOfPages = data.data.paginator.totalPages
+      },
       async editItem (item) {
         this.editedIndex = this.users.indexOf(item)
         await this.$store.commit('user/SET_USER', { ...item })
@@ -205,7 +247,8 @@
           this.$toast.success('عملیات با موفقیت انجام شد')
         } else {
           await this.$store.dispatch('user/createUser', user)
-          await this.$store.dispatch('user/fetchUsers')
+          // await this.$store.dispatch('user/fetchUsers')
+          await this.readDataFromAPI()
           this.$toast.success('عملیات با موفقیت انجام شد')
         }
       },

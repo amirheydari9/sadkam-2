@@ -1,9 +1,9 @@
 import axiosInstance from '../plugins/axios'
 
 export function userService () {
-    const getAllUsers = async () => {
+    const getAllUsers = async (page, size) => {
         try {
-            return await axiosInstance.get('/users?count=100')
+            return await axiosInstance.get(`/users?page=${page}&count=${size}`)
         } catch (e) {
             console.log(e)
         }

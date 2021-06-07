@@ -38,6 +38,7 @@
                   v-model="user.phone"
                   :rules="[required('این فیلد الزامی است'),verifyMobilePhone()]"
                   label="شماره تماس"
+                  type="number"
                 />
               </v-col>
               <v-col
@@ -55,20 +56,20 @@
                   @change="checkUsersLimitCount"
                 />
               </v-col>
-              <v-col
-                v-if="isSuperAdmin"
-                cols="12"
-                sm="6"
-              >
-                <v-autocomplete
-                  v-model="user.organizationType"
-                  :rules="[ required('این فیلد الزامی است'),]"
-                  label="نوع سازمان"
-                  :items="organizationType"
-                  item-text="fa"
-                  item-value="type"
-                />
-              </v-col>
+<!--              <v-col-->
+<!--                v-if="isSuperAdmin"-->
+<!--                cols="12"-->
+<!--                sm="6"-->
+<!--              >-->
+<!--                <v-autocomplete-->
+<!--                  v-model="user.organizationType"-->
+<!--                  :rules="[ required('این فیلد الزامی است'),]"-->
+<!--                  label="نوع سازمان"-->
+<!--                  :items="organizationType"-->
+<!--                  item-text="fa"-->
+<!--                  item-value="type"-->
+<!--                />-->
+<!--              </v-col>-->
               <v-col
                 cols="12"
               >
@@ -156,9 +157,9 @@
       organizationList () {
         return this.$store.getters['organization/getOrganizations']
       },
-      organizationType () {
-        return this.$store.getters['staticData/getOrganizationTypes']
-      },
+      // organizationType () {
+      //   return this.$store.getters['staticData/getOrganizationTypes']
+      // },
       roles () {
         return this.$store.getters['staticData/getRoles']
       },
