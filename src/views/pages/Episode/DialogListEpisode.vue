@@ -5,7 +5,7 @@
   >
     <v-card>
       <v-card-title>
-        <span class="text-h5">لیست اپیزود ها</span>
+        <dialog-headline :title="'لیست اپیزود ها'" />
       </v-card-title>
       <v-card-text>
         <episode-table />
@@ -26,10 +26,11 @@
 
 <script>
   import EpisodeTable from './EpisodeTable'
+  import DialogHeadline from '../../../components/DialogHeadline'
 
   export default {
     name: 'DialogListEpisode',
-    components: { EpisodeTable },
+    components: { DialogHeadline, EpisodeTable},
     props: {
       showDialog: { Boolean, isRequired: true },
       isAssessmentMode: { Boolean, isRequired: false, default: false },

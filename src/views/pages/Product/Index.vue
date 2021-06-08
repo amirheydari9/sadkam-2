@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <div class="w-100">
-      <breadcrumbs :items="breadcrumbs" />
+      <breadcrumbs :items="breadcrumbs"/>
       <v-data-table
         :page="page"
         :pageCount="numberOfPages"
@@ -33,7 +33,7 @@
               hide-details
               autofocus
             />
-            <v-spacer />
+            <v-spacer/>
             <v-btn
               color="primary"
               dark
@@ -261,7 +261,11 @@
 
       async getEpisodesList (item) {
         if (item.episodeCountType === 'multiple') {
-          await this.$store.dispatch('episode/fetchAllEpisodes', item._id)
+          await this.$store.dispatch('episode/fetchAllEpisodes', {
+            productId: item._id,
+            page: 1,
+            size: 5,
+          })
           await this.$store.commit('episode/SET_PARENT_ID', item._id)
           this.showEpisodesListDialog = true
         } else {

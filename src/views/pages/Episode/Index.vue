@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <div class="w-100 d-flex flex-column justify-start">
-      <breadcrumbs :items="breadcrumbs" />
+      <breadcrumbs :items="breadcrumbs"/>
       <v-col
         cols="12"
         sm="4"
@@ -109,7 +109,11 @@
     methods: {
       findEpisodes (event) {
         this.productIsAvailable = true
-        this.$store.dispatch('episode/fetchAllEpisodes', event._id)
+        this.$store.dispatch('episode/fetchAllEpisodes', {
+          productId: event._id,
+          page: 1,
+          size: 5,
+        })
         this.$store.commit('episode/SET_PARENT_ID', event._id)
       },
     },

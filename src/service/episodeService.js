@@ -1,9 +1,9 @@
 import axiosInstance from '../plugins/axios'
 
 export function episodeService () {
-    const getAllEpisodes = async (id) => {
+    const getAllEpisodes = async (id,page, size) => {
         try {
-            return await axiosInstance.get(`/episodes/ofParent/${id}`)
+            return await axiosInstance.get(`/episodes/ofParent/${id}?page=${page}&count=${size}`)
         } catch (e) {
             console.log(e)
         }

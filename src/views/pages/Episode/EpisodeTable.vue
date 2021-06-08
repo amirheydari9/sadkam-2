@@ -1,11 +1,24 @@
 <template>
   <div class="w-100">
     <v-data-table
+      :page="page"
+      :pageCount="numberOfPages"
+      :options.sync="options"
+      :server-items-length="totalEpisodes"
+      :loading="loading"
       :headers="headers"
       :items="episodes"
       :search="search"
       no-results-text="اطلاعاتی یافت نشد"
       class="elevation-1 w-100"
+      :items-per-page="5"
+      :footer-props="{
+      showFirstLastPage: true,
+      firstIcon: 'mdi-arrow-collapse-left',
+      lastIcon: 'mdi-arrow-collapse-right',
+      prevIcon: 'mdi-plus',
+      nextIcon: 'mdi-minus'
+    }"
     >
       <template v-slot:top>
         <v-toolbar
@@ -18,7 +31,7 @@
             hide-details
             autofocus
           />
-          <v-spacer />
+          <v-spacer/>
           <v-btn
             color="primary"
             dark
@@ -78,23 +91,56 @@
 
   export default {
     name: 'EpisodeTable',
-    components: { TabsWrapper, EpisodeDetailsDialog },
+    components: {
+      TabsWrapper,
+      EpisodeDetailsDialog,
+    },
     data () {
       return {
+        page: 1,
+        totalEpisodes: 0,
+        numberOfPages: 0,
+        loading: true,
+        options: {},
         showDialog: false,
         isCreate: true,
         search: '',
         showAssessmentIcon: false,
         showTabs: false,
         headers: [
-          { text: 'نام انگلسیی', value: 'enTitle' },
-          { text: 'نام فارسی', value: 'faTitle' },
-          { text: 'شماره فصل', value: 'seasonNumber' },
-          { text: 'شماره قسمت', value: 'episodeNumber' },
-          { text: 'زمان', value: 'duration' },
-          { text: 'امتیاز', value: 'rate' },
-          { text: 'تاریخ انتشار', value: 'releaseDate' },
-          { text: 'عملیات', value: 'actions', sortable: false },
+          {
+            text: 'نام انگلسیی',
+            value: 'enTitle',
+          },
+          {
+            text: 'نام فارسی',
+            value: 'faTitle',
+          },
+          {
+            text: 'شماره فصل',
+            value: 'seasonNumber',
+          },
+          {
+            text: 'شماره قسمت',
+            value: 'episodeNumber',
+          },
+          {
+            text: 'زمان',
+            value: 'duration',
+          },
+          {
+            text: 'امتیاز',
+            value: 'rate',
+          },
+          {
+            text: 'تاریخ انتشار',
+            value: 'releaseDate',
+          },
+          {
+            text: 'عملیات',
+            value: 'actions',
+            sortable: false,
+          },
         ],
         transformOrganization,
         transformDateToJalali,
@@ -111,7 +157,31 @@
         },
       },
     },
+    watch: {
+      options: {
+        handler () {
+          this.readDataFromAPI()
+        },
+      },
+      deep: true,
+    },
     methods: {
+      async readDataFromAPI () {
+        this.loading = true
+        const {
+          page,
+          itemsPerPage,
+        } = this.options
+        let data = await this.$store.dispatch('episode/fetchAllEpisodes', {
+          productId: this.$store.getters['episode/getParentId'],
+          page: page,
+          size: itemsPerPage,
+        })
+        this.loading = false
+        this.episodes = data.data.items
+        this.totalEpisodes = data.data.paginator.itemCount
+        this.numberOfPages = data.data.paginator.totalPages
+      },
       async editItem (item) {
         this.editedIndex = this.episodes.indexOf(item)
         await this.$store.dispatch('episode/getEpisode', item._id)
@@ -132,7 +202,8 @@
           this.$toast.success('عملیات با موفقیت انجام شد')
         } else {
           await this.$store.dispatch('episode/createEpisode', episode)
-          await this.$store.dispatch('episode/fetchAllEpisodes', this.$store.getters['episode/getParentId'])
+          // await this.$store.dispatch('episode/fetchAllEpisodes', this.$store.getters['episode/getParentId'])
+          await this.readDataFromAPI()
           this.$toast.success('عملیات با موفقیت انجام شد')
         }
       },
