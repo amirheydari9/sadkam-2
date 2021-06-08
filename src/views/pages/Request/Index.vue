@@ -153,6 +153,7 @@
       productSearch (value) {
         if (this.filteredProducts.length > 0 || (!value || value.trim().length <= 0)) {
           this.$store.commit('product/SET_PRODUCTS', [])
+          return false
         }
         if (this.isLoading) return
         this.isLoading = true

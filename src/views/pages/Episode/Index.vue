@@ -80,6 +80,7 @@
           this.$store.commit('episode/SET_EPISODES', [])
           this.$store.commit('episode/SET_PARENT_ID', null)
           this.productIsAvailable = false
+          return false
         }
         if (this.isLoading) return
         this.isLoading = true
