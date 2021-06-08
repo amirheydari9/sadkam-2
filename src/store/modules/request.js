@@ -110,9 +110,9 @@ export const actions = {
         }
     },
 
-    async createRequest (context, requests) {
+    async createRequest (context, request) {
         try {
-            return await requestService().createRequest(requests)
+            return await requestService().createRequest(request)
         } catch (e) {
             console.log(e)
         }

@@ -16,11 +16,13 @@
             ارزیابی
           </v-tab>
           <v-tab
+            v-if="request"
             href="#chat"
           >
             گفتگوها
           </v-tab>
           <v-tab
+            v-if="request"
             href="#file"
           >
             فایل
@@ -316,12 +318,13 @@
     },
     methods: {
       getData () {
-        this.$store.dispatch('request/fetchRequestByEpisodeId', this.episode._id).then(() => {
-          this.$store.dispatch('request/fetchRequest', this.requestInfoByEpisodeId._id)
-        }).catch(() => {
-          this.$toast.error('خظا در دریافت اطلاعات')
-          this.close()
-        })
+        this.$store.dispatch('request/fetchRequest', this.episode._id)
+        // this.$store.dispatch('request/fetchRequestByEpisodeId', this.episode._id).then(() => {
+        //   this.$store.dispatch('request/fetchRequest', this.requestInfoByEpisodeId._id)
+        // }).catch(() => {
+        //   this.$toast.error('خظا در دریافت اطلاعات')
+        //   this.close()
+        // })
       },
       close () {
         this.$store.commit('request/SET_REQUEST_INFO_BY_EPISODE_ID', null)
