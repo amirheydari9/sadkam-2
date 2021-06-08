@@ -186,7 +186,11 @@
           this.$store.commit('episode/SET_EPISODE', item)
           this.showTabs = true
         } else {
-          await this.$store.dispatch('episode/fetchAllEpisodes', item._id)
+          await this.$store.dispatch('episode/fetchAllEpisodes', {
+            productId: item._id,
+            page: 1,
+            size: 5,
+          })
           await this.$store.commit('episode/SET_PARENT_ID', item._id)
           this.showEpisodesListDialog = true
         }
