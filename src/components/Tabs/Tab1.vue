@@ -4,14 +4,14 @@
     value="assessment"
   >
     <v-col cols="12">
-      <template v-if="assessmentRequest">
+      <template v-if="request">
         <v-row>
           <v-col
             cols="12"
             sm="4"
           >
             <v-text-field
-              :value="transformAssessmentRequestStatus(assessmentRequest.status)"
+              :value="transformRequestStatus(request.status)"
               label="وضعیت"
               readonly
             />
@@ -21,7 +21,7 @@
             sm="4"
           >
             <v-text-field
-              :value="transformDateToJalali(assessmentRequest.submitDate)"
+              :value="transformDateToJalali(request.submitDate)"
               label="تاریخ ثبت درخواست"
               readonly
             />
@@ -31,14 +31,14 @@
             sm="4"
           >
             <v-text-field
-              v-model="assessmentRequest.description"
+              v-model="request.description"
               label="توضیحات"
               readonly
             />
           </v-col>
         </v-row>
       </template>
-      <template v-if="!assessmentRequest">
+      <template v-if="!request">
         <v-text-field
           v-model="tab1Desc"
           outlined
@@ -46,12 +46,12 @@
         />
         <v-btn
           color="primary"
-          @click="createAssessmentRequest"
+          @click="createRequest"
         >
           درخواست ارزیابی
         </v-btn>
       </template>
-      <!--      <template v-if="!assessmentRequestInfoObject && canUploadFile">-->
+      <!--      <template v-if="!requestInfoObject && canUploadFile">-->
       <!--        <v-text-field-->
       <!--            v-model="tab1Desc"-->
       <!--            outlined-->
@@ -59,7 +59,7 @@
       <!--        ></v-text-field>-->
       <!--        <v-btn-->
       <!--            color="primary"-->
-      <!--            @click="createAssessmentRequest">-->
+      <!--            @click="createRequest">-->
       <!--          درخواست ارزیابی-->
       <!--        </v-btn>-->
       <!--      </template>-->
@@ -69,14 +69,14 @@
 </template>
 
 <script>
-  import { transformDateToJalali, transformAssessmentRequestStatus } from '../../plugins/transformData'
+  import { transformDateToJalali, transformRequestStatus } from '../../plugins/transformData'
 
   export default {
     name: 'Tab1',
     data () {
       return {
         transformDateToJalali,
-        transformAssessmentRequestStatus,
+        transformRequestStatus,
         tab1Desc: '',
       }
     },
@@ -84,21 +84,21 @@
       episode () {
         return this.$store.getters['episode/getEpisode']
       },
-      assessmentRequest () {
-        return this.$store.getters['assessmentRequest/getAssessmentRequest']
+      request () {
+        return this.$store.getters['request/getRequest']
       },
     },
     mounted () {
       this.$emit('getData')
     },
     methods: {
-      createAssessmentRequest () {
+      createRequest () {
         const data = {
           episode: this.episode._id,
           description: this.tab1Desc,
         }
-        this.$store.dispatch('assessmentRequest/createAssessmentRequest', data).then(() => {
-          // this.$store.dispatch('assessmentRequest/fetchAssessmentRequest', data.data.id)
+        this.$store.dispatch('request/createRequest', data).then(() => {
+          // this.$store.dispatch('request/fetchRequest', data.data.id)
           this.$emit('getData')
         })
       },

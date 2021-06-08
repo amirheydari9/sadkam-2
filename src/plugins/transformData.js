@@ -52,7 +52,7 @@ export const transformVideoTimeToSecond = (format) => {
   return moment.duration(format).asSeconds()
 }
 
-export const transformAssessmentRequestStatus = (status) => {
+export const transformRequestStatus = (status) => {
   const statusObj = assessmentRequestStatus.find(item => item.code === status)
   return statusObj ? statusObj.fa : status
 }

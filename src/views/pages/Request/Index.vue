@@ -48,7 +48,7 @@
           <v-icon
             small
             class="mr-2"
-            @click="goToAssessmentTabsOrSeeEpisodes(item)"
+            @click="goToTabsOrSeeEpisodes(item)"
           >
             mdi-pencil
           </v-icon>
@@ -169,7 +169,6 @@
             // }
             this.$store.commit('product/SET_PRODUCTS', result)
           }
-          // eslint-disable-next-line no-return-assign
         }).finally(() => this.isLoading = false)
       },
     },
@@ -181,7 +180,7 @@
       this.$store.commit('product/SET_PRODUCTS', [])
     },
     methods: {
-      async goToAssessmentTabsOrSeeEpisodes (item) {
+      async goToTabsOrSeeEpisodes (item) {
         if (item.episodeCountType === 'single') {
           this.$store.commit('episode/SET_EPISODE', item)
           this.showTabs = true
