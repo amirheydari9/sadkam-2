@@ -72,7 +72,7 @@
   import { transformDateToJalali, transformAssessmentRequestStatus } from '../../plugins/transformData'
 
   export default {
-    name: 'AssessmentRequestTab',
+    name: 'Tab1',
     data () {
       return {
         transformDateToJalali,

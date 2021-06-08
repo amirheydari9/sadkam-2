@@ -114,7 +114,7 @@
 
 <script>
   export default {
-    name: 'AssessmentTab',
+    name: 'Tab3',
     computed: {
       assessmentRequest () {
         return this.$store.getters['assessmentRequest/getAssessmentRequest']

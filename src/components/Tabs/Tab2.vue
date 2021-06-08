@@ -71,7 +71,7 @@
 
 <script>
   export default {
-    name: 'ChatTab',
+    name: 'Tab2',
     computed: {
       assessmentRequest () {
         return this.$store.getters['assessmentRequest/getAssessmentRequest']

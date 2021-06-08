@@ -252,13 +252,13 @@
           <!--                  </v-data-table>-->
           <!--                </v-tab-item>-->
 
-          <assessment-tab />
-          <chat-tab
-            v-if="assessmentRequest"
+          <tab1 />
+          <tab2
+            v-if="request"
             @getData="getData"
           />
-          <assessment-request-tab
-            v-if="assessmentRequest"
+          <tab3
+            v-if="request"
             @getData="getData"
           />
 
@@ -282,13 +282,13 @@
 </template>
 
 <script>
-  import AssessmentTab from './AssessmentTab'
-  import ChatTab from './ChatTab'
-  import AssessmentRequestTab from './AssessmentRequestTab'
+  import Tab1 from './Tab1'
+  import Tab2 from './Tab2'
+  import tab3 from './Tab3'
 
   export default {
     name: 'TabsWrapper',
-    components: { AssessmentTab, ChatTab, AssessmentRequestTab },
+    components: { Tab1, Tab2, tab3 },
     props: {
       showDialog: { Boolean, isRequired: true },
     },
@@ -304,11 +304,11 @@
       episode () {
         return this.$store.getters['episode/getEpisode']
       },
-      assessmentRequestInfoByEpisodeId () {
-        return this.$store.getters['assessmentRequest/getAssessmentRequestInfoByEpisodeId']
+      requestInfoByEpisodeId () {
+        return this.$store.getters['request/getRequestInfoByEpisodeId']
       },
-      assessmentRequest () {
-        return this.$store.getters['assessmentRequest/getAssessmentRequest']
+      request () {
+        return this.$store.getters['request/getRequest']
       },
     },
     mounted () {
@@ -316,16 +316,16 @@
     },
     methods: {
       getData () {
-        this.$store.dispatch('assessmentRequest/fetchAssessmentRequestByEpisodeId', this.episode._id).then(() => {
-          this.$store.dispatch('assessmentRequest/fetchAssessmentRequest', this.assessmentRequestInfoByEpisodeId._id)
+        this.$store.dispatch('request/fetchRequestByEpisodeId', this.episode._id).then(() => {
+          this.$store.dispatch('request/fetchRequest', this.requestInfoByEpisodeId._id)
         }).catch(() => {
           this.$toast.error('خظا در دریافت اطلاعات')
           this.close()
         })
       },
       close () {
-        this.$store.commit('assessmentRequest/SET_ASSESSMENT_REQUEST_INFO_BY_EPISODE_ID', null)
-        this.$store.commit('assessmentRequest/SET_ASSESSMENT_REQUEST', null)
+        this.$store.commit('request/SET_REQUEST_INFO_BY_EPISODE_ID', null)
+        this.$store.commit('request/SET_REQUEST', null)
         this.$emit('closeDialog')
       },
     },
