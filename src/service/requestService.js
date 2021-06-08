@@ -1,31 +1,31 @@
 import axiosInstance from '../plugins/axios'
 
 export function requestService () {
-    const getAllAssessmentRequests = async () => {
+    const getAllRequests = async () => {
         try {
-            return await axiosInstance.get('/assessmentRequest')
+            return await axiosInstance.get('/request')
         } catch (e) {
             console.log(e)
         }
     }
-    const getAssessmentRequest = async (id) => {
+    const getRequest = async (id) => {
         try {
-            return await axiosInstance.get(`/assessmentRequest/${id}`)
+            return await axiosInstance.get(`/request/${id}`)
         } catch (e) {
             console.log(e)
         }
     }
-    const getAssessmentRequestByEpisode = async (episodeId) => {
+    const getRequestByEpisode = async (episodeId) => {
         try {
-            return await axiosInstance.get(`/assessmentRequest/find/byEpisode/${episodeId}`)
+            return await axiosInstance.get(`/request/find/byEpisode/${episodeId}`)
         } catch (e) {
             console.log(e)
         }
     }
 
-    const createAssessmentRequest = async (assessmentRequest) => {
+    const createRequest = async (request) => {
         try {
-            return await axiosInstance.post('/assessmentRequest', assessmentRequest)
+            return await axiosInstance.post('/request', request)
         } catch (e) {
             console.log(e)
         }
@@ -33,7 +33,7 @@ export function requestService () {
 
     const createFile = async (file) => {
         try {
-            return await axiosInstance.post('/assessmentRequest/file', file)
+            return await axiosInstance.post('/request/file', file)
         } catch (e) {
             console.log(e)
         }
@@ -41,7 +41,7 @@ export function requestService () {
 
     const createDialog = async (dialog) => {
         try {
-            return await axiosInstance.post('/assessmentRequest/dialog', dialog)
+            return await axiosInstance.post('/request/dialog', dialog)
         } catch (e) {
             console.log(e)
         }
@@ -49,46 +49,46 @@ export function requestService () {
 
     const getAssessmentListByStatus = async (status) => {
         try {
-            return await axiosInstance.get(`/assessmentRequest/find/byStatus/${status}`)
+            return await axiosInstance.get(`/request/find/byStatus/${status}`)
         } catch (e) {
             console.log(e)
         }
     }
 
-    const assignAssessmentRequestToBrokerage = async (assign) => {
+    const assignRequestToBrokerage = async (assign) => {
         try {
-            return await axiosInstance.patch('/assessmentRequest/assign', assign)
+            return await axiosInstance.patch('/request/assign', assign)
         } catch (e) {
             console.log(e)
         }
     }
 
-    const unAssignAssessmentRequestToBrokerage = async (assessmentRequestId) => {
+    const unAssignRequestToBrokerage = async (requestId) => {
         try {
-            return await axiosInstance.patch('/assessmentRequest/unassign', assessmentRequestId)
+            return await axiosInstance.patch('/request/unassign', requestId)
         } catch (e) {
             console.log(e)
         }
     }
 
-    const setStatusOfAssessmentRequest = async (status) => {
+    const setStatusOfRequest = async (status) => {
         try {
-            return await axiosInstance.patch('/assessmentRequest/status', status)
+            return await axiosInstance.patch('/request/status', status)
         } catch (e) {
             console.log(e)
         }
     }
 
     return {
-        getAllAssessmentRequests,
-        getAssessmentRequest,
-        getAssessmentRequestByEpisode,
-        createAssessmentRequest,
+        getAllRequests,
+        getRequest,
+        getRequestByEpisode,
+        createRequest,
         createDialog,
         createFile,
         getAssessmentListByStatus,
-        assignAssessmentRequestToBrokerage,
-        setStatusOfAssessmentRequest,
-        unAssignAssessmentRequestToBrokerage,
+        assignRequestToBrokerage,
+        setStatusOfRequest,
+        unAssignRequestToBrokerage,
     }
 }
