@@ -113,10 +113,6 @@
           value: 'organization.title',
         },
         {
-          text: 'شماره تماس',
-          value: 'phone',
-        },
-        {
           text: 'عملیات',
           value: 'actions',
           sortable: false,
@@ -134,10 +130,6 @@
         {
           text: 'سطح دسترسی',
           value: 'organizationRoles',
-        },
-        {
-          text: 'شماره تماس',
-          value: 'phone',
         },
         {
           text: 'عملیات',
