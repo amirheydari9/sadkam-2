@@ -146,12 +146,14 @@
           organizationTypes: ['SECRETARIAT', 'PLATFORM'],
           isSuperAdmin: false,
         },
-        // {
-        //   title: 'درخواست ارزیابی',
-        //   icon: 'mdi-account-circle',
-        //   to: '/assessmentRequest',
-        //   permission: 'USER_MANAGER',
-        // },
+        {
+          title: 'درخواست ارزیابی',
+          icon: 'mdi-account-circle',
+          to: '/request',
+          roles: ['USER_MANAGER'],
+          organizationTypes: ['SECRETARIAT', 'PLATFORM','BROKERAGE'],
+          isSuperAdmin: false,
+        },
         // {
         //   title: 'درخواست ارزیابی 1',
         //   icon: 'mdi-account-circle',

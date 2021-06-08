@@ -87,14 +87,14 @@ const routes = new Router({
         //     hasAssessmentRequestPermission: true,
         //   },
         // },
-        // {
-        //   name: 'AssessmentRequest1',
-        //   path: '/assessmentRequest1',
-        //   component: () => import('@/views/pages/AssessmentRequest1/Index.vue'),
-        //   meta: {
-        //     hasAssessmentRequestPermission: true,
-        //   },
-        // },
+        {
+          name: 'Request',
+          path: '/request',
+          component: () => import('@/views/pages/Request/Index.vue'),
+          // meta: {
+          //   hasAssessmentRequestPermission: true,
+          // },
+        },
         // {
         //   name: 'ViewAssessmentRequest',
         //   path: '/viewAssessmentRequest',
