@@ -1,6 +1,7 @@
 <template>
   <v-container>
     <div class="w-100 d-flex flex-column justify-start">
+      <breadcrumbs :items="breadcrumbs"/>
       <v-col
         cols="12"
         sm="5"
@@ -76,6 +77,7 @@
   import AddProductBtn from './AddProductBtn'
   import DialogListEpisode from '../Episode/DialogListEpisode'
   import TabsWrapper from '../../../components/Tabs/TabsWrapper'
+  import Breadcrumbs from '../../../components/Breadcrumbs'
 
   export default {
     name: 'Index',
@@ -83,6 +85,7 @@
       AddProductBtn,
       DialogListEpisode,
       TabsWrapper,
+      Breadcrumbs
     },
     data: () => ({
       isLoading: false,
@@ -128,7 +131,7 @@
           exact: true,
         },
         {
-          text: 'مدیریت اپیزودها',
+          text: 'درخواست ارزیابی',
           disabled: true,
           exact: true,
         },
