@@ -2,6 +2,7 @@
   <v-dialog
     v-model="show"
     persistent
+    max-width="850px"
   >
     <v-card>
       <v-card-text>
@@ -12,23 +13,26 @@
         >
           <v-tab
             href="#assessment"
+            @click="getData"
           >
             ارزیابی
           </v-tab>
           <v-tab
             v-if="request"
             href="#chat"
+            @click="getData"
           >
             گفتگوها
           </v-tab>
           <v-tab
             v-if="request"
             href="#file"
+            @click="getData"
           >
             فایل
           </v-tab>
         </v-tabs>
-        <v-divider />
+        <v-divider/>
 
         <v-tabs-items v-model="tabsMenu">
           <!--          <v-tab-item class="mt-5" value="assessment">-->
@@ -254,9 +258,11 @@
           <!--                  </v-data-table>-->
           <!--                </v-tab-item>-->
 
-          <tab1 />
+          <tab1/>
           <tab2
             v-if="request"
+            :dialogs="dialogs"
+            :targetFiles="targetFiles"
             @getData="getData"
           />
           <tab3
@@ -268,7 +274,7 @@
 
           <!--      </v-card-text>-->
           <v-card-actions>
-            <v-spacer />
+            <v-spacer/>
             <v-btn
               color="blue darken-1"
               text
@@ -290,13 +296,22 @@
 
   export default {
     name: 'TabsWrapper',
-    components: { Tab1, Tab2, tab3 },
+    components: {
+      Tab1,
+      Tab2,
+      tab3,
+    },
     props: {
-      showDialog: { Boolean, isRequired: true },
+      showDialog: {
+        Boolean,
+        isRequired: true,
+      },
     },
     data () {
       return {
         tabsMenu: null,
+        targetFiles: [],
+        dialogs: [],
       }
     },
     computed: {
@@ -318,13 +333,33 @@
     },
     methods: {
       getData () {
-        this.$store.dispatch('request/fetchRequest', this.episode._id)
-        // this.$store.dispatch('request/fetchRequestByEpisodeId', this.episode._id).then(() => {
-        //   this.$store.dispatch('request/fetchRequest', this.requestInfoByEpisodeId._id)
-        // }).catch(() => {
-        //   this.$toast.error('خظا در دریافت اطلاعات')
-        //   this.close()
-        // })
+        this.$store.dispatch('request/fetchRequestByEpisodeId', this.episode._id).then(() => {
+          this.$store.dispatch('request/fetchRequest', this.requestInfoByEpisodeId._id).then(() => {
+            this.request.dialogs.forEach(value => {
+              const obj = this.request.files.find(item => {
+                if (value.targetFile) {
+                  return item._id === value.targetFile
+                }
+              })
+              if (obj) {
+                value.humanId = obj.humanId
+              } else {
+                value.humanId = 'ندارد'
+              }
+            })
+            this.dialogs = [...this.request.dialogs]
+            this.request.files.forEach(item => {
+              const row = {
+                title: `${item.desc} - ${item.humanId}`,
+                id: item._id,
+              }
+              this.targetFiles.push(row)
+            })
+          })
+        }).catch(() => {
+          this.$toast.error('خظا در دریافت اطلاعات')
+          this.close()
+        })
       },
       close () {
         this.$store.commit('request/SET_REQUEST_INFO_BY_EPISODE_ID', null)

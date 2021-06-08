@@ -4,71 +4,66 @@
     value="file"
   >
     <v-container>
-      <p>TabFile</p>
-      <!--      <v-form v-if="canUploadFile" ref="fileForm">-->
-      <!--        <v-row>-->
-      <!--          <v-col-->
-      <!--              cols="12"-->
-      <!--              sm="6"-->
-      <!--          >-->
-      <!--            <v-text-field-->
-      <!--                :rules="[-->
-      <!--                            required('این فیلد الزامی است'),-->
-      <!--                            ]"-->
-      <!--                v-model="fileEditedItem.fileUrl"-->
-      <!--                label="آدرس فایل"-->
-      <!--            ></v-text-field>-->
-      <!--          </v-col>-->
-      <!--          <v-col-->
-      <!--              cols="12"-->
-      <!--              sm="6"-->
-      <!--          >-->
-      <!--            <v-text-field-->
-      <!--                :rules="[-->
-      <!--                            required('این فیلد الزامی است'),-->
-      <!--                            ]"-->
-      <!--                v-model="fileEditedItem.accessKey"-->
-      <!--                label="accessKey"-->
-      <!--            ></v-text-field>-->
-      <!--          </v-col>-->
-      <!--          <v-col-->
-      <!--              cols="12"-->
-      <!--              sm="6"-->
-      <!--          >-->
-      <!--            <v-text-field-->
-      <!--                :rules="[-->
-      <!--                            required('این فیلد الزامی است'),-->
-      <!--                            ]"-->
-      <!--                v-model="fileEditedItem.secretKey"-->
-      <!--                label="secretKey"-->
-      <!--            ></v-text-field>-->
-      <!--          </v-col>-->
-      <!--          <v-col-->
-      <!--              cols="12"-->
-      <!--              sm="6"-->
-      <!--          >-->
-      <!--            <v-text-field-->
-      <!--                v-model="fileEditedItem.desc"-->
-      <!--                label="توضیحات"-->
-      <!--            ></v-text-field>-->
-      <!--          </v-col>-->
-      <!--          <v-btn-->
-      <!--              color="primary"-->
-      <!--              depressed-->
-      <!--              @click="saveFile"-->
-      <!--              class="mr-auto"-->
-      <!--          >-->
-      <!--            ارسال فایل-->
-      <!--          </v-btn>-->
-      <!--        </v-row>-->
-      <!--      </v-form>-->
+<!--      <v-form v-if="canUploadFile" ref="fileForm">-->
+      <v-form ref="fileForm">
+        <v-row>
+          <v-col
+            cols="12"
+            sm="6"
+          >
+            <v-text-field
+              :rules="[required('این فیلد الزامی است')]"
+              v-model="form.fileUrl"
+              label="آدرس فایل"
+            ></v-text-field>
+          </v-col>
+          <v-col
+            cols="12"
+            sm="6"
+          >
+            <v-text-field
+              :rules="[required('این فیلد الزامی است')]"
+              v-model="form.accessKey"
+              label="accessKey"
+            ></v-text-field>
+          </v-col>
+          <v-col
+            cols="12"
+            sm="6"
+          >
+            <v-text-field
+              :rules="[required('این فیلد الزامی است')]"
+              v-model="form.secretKey"
+              label="secretKey"
+            ></v-text-field>
+          </v-col>
+          <v-col
+            cols="12"
+            sm="6"
+          >
+            <v-text-field
+              v-model="form.desc"
+              label="توضیحات"
+            ></v-text-field>
+          </v-col>
+          <v-btn
+            color="primary"
+            depressed
+            @click="saveFile"
+            class="mr-auto"
+          >
+            ارسال فایل
+          </v-btn>
+        </v-row>
+      </v-form>
     </v-container>
     <v-data-table
       :headers="fileHeaders"
-      :items="files"
+      :items="request.files"
       :search="fileSearch"
       no-results-text="اطلاعاتی یافت نشد"
       class="elevation-1 w-100 mt-3"
+      :items-per-page="5"
     >
       <template v-slot:top>
         <v-toolbar
@@ -93,44 +88,92 @@
         >
           mdi-pen
         </v-icon>
-        <!--                  <v-btn-->
-        <!--                      small-->
-        <!--                      download-->
-        <!--                      :href="item.fileUrl"-->
-        <!--                      class="ma-2"-->
-        <!--                      outlined-->
-        <!--                      text-->
-        <!--                  >-->
-        <!--                    <v-icon-->
-        <!--                        small-->
-        <!--                    >-->
-        <!--                      mdi-cloud-->
-        <!--                    </v-icon>-->
-        <!--                  </v-btn>-->
+        <v-btn
+          small
+          download
+          :href="item.fileUrl"
+          class="ma-2"
+          outlined
+          text
+        >
+          <v-icon
+            small
+          >
+            mdi-cloud
+          </v-icon>
+        </v-btn>
       </template>
     </v-data-table>
   </v-tab-item>
 </template>
 
 <script>
+  import { permission } from '../../plugins/permission'
+  import { required} from '../../plugins/rule'
+  import { transformDateToJalali } from '../../plugins/transformData'
+  import { requestService } from '../../service/requestService'
+
+
   export default {
     name: 'Tab3',
+    data(){
+      return{
+        fileSearch:'',
+        form: {
+          desc: '',
+          fileUrl: 'http://techslides.com/demos/sample-videos/small.mp4',
+          accessKey: '',
+          secretKey: '',
+        },
+        fileHeaders: [
+          { text: 'آدرس فایل', value: 'fileUrl' },
+          { text: 'آپلود کننده', value: 'user.nickname' },
+          { text: 'تاریخ ارسال', value: 'submitDate' },
+          { text: 'شناسه کوتاه', value: 'humanId' },
+          { text: 'مدت زمان', value: 'duration' },
+          { text: 'توضیحات', value: 'desc' },
+          { text: 'عملیات', value: 'actions', sortable: false },
+        ],
+        required,
+        transformDateToJalali
+      }
+    },
     computed: {
-      assessmentRequest () {
-        return this.$store.getters['assessmentRequest/getAssessmentRequest']
+      canUploadFile () {
+        return permission().isPlatform() && permission().isOrders()
+      },
+      request () {
+        return this.$store.getters['request/getRequest']
       },
     },
     mounted () {
-      this.$emit('getData')
+      // this.$emit('getData')
     },
     methods: {
-    // createAssessmentRequest() {
-    //   this.$store.dispatch('assessmentRequest/createAssessmentRequest', this.episode._id).then(({data}) => {
-    //     this.$store.dispatch('assessmentRequest/fetchAssessmentRequest', data.data.id)
-    //   })
-    // }
+      saveFile () {
+        if (this.$refs.fileForm.validate()) {
+          const file = { ...this.form, _id: this.request._id }
+          requestService().createFile(file).then(() => {
+            this.$emit('getData')
+            this.$toast.success('عملیات با موفقیت انجام شد')
+            this.$refs.fileForm.reset()
+            this.$refs.fileForm.resetValidation()
+          })
+        }
+      },
+      async handleFileRule (item) {
+        return true
+        // try {
+        //   await this.$store.dispatch('rule/fetchAllListRulesOfFile', item._id)
+        //   this.videoUrl = item.fileUrl
+        //   this.assessmentId = this.assessmentRequestInfoObject._id
+        //   this.fileId = item._id
+        //   this.videoTagDialog = true
+        // } catch (e) {
+        //   this.$toast.error('خطایی رخ داده است')
+        // }
+      },
     },
-
   }
 </script>
 

@@ -13,7 +13,7 @@
           :loading="isLoading"
           outlined
         />
-        <add-product-btn />
+        <add-product-btn/>
       </v-col>
       <v-data-table
         :headers="headers"
@@ -33,7 +33,7 @@
               hide-details
               autofocus
             />
-            <v-spacer />
+            <v-spacer/>
           </v-toolbar>
         </template>
         <template v-slot:item.episodeCountType="{ item }">
@@ -42,9 +42,9 @@
         <template v-slot:item.category="{ item }">
           {{ transformTitleType(item.category) }}
         </template>
-<!--        <template v-slot:item.lastUpdate="{ item }">-->
-<!--          {{ transformDateToJalali(item.lastUpdate) }}-->
-<!--        </template>-->
+        <!--        <template v-slot:item.lastUpdate="{ item }">-->
+        <!--          {{ transformDateToJalali(item.lastUpdate) }}-->
+        <!--        </template>-->
         <template v-slot:item.actions="{ item }">
           <v-icon
             small
@@ -85,7 +85,7 @@
       AddProductBtn,
       DialogListEpisode,
       TabsWrapper,
-      Breadcrumbs
+      Breadcrumbs,
     },
     data: () => ({
       isLoading: false,
@@ -185,15 +185,21 @@
     },
     methods: {
       async goToTabsOrSeeEpisodes (item) {
+        await this.$store.dispatch('episode/fetchAllEpisodes', {
+          productId: item._id,
+          page: 1,
+          size: 5,
+        })
         if (item.episodeCountType === 'single') {
-          this.$store.commit('episode/SET_EPISODE', item)
+          // await this.$store.commit('episode/SET_PARENT_ID', this.$store.getters['episode/getEpisodes'][0]._id)
+          this.$store.commit('episode/SET_EPISODE', this.$store.getters['episode/getEpisodes'][0])
           this.showTabs = true
         } else {
-          await this.$store.dispatch('episode/fetchAllEpisodes', {
-            productId: item._id,
-            page: 1,
-            size: 5,
-          })
+          // await this.$store.dispatch('episode/fetchAllEpisodes', {
+          //   productId: item._id,
+          //   page: 1,
+          //   size: 5,
+          // })
           await this.$store.commit('episode/SET_PARENT_ID', item._id)
           this.showEpisodesListDialog = true
         }
