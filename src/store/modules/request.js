@@ -1,4 +1,4 @@
-import { assessmentRequestService } from '../../service/assessmentRequestService'
+import { requestService } from '../../service/requestService'
 
 export const namespaced = true
 
@@ -78,7 +78,7 @@ export const getters = {
 export const actions = {
     async fetchAllAssessmentRequests ({ commit }) {
         try {
-            const { data } = await assessmentRequestService().getAllAssessmentRequests()
+            const { data } = await requestService().getAllAssessmentRequests()
             commit('SET_ASSESSMENT_REQUESTS', data.data)
         } catch (e) {
             console.log(e)
@@ -86,7 +86,7 @@ export const actions = {
     },
     async fetchAssessmentRequest ({ commit }, assessmentRequestId) {
         try {
-            const { data } = await assessmentRequestService().getAssessmentRequest(assessmentRequestId)
+            const { data } = await requestService().getAssessmentRequest(assessmentRequestId)
             if (data.data) {
                 commit('SET_ASSESSMENT_REQUEST', data.data)
             } else {
@@ -99,7 +99,7 @@ export const actions = {
 
     async fetchAssessmentRequestByEpisodeId ({ commit }, id) {
         try {
-            const { data } = await assessmentRequestService().getAssessmentRequestByEpisode(id)
+            const { data } = await requestService().getAssessmentRequestByEpisode(id)
             if (data.data && data.data.length > 0) {
                 commit('SET_ASSESSMENT_REQUEST_INFO_BY_EPISODE_ID', data.data[0])
             } else {
@@ -112,7 +112,7 @@ export const actions = {
 
     async createAssessmentRequest (context, assessmentRequests) {
         try {
-            return await assessmentRequestService().createAssessmentRequest(assessmentRequests)
+            return await requestService().createAssessmentRequest(assessmentRequests)
         } catch (e) {
             console.log(e)
         }
@@ -120,7 +120,7 @@ export const actions = {
 
     async fetchAssessmentListByStatus ({ commit }, status) {
         try {
-            const { data } = await assessmentRequestService().getAssessmentListByStatus(status)
+            const { data } = await requestService().getAssessmentListByStatus(status)
             switch (status) {
                 case 0:
                     commit('SET_SUBMITTED', data.data)
@@ -148,7 +148,7 @@ export const actions = {
 
     async assignAssessmentRequestToBrokerage (context, assign) {
         try {
-            return await assessmentRequestService().assignAssessmentRequestToBrokerage(assign)
+            return await requestService().assignAssessmentRequestToBrokerage(assign)
         } catch (e) {
             console.log(e)
         }
@@ -156,7 +156,7 @@ export const actions = {
 
     async unAssignAssessmentRequestToBrokerage (context, assessmentRequestId) {
         try {
-            return await assessmentRequestService().unAssignAssessmentRequestToBrokerage(assessmentRequestId)
+            return await requestService().unAssignAssessmentRequestToBrokerage(assessmentRequestId)
         } catch (e) {
             console.log(e)
         }
@@ -164,7 +164,7 @@ export const actions = {
 
     async setStatusOfAssessmentRequest (context, status) {
         try {
-            return await assessmentRequestService().setStatusOfAssessmentRequest(status)
+            return await requestService().setStatusOfAssessmentRequest(status)
         } catch (e) {
             console.log(e)
         }

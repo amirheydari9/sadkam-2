@@ -918,7 +918,7 @@
   import { productService } from '../../../service/productService'
   import { entryType } from '../../../plugins/constant'
   import { episodeService } from '../../../service/episodeService'
-  import { assessmentRequestService } from '../../../service/assessmentRequestService'
+  import { requestService } from '../../../service/requestService'
   import VuePersianDatetimePicker from 'vue-persian-datetime-picker'
   import VideoTag from '../../../components/VideoTag'
 
@@ -1237,13 +1237,13 @@
       },
 
       handleTab1 () {
-        assessmentRequestService().getAssessmentRequestByEpisode(this.episodeIdForTab1).then(({ data }) => {
+        requestService().getAssessmentRequestByEpisode(this.episodeIdForTab1).then(({ data }) => {
           if (data.data.length === 0) {
             this.episodeHasAssessmentRequest = false
             this.assessmentRequestInfoObject = null
           } else {
             this.episodeHasAssessmentRequest = true
-            assessmentRequestService().getAssessmentRequest(data.data[0]._id).then((res) => {
+            requestService().getAssessmentRequest(data.data[0]._id).then((res) => {
               this.assessmentRequestInfoObject = res.data.data
               this.files = res.data.data.files
               res.data.data.dialogs.forEach(value => {
@@ -1275,9 +1275,9 @@
           episode: this.episodeIdForTab1,
           description: this.tab1Desc,
         }
-        assessmentRequestService().createAssessmentRequest(assessmentRequest).then(({ data }) => {
+        requestService().createAssessmentRequest(assessmentRequest).then(({ data }) => {
           this.episodeHasAssessmentRequest = true
-          assessmentRequestService().getAssessmentRequest(data.data.id).then((res) => {
+          requestService().getAssessmentRequest(data.data.id).then((res) => {
             this.assessmentRequestInfoObject = res.data.data
             this.files = res.data.data.files
             res.data.data.dialogs.forEach(value => {
@@ -1313,7 +1313,7 @@
       saveDialog () {
         if (this.$refs.dialogForm.validate()) {
           const dialog = { ...this.dialogEditedItem, _id: this.assessmentRequestInfoObject._id }
-          assessmentRequestService().createDialog(dialog).then(() => {
+          requestService().createDialog(dialog).then(() => {
             this.handleTab1()
             this.$refs.dialogForm.reset()
             this.$refs.dialogForm.resetValidation()
@@ -1327,7 +1327,7 @@
       saveFile () {
         if (this.$refs.fileForm.validate()) {
           const file = { ...this.fileEditedItem, _id: this.assessmentRequestInfoObject._id }
-          assessmentRequestService().createFile(file).then(() => {
+          requestService().createFile(file).then(() => {
             this.handleTab1()
             this.$refs.fileForm.reset()
             this.$refs.fileForm.resetValidation()

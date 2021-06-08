@@ -5,7 +5,7 @@ import { userService } from '@/service/userService'
 import { organizationService } from '@/service/organizationService'
 import * as product from './modules/product'
 import * as episode from './modules/episode'
-import * as assessmentRequest from './modules/assessmentRequest'
+import * as request from './modules/request'
 import * as staticData from './modules/static'
 import * as rule from './modules/rule'
 import * as assessment from './modules/assessment'
@@ -186,7 +186,7 @@ export default new Vuex.Store({
     organization,
     product,
     episode,
-    assessmentRequest,
+    request,
     staticData,
     rule,
     assessment,

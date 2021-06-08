@@ -1,6 +1,6 @@
 import axiosInstance from '../plugins/axios'
 
-export function assessmentRequestService () {
+export function requestService () {
     const getAllAssessmentRequests = async () => {
         try {
             return await axiosInstance.get('/assessmentRequest')

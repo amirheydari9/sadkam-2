@@ -787,7 +787,7 @@
   import { transformDateToJalali, transformAssessmentRequestStatus } from '../../../plugins/transformData'
   import { assessmentRequestStatus } from '../../../plugins/constant'
   import { permission } from '../../../plugins/permission'
-  import { assessmentRequestService } from '../../../service/assessmentRequestService'
+  import { requestService } from '../../../service/requestService'
   import { required } from '../../../plugins/rule'
   import VideoTag from '../../../components/VideoTag'
   // import {assessmentService} from "../../../service/assessmentService";
@@ -1063,7 +1063,7 @@
       seeDetails (item) {
         console.log(item)
         this.currentEpisode = item.episode
-        assessmentRequestService().getAssessmentRequest(item._id).then(({ data }) => {
+        requestService().getAssessmentRequest(item._id).then(({ data }) => {
           this.assessmentRequestInfoObject = data.data
           this.files = data.data.files
           data.data.dialogs.forEach(value => {
@@ -1105,7 +1105,7 @@
       saveDialog () {
         if (this.$refs.dialogForm.validate()) {
           const dialog = { ...this.dialogEditedItem, _id: this.assessmentRequestInfoObject._id }
-          assessmentRequestService().createDialog(dialog).then(() => {
+          requestService().createDialog(dialog).then(() => {
             this.seeDetails(this.assessmentRequestInfoObject)
             this.$refs.dialogForm.reset()
             this.$refs.dialogForm.resetValidation()
@@ -1115,7 +1115,7 @@
       saveFile () {
         if (this.$refs.fileForm.validate()) {
           const file = { ...this.fileEditedItem, _id: this.assessmentRequestInfoObject._id }
-          assessmentRequestService().createFile(file).then(() => {
+          requestService().createFile(file).then(() => {
             this.seeDetails(this.assessmentRequestInfoObject)
             this.$refs.fileForm.reset()
             this.$refs.fileForm.resetValidation()
