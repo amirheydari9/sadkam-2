@@ -245,7 +245,7 @@
     >
       <v-card>
         <v-card-title>
-          <dialog-headline title="'افزودن رول'"/>
+          <dialog-headline title="مدیریت رول"/>
         </v-card-title>
 
         <v-card-text>

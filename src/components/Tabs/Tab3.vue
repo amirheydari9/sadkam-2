@@ -203,6 +203,7 @@
             this.$toast.success('عملیات با موفقیت انجام شد')
             this.$refs.fileForm.reset()
             this.$refs.fileForm.resetValidation()
+            this.form.fileUrl = 'http://techslides.com/demos/sample-videos/small.mp4'
           })
         }
       },

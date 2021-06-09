@@ -334,28 +334,32 @@
     methods: {
       getData () {
         this.$store.dispatch('request/fetchRequestByEpisodeId', this.episode._id).then(() => {
-          this.$store.dispatch('request/fetchRequest', this.requestInfoByEpisodeId._id).then(() => {
-            this.request.dialogs.forEach(value => {
-              const obj = this.request.files.find(item => {
-                if (value.targetFile) {
-                  return item._id === value.targetFile
+
+          console.log(this.requestInfoByEpisodeId,'requestInfoByEpisodeId')
+          if(this.requestInfoByEpisodeId){
+            this.$store.dispatch('request/fetchRequest', this.requestInfoByEpisodeId._id).then(() => {
+              this.request.dialogs.forEach(value => {
+                const obj = this.request.files.find(item => {
+                  if (value.targetFile) {
+                    return item._id === value.targetFile
+                  }
+                })
+                if (obj) {
+                  value.humanId = obj.humanId
+                } else {
+                  value.humanId = 'ندارد'
                 }
               })
-              if (obj) {
-                value.humanId = obj.humanId
-              } else {
-                value.humanId = 'ندارد'
-              }
+              this.dialogs = [...this.request.dialogs]
+              this.request.files.forEach(item => {
+                const row = {
+                  title: `${item.desc} - ${item.humanId}`,
+                  id: item._id,
+                }
+                this.targetFiles.push(row)
+              })
             })
-            this.dialogs = [...this.request.dialogs]
-            this.request.files.forEach(item => {
-              const row = {
-                title: `${item.desc} - ${item.humanId}`,
-                id: item._id,
-              }
-              this.targetFiles.push(row)
-            })
-          })
+          }
         }).catch(() => {
           this.$toast.error('خظا در دریافت اطلاعات')
           this.close()
