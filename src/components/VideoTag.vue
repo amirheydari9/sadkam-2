@@ -1,6 +1,7 @@
 <template>
   <div>
     <v-container>
+
       <v-row>
         <v-col cols="8">
           <video
@@ -9,6 +10,9 @@
             controls
           />
         </v-col>
+        <!--        ویدیو-->
+
+        <!--        زمانبندی-->
         <v-col
           v-if="hasPermission"
           cols="4"
@@ -75,7 +79,7 @@
               </v-form>
             </v-card-text>
             <v-card-actions>
-              <v-spacer />
+              <v-spacer/>
               <v-btn
                 color="primary"
                 :disabled="!formIsValid"
@@ -92,10 +96,13 @@
             </v-card-actions>
           </v-card>
         </v-col>
+        <!--        زمانبندی-->
+
       </v-row>
 
       <v-row>
         <v-col cols="12">
+          <!--        لیست رول ها request-->
           <v-data-table
             v-if="type==='assessmentRequest'"
             :headers="headers"
@@ -103,6 +110,14 @@
             :search="search"
             no-results-text="اطلاعاتی یافت نشد"
             class="elevation-1 w-100"
+            :items-per-page="5"
+            :footer-props="{
+      showFirstLastPage: true,
+      firstIcon: 'mdi-arrow-collapse-left',
+      lastIcon: 'mdi-arrow-collapse-right',
+      prevIcon: 'mdi-plus',
+      nextIcon: 'mdi-minus'
+    }"
           >
             <template v-slot:top>
               <v-toolbar
@@ -115,7 +130,7 @@
                   hide-details
                   autofocus
                 />
-                <v-spacer />
+                <v-spacer/>
               </v-toolbar>
             </template>
             <template v-slot:item.actions="{ item }">
@@ -150,7 +165,9 @@
               {{ transformVideoTimeFormat(item.toTime) }}
             </template>
           </v-data-table>
+          <!--        لیست رول ها request-->
 
+          <!--        لیست رول ها assessment-->
           <v-data-table
             v-if="type==='assessment'"
             :headers="headers"
@@ -158,6 +175,14 @@
             :search="search"
             no-results-text="اطلاعاتی یافت نشد"
             class="elevation-1 w-100"
+            items-per-page="5"
+            :footer-props="{
+      showFirstLastPage: true,
+      firstIcon: 'mdi-arrow-collapse-left',
+      lastIcon: 'mdi-arrow-collapse-right',
+      prevIcon: 'mdi-plus',
+      nextIcon: 'mdi-minus'
+    }"
           >
             <template v-slot:top>
               <v-toolbar
@@ -170,7 +195,7 @@
                   hide-details
                   autofocus
                 />
-                <v-spacer />
+                <v-spacer/>
               </v-toolbar>
             </template>
             <template v-slot:item.actions="{ item }">
@@ -205,11 +230,14 @@
               {{ transformVideoTimeFormat(item.toTime) }}
             </template>
           </v-data-table>
+          <!--        لیست رول ها assessment-->
 
         </v-col>
       </v-row>
+
     </v-container>
 
+    <!--       مدال افزودن رول-->
     <v-dialog
       v-model="dialog"
       max-width="600px"
@@ -307,7 +335,7 @@
         </v-card-text>
 
         <v-card-actions>
-          <v-spacer />
+          <v-spacer/>
           <v-btn
             color="blue darken-1"
             text
@@ -325,6 +353,8 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+    <!--       مدال افزودن رول-->
+
   </div>
 </template>
 
@@ -337,11 +367,27 @@
   export default {
     name: 'VideoTag',
     props: {
-      url: { String, isRequired: true },
-      assessment: { String, isRequired: true },
-      file: { String, isRequired: false },
-      assessmentRules: { Array, isRequired: false },
-      type: { String, isRequired: false, default: 'assessmentRequest' },
+      url: {
+        String,
+        isRequired: true,
+      },
+      assessment: {
+        String,
+        isRequired: true,
+      },
+      file: {
+        String,
+        isRequired: false,
+      },
+      assessmentRules: {
+        Array,
+        isRequired: false,
+      },
+      type: {
+        String,
+        isRequired: false,
+        default: 'assessmentRequest',
+      },
     },
     components: { DialogHeadline },
     data () {
@@ -355,16 +401,47 @@
         priority: [1, 2, 3, 4, 5],
         search: '',
         headers: [
-          { text: 'شماره', value: 'rowNumber' },
-          { text: 'از', value: 'fromTime' },
-          { text: 'تا', value: 'toTime' },
-          { text: 'موضوع', value: 'subject' },
-          { text: 'نوع', value: 'type' },
-          { text: 'عملیات', value: 'action' },
-          { text: 'اولویت', value: 'priority' },
-          { text: 'پیغام', value: 'message' },
-          { text: 'توضیحات', value: 'desc' },
-          { text: 'عملیات', value: 'actions', sortable: false },
+          {
+            text: 'شماره',
+            value: 'rowNumber',
+          },
+          {
+            text: 'از',
+            value: 'fromTime',
+          },
+          {
+            text: 'تا',
+            value: 'toTime',
+          },
+          {
+            text: 'موضوع',
+            value: 'subject',
+          },
+          {
+            text: 'نوع',
+            value: 'type',
+          },
+          {
+            text: 'عملیات',
+            value: 'action',
+          },
+          {
+            text: 'اولویت',
+            value: 'priority',
+          },
+          {
+            text: 'پیغام',
+            value: 'message',
+          },
+          {
+            text: 'توضیحات',
+            value: 'desc',
+          },
+          {
+            text: 'عملیات',
+            value: 'actions',
+            sortable: false,
+          },
         ],
         editedIndex: -1,
         editedItem: {
@@ -415,10 +492,10 @@
     mounted () {
       // this.$store.dispatch('rule/fetchAllListRulesOfFile', this.file)
       if (this.hasPermission) {
-        this.$store.dispatch('staticData/fetchRulesList')
-        this.$refs.video.addEventListener('play', this.handlePlayVideo)
-        this.$refs.video.addEventListener('timeupdate', this.handleTimeUpdateVideo)
-        this.$refs.video.addEventListener('pause', this.handlePauseVideo)
+      this.$store.dispatch('staticData/fetchRulesList')
+      this.$refs.video.addEventListener('play', this.handlePlayVideo)
+      this.$refs.video.addEventListener('timeupdate', this.handleTimeUpdateVideo)
+      this.$refs.video.addEventListener('pause', this.handlePauseVideo)
       }
     },
     beforeDestroy () {
@@ -541,14 +618,34 @@
               file: this.file,
             }
             if (this.type === 'assessmentRequest') {
-              rule = { ...rule, assessmentRequestId: this.assessment }
+              rule = {
+                ...rule,
+                requestId: this.assessment,
+              }
             } else {
-              rule = { ...rule, assessmentId: this.assessment }
+              rule = {
+                ...rule,
+                assessmentId: this.assessment,
+              }
             }
             if (this.editedIndex > -1) {
-              await this.$store.dispatch('rule/updateRule', rule)
+              const data = {
+                _id: rule._id,
+                fromTime: rule.fromTime,
+                toTime: rule.toTime,
+                subject: rule.subject,
+                type: rule.type,
+                action: rule.action,
+                priority: rule.priority,
+                message: rule.message,
+                desc: rule.desc,
+                rowNumber: rule.rowNumber,
+                file: rule.file,
+              }
+              await this.$store.dispatch('rule/updateRule', data)
             } else {
               if (this.type === 'assessmentRequest') {
+                console.log(rule, 'rule')
                 await this.$store.dispatch('rule/createRuleForAssessmentRequest', rule)
                 await this.$store.dispatch('rule/fetchAllListRulesOfFile', this.file)
                 this.successAction()
@@ -558,10 +655,10 @@
                 })
               }
             }
-          // if (this.type === 'assessmentRequest') {
-          //   await this.$store.dispatch('rule/fetchAllListRulesOfFile', this.file)
-          // }
-          // this.successAction()
+            // if (this.type === 'assessmentRequest') {
+            //   await this.$store.dispatch('rule/fetchAllListRulesOfFile', this.file)
+            // }
+            // this.successAction()
           } catch (e) {
             this.failAction()
           }
@@ -572,7 +669,7 @@
         this.$refs.video.currentTime = second
       },
       successAction () {
-        this.$toast.success('عملیات با موفیت انجام شد')
+        this.$toast.success('عملیات با موفقیت انجام شد')
         this.close()
       },
       failAction () {

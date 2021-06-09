@@ -4,8 +4,8 @@
     value="file"
   >
     <v-container>
-<!--      <v-form v-if="canUploadFile" ref="fileForm">-->
-      <v-form ref="fileForm">
+      <v-form v-if="canUploadFile" ref="fileForm">
+<!--      <v-form ref="fileForm">-->
         <v-row>
           <v-col
             cols="12"
@@ -118,7 +118,12 @@
     >
       <v-card>
         <v-card-text>
-          <video-tag-second
+<!--          <video-tag-second-->
+<!--            :url="videoUrl"-->
+<!--            :file="fileId"-->
+<!--            :assessment="assessmentId"-->
+<!--          />-->
+          <video-tag
             :url="videoUrl"
             :file="fileId"
             :assessment="assessmentId"
@@ -146,11 +151,12 @@
   import { transformDateToJalali } from '../../plugins/transformData'
   import { requestService } from '../../service/requestService'
   import VideoTagSecond from '../VideoTag-second'
+  import VideoTag from '../VideoTag'
 
 
   export default {
     name: 'Tab3',
-    components: { VideoTagSecond },
+    components: { VideoTagSecond ,VideoTag},
     data(){
       return{
         videoTagDialog: false,

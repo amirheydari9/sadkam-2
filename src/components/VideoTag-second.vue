@@ -2,6 +2,7 @@
   <div>
     <v-container>
       <v-row>
+        <!--        ویدیو-->
         <v-col cols="8">
           <video
             ref="video"
@@ -9,10 +10,10 @@
             controls
           />
         </v-col>
-        <v-col
-          v-if="hasPermission"
-          cols="4"
-        >
+        <!--        ویدیو-->
+
+        <!--        زمانبندی-->
+        <v-col v-if="hasPermission" cols="4">
           <v-card>
             <v-card-text>
               <v-form ref="videoTagForm">
@@ -75,7 +76,7 @@
               </v-form>
             </v-card-text>
             <v-card-actions>
-              <v-spacer />
+              <v-spacer/>
               <v-btn
                 color="primary"
                 :disabled="!formIsValid"
@@ -92,8 +93,11 @@
             </v-card-actions>
           </v-card>
         </v-col>
+        <!--        زمانبندی-->
+
       </v-row>
 
+      <!--        لیست رول ها-->
       <v-row>
         <v-col cols="12">
           <v-data-table
@@ -102,6 +106,13 @@
             :search="search"
             no-results-text="اطلاعاتی یافت نشد"
             class="elevation-1 w-100"
+            :footer-props="{
+      showFirstLastPage: true,
+      firstIcon: 'mdi-arrow-collapse-left',
+      lastIcon: 'mdi-arrow-collapse-right',
+      prevIcon: 'mdi-plus',
+      nextIcon: 'mdi-minus'
+    }"
           >
             <template v-slot:top>
               <v-toolbar
@@ -114,20 +125,34 @@
                   hide-details
                   autofocus
                 />
-                <v-spacer />
+                <v-spacer/>
               </v-toolbar>
             </template>
             <template v-slot:item.actions="{ item }">
+              <!--              <v-icon-->
+              <!--                v-if="hasPermission"-->
+              <!--                small-->
+              <!--                class="mr-2"-->
+              <!--                @click="editItem(item)"-->
+              <!--              >-->
+              <!--                mdi-pencil-->
+              <!--              </v-icon>-->
               <v-icon
-                v-if="hasPermission"
                 small
                 class="mr-2"
                 @click="editItem(item)"
               >
                 mdi-pencil
               </v-icon>
+              <!--              <v-icon-->
+              <!--                v-if="hasPermission"-->
+              <!--                small-->
+              <!--                class="mr-2"-->
+              <!--                @click="deleteItem(item)"-->
+              <!--              >-->
+              <!--                mdi-delete-->
+              <!--              </v-icon>-->
               <v-icon
-                v-if="hasPermission"
                 small
                 class="mr-2"
                 @click="deleteItem(item)"
@@ -152,8 +177,11 @@
 
         </v-col>
       </v-row>
+      <!--        لیست رول ها-->
+
     </v-container>
 
+    <!--       مدال افزودن رول-->
     <v-dialog
       v-model="dialog"
       max-width="600px"
@@ -161,9 +189,8 @@
     >
       <v-card>
         <v-card-title>
-          <dialog-headline title="'افزودن رول'"/>
+          <dialog-headline title="مدیریت رول"/>
         </v-card-title>
-
         <v-card-text>
           <v-container>
             <v-form ref="ruleForm">
@@ -249,9 +276,8 @@
             </v-form>
           </v-container>
         </v-card-text>
-
         <v-card-actions>
-          <v-spacer />
+          <v-spacer/>
           <v-btn
             color="blue darken-1"
             text
@@ -268,7 +294,10 @@
           </v-btn>
         </v-card-actions>
       </v-card>
+
     </v-dialog>
+    <!--       مدال افزودن رول-->
+
   </div>
 </template>
 
@@ -281,9 +310,18 @@
   export default {
     name: 'VideoTag-second',
     props: {
-      url: { String, isRequired: true },
-      assessment: { String, isRequired: true },
-      file: { String, isRequired: false },
+      url: {
+        String,
+        isRequired: true,
+      },
+      assessment: {
+        String,
+        isRequired: true,
+      },
+      file: {
+        String,
+        isRequired: false,
+      },
     },
     components: { DialogHeadline },
     data () {
@@ -297,16 +335,47 @@
         priority: [1, 2, 3, 4, 5],
         search: '',
         headers: [
-          { text: 'شماره', value: 'rowNumber' },
-          { text: 'از', value: 'fromTime' },
-          { text: 'تا', value: 'toTime' },
-          { text: 'موضوع', value: 'subject' },
-          { text: 'نوع', value: 'type' },
-          { text: 'عملیات', value: 'action' },
-          { text: 'اولویت', value: 'priority' },
-          { text: 'پیغام', value: 'message' },
-          { text: 'توضیحات', value: 'desc' },
-          { text: 'عملیات', value: 'actions', sortable: false },
+          {
+            text: 'شماره',
+            value: 'rowNumber',
+          },
+          {
+            text: 'از',
+            value: 'fromTime',
+          },
+          {
+            text: 'تا',
+            value: 'toTime',
+          },
+          {
+            text: 'موضوع',
+            value: 'subject',
+          },
+          {
+            text: 'نوع',
+            value: 'type',
+          },
+          {
+            text: 'عملیات',
+            value: 'action',
+          },
+          {
+            text: 'اولویت',
+            value: 'priority',
+          },
+          {
+            text: 'پیغام',
+            value: 'message',
+          },
+          {
+            text: 'توضیحات',
+            value: 'desc',
+          },
+          {
+            text: 'عملیات',
+            value: 'actions',
+            sortable: false,
+          },
         ],
         editedIndex: -1,
         editedItem: {
@@ -483,9 +552,15 @@
               file: this.file,
             }
             if (this.type === 'assessmentRequest') {
-              rule = { ...rule, assessmentRequestId: this.assessment }
+              rule = {
+                ...rule,
+                assessmentRequestId: this.assessment,
+              }
             } else {
-              rule = { ...rule, assessmentId: this.assessment }
+              rule = {
+                ...rule,
+                assessmentId: this.assessment,
+              }
             }
             if (this.editedIndex > -1) {
               await this.$store.dispatch('rule/updateRule', rule)
@@ -500,10 +575,10 @@
                 })
               }
             }
-          // if (this.type === 'assessmentRequest') {
-          //   await this.$store.dispatch('rule/fetchAllListRulesOfFile', this.file)
-          // }
-          // this.successAction()
+            // if (this.type === 'assessmentRequest') {
+            //   await this.$store.dispatch('rule/fetchAllListRulesOfFile', this.file)
+            // }
+            // this.successAction()
           } catch (e) {
             this.failAction()
           }
