@@ -104,6 +104,32 @@
         </v-btn>
       </template>
     </v-data-table>
+
+    <v-dialog
+      v-model="videoTagDialog"
+      persistent
+    >
+      <v-card>
+        <v-card-text>
+          <video-tag
+            :url="videoUrl"
+            :file="fileId"
+            :assessment="assessmentId"
+          />
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer />
+          <v-btn
+            color="blue darken-1"
+            text
+            @click="closeVideoTags"
+          >
+            انصراف
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
   </v-tab-item>
 </template>
 
@@ -112,12 +138,20 @@
   import { required} from '../../plugins/rule'
   import { transformDateToJalali } from '../../plugins/transformData'
   import { requestService } from '../../service/requestService'
+  import VideoTag from '../VideoTag'
 
 
   export default {
     name: 'Tab3',
+    comments:{
+      VideoTag
+    },
     data(){
       return{
+        videoTagDialog: false,
+        assessmentId: null,
+        fileId: null,
+        videoUrl: null,
         fileSearch:'',
         form: {
           desc: '',
@@ -162,16 +196,23 @@
         }
       },
       async handleFileRule (item) {
-        return true
-        // try {
-        //   await this.$store.dispatch('rule/fetchAllListRulesOfFile', item._id)
-        //   this.videoUrl = item.fileUrl
-        //   this.assessmentId = this.assessmentRequestInfoObject._id
-        //   this.fileId = item._id
-        //   this.videoTagDialog = true
-        // } catch (e) {
-        //   this.$toast.error('خطایی رخ داده است')
-        // }
+        try {
+          await this.$store.dispatch('rule/fetchAllListRulesOfFile', item._id)
+          this.videoUrl = item.fileUrl
+          this.assessmentId = this.request._id
+          this.fileId = item._id
+          this.videoTagDialog = true
+        } catch (e) {
+          this.$toast.error('خطایی رخ داده است')
+        }
+      },
+      closeVideoTags () {
+        this.videoTagDialog = false
+        this.$nextTick(() => {
+          this.videoUrl = null
+          this.assessmentId = null
+          this.fileId = null
+        })
       },
     },
   }

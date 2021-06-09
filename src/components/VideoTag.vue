@@ -205,6 +205,7 @@
               {{ transformVideoTimeFormat(item.toTime) }}
             </template>
           </v-data-table>
+
         </v-col>
       </v-row>
     </v-container>
@@ -216,7 +217,7 @@
     >
       <v-card>
         <v-card-title>
-          <span class="text-h5">افزودن رول</span>
+          <dialog-headline title="'افزودن رول'"/>
         </v-card-title>
 
         <v-card-text>
@@ -331,6 +332,7 @@
   import { required } from '../plugins/rule'
   import { transformVideoTimeFormat, transformVideoTimeToSecond } from '../plugins/transformData'
   import { permission } from '../plugins/permission'
+  import DialogHeadline from './DialogHeadline'
 
   export default {
     name: 'VideoTag',
@@ -341,6 +343,7 @@
       assessmentRules: { Array, isRequired: false },
       type: { String, isRequired: false, default: 'assessmentRequest' },
     },
+    components: { DialogHeadline },
     data () {
       return {
         required,
