@@ -111,7 +111,7 @@
     >
       <v-card>
         <v-card-text>
-          <video-tag
+          <video-tag-second
             :url="videoUrl"
             :file="fileId"
             :assessment="assessmentId"
@@ -138,14 +138,12 @@
   import { required} from '../../plugins/rule'
   import { transformDateToJalali } from '../../plugins/transformData'
   import { requestService } from '../../service/requestService'
-  import VideoTag from '../VideoTag'
+  import VideoTagSecond from '../VideoTag-second'
 
 
   export default {
     name: 'Tab3',
-    comments:{
-      VideoTag
-    },
+    components: { VideoTagSecond },
     data(){
       return{
         videoTagDialog: false,
