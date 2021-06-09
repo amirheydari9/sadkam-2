@@ -97,7 +97,6 @@
       <v-row>
         <v-col cols="12">
           <v-data-table
-            v-if="type==='assessmentRequest'"
             :headers="headers"
             :items="rulesOfFile"
             :search="search"
@@ -135,61 +134,6 @@
               >
                 mdi-delete
               </v-icon>
-              <v-icon
-                small
-                class="mr-2"
-                @click="seekToTime(item.fromTime)"
-              >
-                mdi-play
-              </v-icon>
-            </template>
-            <template v-slot:item.fromTime="{ item }">
-              {{ transformVideoTimeFormat(item.fromTime) }}
-            </template>
-            <template v-slot:item.toTime="{ item }">
-              {{ transformVideoTimeFormat(item.toTime) }}
-            </template>
-          </v-data-table>
-
-          <v-data-table
-            v-if="type==='assessment'"
-            :headers="headers"
-            :items="assessmentRulesData"
-            :search="search"
-            no-results-text="اطلاعاتی یافت نشد"
-            class="elevation-1 w-100"
-          >
-            <template v-slot:top>
-              <v-toolbar
-                flat
-              >
-                <v-text-field
-                  v-model="search"
-                  label="جست جو"
-                  single-line
-                  hide-details
-                  autofocus
-                />
-                <v-spacer />
-              </v-toolbar>
-            </template>
-            <template v-slot:item.actions="{ item }">
-              <!--              <v-icon-->
-              <!--                  small-->
-              <!--                  class="mr-2"-->
-              <!--                  @click="editItem(item)"-->
-              <!--                  v-if="hasPermission"-->
-              <!--              >-->
-              <!--                mdi-pencil-->
-              <!--              </v-icon>-->
-              <!--              <v-icon-->
-              <!--                  small-->
-              <!--                  class="mr-2"-->
-              <!--                  @click="deleteItem(item)"-->
-              <!--                  v-if="hasPermission"-->
-              <!--              >-->
-              <!--                mdi-cloud-->
-              <!--              </v-icon>-->
               <v-icon
                 small
                 class="mr-2"
@@ -340,8 +284,6 @@
       url: { String, isRequired: true },
       assessment: { String, isRequired: true },
       file: { String, isRequired: false },
-      assessmentRules: { Array, isRequired: false },
-      type: { String, isRequired: false, default: 'assessmentRequest' },
     },
     components: { DialogHeadline },
     data () {
