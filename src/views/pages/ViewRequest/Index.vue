@@ -96,7 +96,7 @@
               </v-icon>
             </template>
             <template v-slot:item.status="{ item }">
-              {{ transformAssessmentRequestStatus(item.status) }}
+              {{ transformRequestStatus(item.status) }}
             </template>
             <template v-slot:item.submitDate="{ item }">
               {{ transformDateToJalali(item.submitDate) }}
@@ -148,7 +148,7 @@
               </v-icon>
             </template>
             <template v-slot:item.status="{ item }">
-              {{ transformAssessmentRequestStatus(item.status) }}
+              {{ transformRequestStatus(item.status) }}
             </template>
             <template v-slot:item.submitDate="{ item }">
               {{ transformDateToJalali(item.submitDate) }}
@@ -200,7 +200,7 @@
               </v-icon>
             </template>
             <template v-slot:item.status="{ item }">
-              {{ transformAssessmentRequestStatus(item.status) }}
+              {{ transformRequestStatus(item.status) }}
             </template>
             <template v-slot:item.submitDate="{ item }">
               {{ transformDateToJalali(item.submitDate) }}
@@ -235,7 +235,7 @@
               </v-toolbar>
             </template>
             <template v-slot:item.status="{ item }">
-              {{ transformAssessmentRequestStatus(item.status) }}
+              {{ transformRequestStatus(item.status) }}
             </template>
             <template v-slot:item.submitDate="{ item }">
               {{ transformDateToJalali(item.submitDate) }}
@@ -279,7 +279,7 @@
               </v-toolbar>
             </template>
             <template v-slot:item.status="{ item }">
-              {{ transformAssessmentRequestStatus(item.status) }}
+              {{ transformRequestStatus(item.status) }}
             </template>
             <template v-slot:item.submitDate="{ item }">
               {{ transformDateToJalali(item.submitDate) }}
@@ -323,7 +323,7 @@
               </v-toolbar>
             </template>
             <template v-slot:item.status="{ item }">
-              {{ transformAssessmentRequestStatus(item.status) }}
+              {{ transformRequestStatus(item.status) }}
             </template>
             <template v-slot:item.submitDate="{ item }">
               {{ transformDateToJalali(item.submitDate) }}
@@ -461,7 +461,7 @@
                       sm="4"
                     >
                       <v-text-field
-                        :value="transformAssessmentRequestStatus(assessmentRequestInfoObject.status)"
+                        :value="transformRequestStatus(assessmentRequestInfoObject.status)"
                         label="وضعیت"
                         readonly
                       />
@@ -784,7 +784,7 @@
 </template>
 
 <script>
-  import { transformDateToJalali, transformAssessmentRequestStatus } from '../../../plugins/transformData'
+  import { transformDateToJalali, transformRequestStatus } from '../../../plugins/transformData'
   import { assessmentRequestStatus } from '../../../plugins/constant'
   import { permission } from '../../../plugins/permission'
   import { requestService } from '../../../service/requestService'
@@ -821,7 +821,7 @@
         statusSelectValue: 0,
         brokerageValue: null,
         transformDateToJalali,
-        transformAssessmentRequestStatus,
+        transformRequestStatus,
         required,
         tabsDialog: false,
         detailsTabsMenu: null,

@@ -160,12 +160,14 @@
         //   to: '/assessmentRequest1',
         //   permission: 'USER_MANAGER',
         // },
-        // {
-        //   title: 'مشاهده درخواست ارزیابی',
-        //   icon: 'mdi-account-circle',
-        //   to: '/viewAssessmentRequest',
-        //   permission: 'USER_MANAGER',
-        // },
+        {
+          title: 'مشاهده درخواست ارزیابی',
+          icon: 'mdi-account-circle',
+          to: '/viewRequest',
+          roles: ['ORDERS'],
+          organizationTypes: ['SECRETARIAT', 'PLATFORM','BROKERAGE'],
+          isSuperAdmin: false,
+        },
         {
           title: 'مدیریت تیکت',
           icon: 'mdi-clipboard-check',
