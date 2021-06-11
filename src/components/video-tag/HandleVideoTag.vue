@@ -576,6 +576,7 @@
         }
         this.endTime = this.transformVideoTimeFormat(endTime)
         this.formIsValid = true
+        this.$refs.video.pause()
       },
       handleResetEndTimeRule () {
         this.endTime = null
