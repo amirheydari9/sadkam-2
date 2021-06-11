@@ -127,6 +127,7 @@
             :url="videoUrl"
             :file="fileId"
             :assessment="assessmentId"
+            :files="request.files"
           />
         </v-card-text>
         <v-card-actions>

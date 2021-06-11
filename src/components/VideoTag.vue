@@ -1,108 +1,177 @@
 <template>
   <div>
-    <v-container>
-
       <v-row>
-        <v-col cols="8">
-          <video
-            ref="video"
-            :src="url"
-            controls
-          />
+        <v-col cols="6">
+          <!--        ویدیو-->
+            <video
+              ref="video"
+              :src="url"
+              controls
+              class="w-100"
+            />
+          <!--        ویدیو-->
         </v-col>
-        <!--        ویدیو-->
-
-        <!--        زمانبندی-->
-        <v-col
-          v-if="hasPermission"
-          cols="4"
-        >
-          <v-card>
-            <v-card-text>
-              <v-form ref="videoTagForm">
-                <v-container>
-                  <v-row>
-                    <v-col
-                      cols="12"
-                    >
-                      <v-row>
-                        <v-btn
-                          color="success"
-                          @click="handleStartTimeRule"
-                        >
-                          زمان شروع
-                        </v-btn>
-                        <v-btn
-                          color="warning"
-                          @click="handleResetStartTimeRule"
-                        >
-                          ریست
-                        </v-btn>
-                        <v-text-field
-                          v-model="startTime"
-                          :rules="[
+          <!--        زمانبندی-->
+          <v-col
+            v-if="hasPermission"
+            cols="6"
+          >
+            <v-card>
+              <v-card-text>
+                <v-form ref="videoTagForm">
+                  <v-container>
+                    <v-row>
+                      <v-col
+                        cols="12"
+                      >
+                        <v-row>
+                          <v-btn
+                            color="success"
+                            @click="handleStartTimeRule"
+                          >
+                            زمان شروع
+                          </v-btn>
+                          <v-btn
+                            color="warning"
+                            @click="handleResetStartTimeRule"
+                          >
+                            ریست
+                          </v-btn>
+                          <v-text-field
+                            v-model="startTime"
+                            :rules="[
                             required('این فیلد الزامی است'),
                           ]"
-                          label="زمان شروع"
-                          readonly
-                        />
-                      </v-row>
-                    </v-col>
-                    <v-col
-                      cols="12"
-                    >
-                      <v-row>
-                        <v-btn
-                          color="primary"
-                          @click="handleEndTimeRule"
-                        >
-                          زمان پایان
-                        </v-btn>
-                        <v-btn
-                          color="warning"
-                          @click="handleResetEndTimeRule"
-                        >
-                          ریست
-                        </v-btn>
-                        <v-text-field
-                          v-model="endTime"
-                          :rules="[
+                            label="زمان شروع"
+                            readonly
+                          />
+                        </v-row>
+                      </v-col>
+                      <v-col
+                        cols="12"
+                      >
+                        <v-row>
+                          <v-btn
+                            color="primary"
+                            @click="handleEndTimeRule"
+                          >
+                            زمان پایان
+                          </v-btn>
+                          <v-btn
+                            color="warning"
+                            @click="handleResetEndTimeRule"
+                          >
+                            ریست
+                          </v-btn>
+                          <v-text-field
+                            v-model="endTime"
+                            :rules="[
                             required('این فیلد الزامی است'),
                           ]"
-                          label="زمان پایان"
-                          readonly
-                        />
-                      </v-row>
-                    </v-col>
-                  </v-row>
-                </v-container>
-              </v-form>
-            </v-card-text>
-            <v-card-actions>
-              <v-spacer/>
-              <v-btn
-                color="primary"
-                :disabled="!formIsValid"
-                @click="addRule"
-              >
-                افزودن رول
-              </v-btn>
-              <v-btn
-                color="warning"
-                @click="clearRule"
-              >
-                ریست
-              </v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-col>
-        <!--        زمانبندی-->
-
+                            label="زمان پایان"
+                            readonly
+                          />
+                        </v-row>
+                      </v-col>
+                    </v-row>
+                  </v-container>
+                </v-form>
+              </v-card-text>
+              <v-card-actions>
+                <v-spacer/>
+                <v-btn
+                  color="primary"
+                  :disabled="!formIsValid"
+                  @click="addRule"
+                >
+                  افزودن رول
+                </v-btn>
+                <v-btn
+                  color="warning"
+                  @click="clearRule"
+                >
+                  ریست
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-col>
+          <!--        زمانبندی-->
       </v-row>
 
       <v-row>
-
-        <v-col cols="12">
+        <v-col cols="6">
+          <v-autocomplete
+            v-model="fileId"
+            label="فایل"
+            :items="files"
+            item-text="humanId"
+            item-value="_id"
+            dense
+          ></v-autocomplete>
+          <v-data-table
+            v-if="type==='assessmentRequest'"
+            :headers="headers"
+            :items="comparisonListRulesOfFile"
+            :search="search"
+            no-results-text="اطلاعاتی یافت نشد"
+            class="elevation-1 w-100"
+            :items-per-page="5"
+            :footer-props="{
+      showFirstLastPage: true,
+      firstIcon: 'mdi-arrow-collapse-left',
+      lastIcon: 'mdi-arrow-collapse-right',
+      prevIcon: 'mdi-plus',
+      nextIcon: 'mdi-minus'
+    }"
+          >
+            <template v-slot:top>
+              <v-toolbar
+                flat
+              >
+                <v-text-field
+                  v-model="search"
+                  label="جست جو"
+                  single-line
+                  hide-details
+                  autofocus
+                />
+                <v-spacer/>
+              </v-toolbar>
+            </template>
+            <template v-slot:item.actions="{ item }">
+              <v-icon
+                v-if="hasPermission"
+                small
+                class="mr-2"
+                @click="editItem(item)"
+              >
+                mdi-pencil
+              </v-icon>
+              <v-icon
+                v-if="hasPermission"
+                small
+                class="mr-2"
+                @click="deleteItem(item)"
+              >
+                mdi-delete
+              </v-icon>
+              <v-icon
+                small
+                class="mr-2"
+                @click="seekToTime(item.fromTime)"
+              >
+                mdi-play
+              </v-icon>
+            </template>
+            <template v-slot:item.fromTime="{ item }">
+              {{ transformVideoTimeFormat(item.fromTime) }}
+            </template>
+            <template v-slot:item.toTime="{ item }">
+              {{ transformVideoTimeFormat(item.toTime) }}
+            </template>
+          </v-data-table>
+        </v-col>
+        <v-col cols="6">
           <!--        لیست رول ها request-->
           <v-data-table
             v-if="type==='assessmentRequest'"
@@ -235,8 +304,6 @@
 
         </v-col>
       </v-row>
-
-    </v-container>
 
     <!--       مدال افزودن رول-->
     <v-dialog
@@ -389,6 +456,10 @@
         isRequired: false,
         default: 'assessmentRequest',
       },
+      files: {
+        Array,
+        isRequired: false,
+      },
     },
     components: { DialogHeadline },
     data () {
@@ -463,6 +534,7 @@
         },
         transformVideoTimeFormat,
         transformVideoTimeToSecond,
+        fileId: '',
       }
     },
     computed: {
@@ -476,6 +548,9 @@
         set (value) {
           return this.$store.commit('rule/SET_LIST_RULES_OF_FILE', value)
         },
+      },
+      comparisonListRulesOfFile(){
+        return this.$store.getters['rule/getComparisonListRulesOfFile']
       },
       assessmentRulesData () {
         return this.assessmentRules
@@ -491,16 +566,18 @@
       },
     },
     mounted () {
+      console.log(this.files, 'files')
       // this.$store.dispatch('rule/fetchAllListRulesOfFile', this.file)
       if (this.hasPermission) {
-      this.$store.dispatch('staticData/fetchRulesList')
-      this.$refs.video.addEventListener('play', this.handlePlayVideo)
-      this.$refs.video.addEventListener('timeupdate', this.handleTimeUpdateVideo)
-      this.$refs.video.addEventListener('pause', this.handlePauseVideo)
+        this.$store.dispatch('staticData/fetchRulesList')
+        this.$refs.video.addEventListener('play', this.handlePlayVideo)
+        this.$refs.video.addEventListener('timeupdate', this.handleTimeUpdateVideo)
+        this.$refs.video.addEventListener('pause', this.handlePauseVideo)
       }
     },
     beforeDestroy () {
       this.$store.commit('rule/SET_LIST_RULES_OF_FILE', [])
+      this.$store.commit('rule/SET_COMPARISON_LIST_RULES_OF_FILE', [])
       this.$refs.video.removeEventListener('play', this.handlePlayVideo)
       this.$refs.video.removeEventListener('pause', this.handlePauseVideo)
       this.startTime = null
@@ -675,6 +752,11 @@
       },
       failAction () {
         this.$toast.error('عملیات انجام نشد')
+      },
+    },
+    watch: {
+      async fileId (val) {
+        await this.$store.dispatch('rule/fetchAllComparisonListRulesOfFile', val)
       },
     },
   }
