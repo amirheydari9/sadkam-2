@@ -600,22 +600,21 @@
       },
       async handleSaveRule (rule) {
         let item = {
-          ...rule,
+          subject: rule.subject,
+          type: rule.type,
+          action: rule.action,
+          priority: rule.priority,
+          message: rule.message,
+          desc: rule.desc,
           file: this.file,
         }
         if (this.editedIndex > -1) {
           const data = {
-            _id: item._id,
-            fromTime: item.fromTime,
-            toTime: item.toTime,
-            subject: item.subject,
-            type: item.type,
-            action: item.action,
-            priority: item.priority,
-            message: item.message,
-            desc: item.desc,
-            rowNumber: item.rowNumber,
-            file: item.file,
+            ...item,
+            _id: rule._id,
+            fromTime: rule.fromTime,
+            toTime: rule.toTime,
+            rowNumber: rule.rowNumber,
           }
           await this.$store.dispatch('rule/updateRule', data)
           Object.assign(this.rulesOfFile[this.editedIndex], rule)
@@ -623,35 +622,22 @@
         } else {
           if (this.type === 'assessmentRequest') {
             const data = {
+              ...item,
               requestId: this.assessment,
               fromTime: this.transformVideoTimeToSecond(this.startTime),
               toTime: this.transformVideoTimeToSecond(this.endTime),
               rowNumber: this.rulesOfFile.length ? this.rulesOfFile.length + 1 : 1,
-              subject: item.subject,
-              type: item.type,
-              action: item.action,
-              priority: item.priority,
-              message: item.message,
-              desc: item.desc,
-              file: item.file,
             }
-            console.log(rule, 'rule')
             await this.$store.dispatch('rule/createRuleForAssessmentRequest', data)
             await this.$store.dispatch('rule/fetchAllListRulesOfFile', this.file)
             this.$toast.success('عملیات با موفقیت انجام شد')
           } else {
             const data = {
+              ...item,
               assessmentId: item.assessment,
               fromTime: this.transformVideoTimeToSecond(this.startTime),
               toTime: this.transformVideoTimeToSecond(this.endTime),
               rowNumber: this.rulesOfFile.length ? this.rulesOfFile.length + 1 : 1,
-              subject: item.subject,
-              type: item.type,
-              action: item.action,
-              priority: item.priority,
-              message: item.message,
-              desc: item.desc,
-              file: item.file,
             }
             await this.$store.dispatch('rule/createRuleForAssessment', data).then((res) => {
               console.log(res.data.id)
