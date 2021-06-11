@@ -721,6 +721,7 @@
                 file: rule.file,
               }
               await this.$store.dispatch('rule/updateRule', data)
+              this.successAction()
             } else {
               if (this.type === 'assessmentRequest') {
                 console.log(rule, 'rule')
