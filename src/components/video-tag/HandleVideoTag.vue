@@ -11,7 +11,7 @@
               <!--        ویدیو-->
               <video
                 ref="video"
-                :src="url"
+                :src="fileItem.fileUrl"
                 controls
                 class="w-100"
               />
@@ -118,7 +118,7 @@
               ></v-autocomplete>
 
               <v-data-table
-                v-if="type==='assessmentRequest'"
+                v-if="type==='request'"
                 :headers="headers"
                 :items="comparisonListRulesOfFile"
                 :search="search"
@@ -195,7 +195,7 @@
 
               <!--        لیست رول ها request-->
               <v-data-table
-                v-if="type==='assessmentRequest'"
+                v-if="type==='request'"
                 :headers="headers"
                 :items="rulesOfFile"
                 :search="search"
@@ -388,17 +388,13 @@
         Boolean,
         isRequired: true,
       },
-      url: {
-        String,
+      fileItem: {
+        Object,
         isRequired: true,
       },
       assessment: {
         String,
         isRequired: true,
-      },
-      file: {
-        String,
-        isRequired: false,
       },
       assessmentRules: {
         Array,
@@ -407,7 +403,7 @@
       type: {
         String,
         isRequired: false,
-        default: 'assessmentRequest',
+        default: 'request',
       },
       files: {
         Array,
@@ -504,7 +500,6 @@
       },
     },
     mounted () {
-      console.log(this.files, 'files')
       // this.$store.dispatch('rule/fetchAllListRulesOfFile', this.file)
       if (this.canManageRule) {
         this.$refs.video.addEventListener('play', this.handlePlayVideo)
@@ -606,7 +601,7 @@
           priority: rule.priority,
           message: rule.message,
           desc: rule.desc,
-          file: this.file,
+          file: this.fileItem._id,
         }
         if (this.editedIndex > -1) {
           const data = {
@@ -620,26 +615,24 @@
           Object.assign(this.rulesOfFile[this.editedIndex], rule)
           this.$toast.success('عملیات با موفقیت انجام شد')
         } else {
-          if (this.type === 'assessmentRequest') {
-            const data = {
-              ...item,
+          const data = {
+            ...item,
+            fromTime: this.transformVideoTimeToSecond(this.startTime),
+            toTime: this.transformVideoTimeToSecond(this.endTime),
+            rowNumber: this.rulesOfFile.length ? this.rulesOfFile.length + 1 : 1,
+          }
+          if (this.type === 'request') {
+            await this.$store.dispatch('rule/createRuleForRequest', {
               requestId: this.assessment,
-              fromTime: this.transformVideoTimeToSecond(this.startTime),
-              toTime: this.transformVideoTimeToSecond(this.endTime),
-              rowNumber: this.rulesOfFile.length ? this.rulesOfFile.length + 1 : 1,
-            }
-            await this.$store.dispatch('rule/createRuleForAssessmentRequest', data)
-            await this.$store.dispatch('rule/fetchAllListRulesOfFile', this.file)
+              ...data,
+            })
+            await this.$store.dispatch('rule/fetchAllListRulesOfFile', this.fileItem._id)
             this.$toast.success('عملیات با موفقیت انجام شد')
           } else {
-            const data = {
-              ...item,
-              assessmentId: item.assessment,
-              fromTime: this.transformVideoTimeToSecond(this.startTime),
-              toTime: this.transformVideoTimeToSecond(this.endTime),
-              rowNumber: this.rulesOfFile.length ? this.rulesOfFile.length + 1 : 1,
-            }
-            await this.$store.dispatch('rule/createRuleForAssessment', data).then((res) => {
+            await this.$store.dispatch('rule/createRuleForAssessment', {
+              assessmentId: this.assessment,
+              ...data,
+            }).then((res) => {
               console.log(res.data.id)
             })
           }
@@ -656,7 +649,7 @@
             callback: async confirm => {
               if (confirm) {
                 await this.$store.dispatch('rule/deleteRule', item._id)
-                await this.$store.dispatch('rule/fetchAllListRulesOfFile', this.file)
+                await this.$store.dispatch('rule/fetchAllListRulesOfFile', this.fileItem._id)
                 this.$toast.success('عملیات با موفقیت انجام شد')
               }
             },

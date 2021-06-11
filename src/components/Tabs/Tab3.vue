@@ -115,8 +115,7 @@
     <handle-video-tag
       v-if="videoTagDialog"
       :show-dialog="videoTagDialog"
-      :url="videoUrl"
-      :file="fileId"
+      :file-item="fileItem"
       :assessment="assessmentId"
       :files="request.files"
       @closeDialog="closeVideoTags"
@@ -145,8 +144,7 @@
       return {
         videoTagDialog: false,
         assessmentId: null,
-        fileId: null,
-        videoUrl: null,
+        fileItem: null,
         fileSearch: '',
         form: {
           desc: '',
@@ -213,17 +211,16 @@
               fileUrl: 'http://techslides.com/demos/sample-videos/small.mp4',
               accessKey: '',
               secretKey: '',
-            },
-              this.$refs.fileForm.resetValidation()
+            }
+            this.$refs.fileForm.resetValidation()
           })
         }
       },
       async handleFileRule (item) {
         try {
           await this.$store.dispatch('rule/fetchAllListRulesOfFile', item._id)
-          this.videoUrl = item.fileUrl
           this.assessmentId = this.request._id
-          this.fileId = item._id
+          this.fileItem = { ...item }
           this.videoTagDialog = true
         } catch (e) {
           this.$toast.error('خطایی رخ داده است')
@@ -231,9 +228,8 @@
       },
       closeVideoTags () {
         this.videoTagDialog = false
-        this.videoUrl = null
         this.assessmentId = null
-        this.fileId = null
+        this.fileItem = null
       },
     },
   }

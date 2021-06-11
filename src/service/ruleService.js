@@ -33,7 +33,7 @@ export function ruleService () {
     }
   }
 
-  const createRuleForAssessmentRequest = async (rule) => {
+  const createRuleForRequest = async (rule) => {
     try {
       return await axiosInstance.post('/rules/forRequest', rule)
     } catch (e) {
@@ -67,7 +67,7 @@ export function ruleService () {
 
   return {
     getListRuleOfFile,
-    createRuleForAssessmentRequest,
+    createRuleForRequest,
     updateRule,
     deleteRule,
     getListRulesOfAssessmentRequest,

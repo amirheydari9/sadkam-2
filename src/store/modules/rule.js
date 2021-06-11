@@ -73,9 +73,9 @@ export const actions = {
       console.log(e)
     }
   },
-  async createRuleForAssessmentRequest (context, rule) {
+  async createRuleForRequest (context, rule) {
     try {
-      await ruleService().createRuleForAssessmentRequest(rule)
+      await ruleService().createRuleForRequest(rule)
     } catch (e) {
       console.log(e)
     }
