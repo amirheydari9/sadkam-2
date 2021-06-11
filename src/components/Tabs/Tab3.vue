@@ -5,7 +5,7 @@
   >
     <v-container>
       <v-form v-if="canUploadFile" ref="fileForm">
-<!--      <v-form ref="fileForm">-->
+        <!--      <v-form ref="fileForm">-->
         <v-row>
           <v-col
             cols="12"
@@ -112,59 +112,68 @@
       </template>
     </v-data-table>
 
-    <v-dialog
-      v-model="videoTagDialog"
-      persistent
-    >
-      <v-card>
-        <v-card-text>
-<!--          <video-tag-second-->
-<!--            :url="videoUrl"-->
-<!--            :file="fileId"-->
-<!--            :assessment="assessmentId"-->
-<!--          />-->
-          <video-tag
-            :url="videoUrl"
-            :file="fileId"
-            :assessment="assessmentId"
-            :files="request.files"
-          />
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer />
-          <v-btn
-            color="blue darken-1"
-            text
-            @click="closeVideoTags"
-          >
-            انصراف
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
+    <!--    <v-dialog-->
+    <!--      v-model="videoTagDialog"-->
+    <!--      persistent-->
+    <!--    >-->
+    <!--      <v-card>-->
+    <!--        <v-card-text>-->
+    <!--          <video-tag-->
+    <!--            :url="videoUrl"-->
+    <!--            :file="fileId"-->
+    <!--            :assessment="assessmentId"-->
+    <!--            :files="request.files"-->
+    <!--          />-->
+    <!--        </v-card-text>-->
+    <!--        <v-card-actions>-->
+    <!--          <v-spacer />-->
+    <!--          <v-btn-->
+    <!--            color="blue darken-1"-->
+    <!--            text-->
+    <!--            @click="closeVideoTags"-->
+    <!--          >-->
+    <!--            انصراف-->
+    <!--          </v-btn>-->
+    <!--        </v-card-actions>-->
+    <!--      </v-card>-->
+    <!--    </v-dialog>-->
+
+    <handle-video-tag
+      v-if="videoTagDialog"
+      :show-dialog="videoTagDialog"
+      :url="videoUrl"
+      :file="fileId"
+      :assessment="assessmentId"
+      :files="request.files"
+      @closeDialog="closeVideoTags"
+    />
 
   </v-tab-item>
 </template>
 
 <script>
   import { permission } from '../../plugins/permission'
-  import { required} from '../../plugins/rule'
+  import { required } from '../../plugins/rule'
   import { transformDateToJalali } from '../../plugins/transformData'
   import { requestService } from '../../service/requestService'
   import VideoTagSecond from '../VideoTag-second'
   import VideoTag from '../VideoTag'
-
+  import HandleVideoTag from '../video-tag/HandleVideoTag'
 
   export default {
     name: 'Tab3',
-    components: { VideoTagSecond ,VideoTag},
-    data(){
-      return{
+    components: {
+      HandleVideoTag,
+      VideoTagSecond,
+      VideoTag,
+    },
+    data () {
+      return {
         videoTagDialog: false,
         assessmentId: null,
         fileId: null,
         videoUrl: null,
-        fileSearch:'',
+        fileSearch: '',
         form: {
           desc: '',
           fileUrl: 'http://techslides.com/demos/sample-videos/small.mp4',
@@ -172,16 +181,38 @@
           secretKey: '',
         },
         fileHeaders: [
-          { text: 'آدرس فایل', value: 'fileUrl' },
-          { text: 'آپلود کننده', value: 'user.nickname' },
-          { text: 'تاریخ ارسال', value: 'submitDate' },
-          { text: 'شناسه کوتاه', value: 'humanId' },
-          { text: 'مدت زمان', value: 'duration' },
-          { text: 'توضیحات', value: 'desc' },
-          { text: 'عملیات', value: 'actions', sortable: false },
+          {
+            text: 'آدرس فایل',
+            value: 'fileUrl',
+          },
+          {
+            text: 'آپلود کننده',
+            value: 'user.nickname',
+          },
+          {
+            text: 'تاریخ ارسال',
+            value: 'submitDate',
+          },
+          {
+            text: 'شناسه کوتاه',
+            value: 'humanId',
+          },
+          {
+            text: 'مدت زمان',
+            value: 'duration',
+          },
+          {
+            text: 'توضیحات',
+            value: 'desc',
+          },
+          {
+            text: 'عملیات',
+            value: 'actions',
+            sortable: false,
+          },
         ],
         required,
-        transformDateToJalali
+        transformDateToJalali,
       }
     },
     computed: {
@@ -192,24 +223,24 @@
         return this.$store.getters['request/getRequest']
       },
     },
-    mounted () {
-      // this.$emit('getData')
-    },
     methods: {
       saveFile () {
         if (this.$refs.fileForm.validate()) {
-          const file = { ...this.form, _id: this.request._id }
+          const file = {
+            ...this.form,
+            _id: this.request._id,
+          }
           requestService().createFile(file).then(() => {
             this.$emit('getData')
             this.$toast.success('عملیات با موفقیت انجام شد')
             // this.$refs.fileForm.reset()
-            this.form ={
+            this.form = {
               desc: '',
-                fileUrl: 'http://techslides.com/demos/sample-videos/small.mp4',
-                accessKey: '',
-                secretKey: '',
+              fileUrl: 'http://techslides.com/demos/sample-videos/small.mp4',
+              accessKey: '',
+              secretKey: '',
             },
-            this.$refs.fileForm.resetValidation()
+              this.$refs.fileForm.resetValidation()
           })
         }
       },
@@ -226,11 +257,9 @@
       },
       closeVideoTags () {
         this.videoTagDialog = false
-        this.$nextTick(() => {
-          this.videoUrl = null
-          this.assessmentId = null
-          this.fileId = null
-        })
+        this.videoUrl = null
+        this.assessmentId = null
+        this.fileId = null
       },
     },
   }
