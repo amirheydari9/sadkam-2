@@ -129,7 +129,6 @@
   import { required } from '../../plugins/rule'
   import { transformDateToJalali } from '../../plugins/transformData'
   import { requestService } from '../../service/requestService'
-  import VideoTagSecond from '../VideoTag-second'
   import VideoTag from '../VideoTag'
   import HandleVideoTag from '../video-tag/HandleVideoTag'
 
@@ -137,7 +136,6 @@
     name: 'Tab3',
     components: {
       HandleVideoTag,
-      VideoTagSecond,
       VideoTag,
     },
     data () {
