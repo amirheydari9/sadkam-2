@@ -10,21 +10,15 @@
       </v-card-title>
 
       <v-card-text>
-        <v-container>
-          <v-form ref="descForm">
-            <v-row>
-              <v-col>
-                <v-text-field
-                  v-model="desc"
-                  :rules="[
+        <v-form ref="descForm">
+          <v-text-field
+            v-model="desc"
+            :rules="[
                       required('این فیلد الزامی است'),
                     ]"
-                  label="توضیحات"
-                />
-              </v-col>
-            </v-row>
-          </v-form>
-        </v-container>
+            label="توضیحات"
+          />
+        </v-form>
       </v-card-text>
 
       <v-card-actions>
@@ -62,7 +56,7 @@
       },
       item: {
         Object,
-        isRequired: false,
+        isRequired: true,
       },
     },
     data () {
@@ -72,7 +66,7 @@
       }
     },
     mounted () {
-      if (this.item) {
+      if (this.item.platformDesc) {
         this.desc = this.item.platformDesc
       }
     },

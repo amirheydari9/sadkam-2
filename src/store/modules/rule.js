@@ -33,6 +33,13 @@ export const actions = {
       console.log(e)
     }
   },
+  async setConfirmationBrokerageUser ({ commit }, payload) {
+    try {
+      return await ruleService().setConfirmationBrokerageUser(payload)
+    } catch (e) {
+      console.log(e)
+    }
+  },
 
   async fetchAllListRulesOfFile ({ commit }, fileId) {
     try {

@@ -3,7 +3,10 @@ import axiosInstance from '../plugins/axios'
 export function ruleService () {
 
   const setDescriptionForPlatform = async (data) => {
-    return await axiosInstance.patch('rules/set/description', data)
+    return await axiosInstance.patch('/rules/set/description', data)
+  }
+  const setConfirmationBrokerageUser = async (data) => {
+    return await axiosInstance.patch('/rules/set/confirm', data)
   }
 
   const getListRuleOfFile = async (fileId) => {
@@ -71,5 +74,6 @@ export function ruleService () {
     getListRulesOfAssessment,
     createRuleForAssessment,
     setDescriptionForPlatform,
+    setConfirmationBrokerageUser,
   }
 }

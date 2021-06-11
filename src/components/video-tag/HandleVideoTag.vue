@@ -107,6 +107,7 @@
           <v-row>
 
             <v-col cols="6">
+
               <v-autocomplete
                 v-model="fileId"
                 label="فایل"
@@ -115,6 +116,7 @@
                 item-value="_id"
                 dense
               ></v-autocomplete>
+
               <v-data-table
                 v-if="type==='assessmentRequest'"
                 :headers="headers"
@@ -146,28 +148,37 @@
                   </v-toolbar>
                 </template>
                 <template v-slot:item.actions="{ item }">
+                  <!--                  <v-icon-->
+                  <!--                    v-if="canManageRule"-->
+                  <!--                    small-->
+                  <!--                    class="mr-2"-->
+                  <!--                    @click="editItem(item)"-->
+                  <!--                  >-->
+                  <!--                    mdi-pencil-->
+                  <!--                  </v-icon>-->
+                  <!--                  <v-icon-->
+                  <!--                    v-if="canManageRule"-->
+                  <!--                    small-->
+                  <!--                    class="mr-2"-->
+                  <!--                    @click="deleteItem(item)"-->
+                  <!--                  >-->
+                  <!--                    mdi-delete-->
+                  <!--                  </v-icon>-->
+                  <!--                  <v-icon-->
+                  <!--                    small-->
+                  <!--                    class="mr-2"-->
+                  <!--                    @click="handleSeekToTime(item.fromTime)"-->
+                  <!--                  >-->
+                  <!--                    mdi-play-->
+                  <!--                  </v-icon>-->
                   <v-icon
-                    v-if="canManageRule"
+                    v-if="canManageRule && !item.confirmed"
                     small
-                    class="mr-2"
-                    @click="editItem(item)"
+                    class="mr-2 font-weight-bold"
+                    color="primary"
+                    @click="handleSetConfirm(item)"
                   >
-                    mdi-pencil
-                  </v-icon>
-                  <v-icon
-                    v-if="canManageRule"
-                    small
-                    class="mr-2"
-                    @click="deleteItem(item)"
-                  >
-                    mdi-delete
-                  </v-icon>
-                  <v-icon
-                    small
-                    class="mr-2"
-                    @click="handleSeekToTime(item.fromTime)"
-                  >
-                    mdi-play
+                    mdi-check
                   </v-icon>
                 </template>
                 <template v-slot:item.fromTime="{ item }">
@@ -177,6 +188,7 @@
                   {{ transformVideoTimeFormat(item.toTime) }}
                 </template>
               </v-data-table>
+
             </v-col>
 
             <v-col cols="6">
@@ -678,13 +690,39 @@
           _id: this.ruleItem._id,
           desc: desc,
         }
-        console.log(data)
         await this.$store.dispatch('rule/setDescriptionForPlatform', data)
         Object.assign(this.rulesOfFile[this.editedIndex], {
           ...this.ruleItem,
           platformDesc: desc,
         })
         this.$toast.success('عملیات با موفقیت انجام شد')
+      },
+      handleSetConfirm (item) {
+        this.editedIndex = this.comparisonListRulesOfFile.indexOf(item)
+        this.ruleItem = { ...item }
+        this.$confirm(
+          {
+            message: 'آیا از تایید این رول اطمینان دارید ؟',
+            button: {
+              no: 'خیر',
+              yes: 'بله',
+            },
+            callback: async confirm => {
+              if (confirm) {
+                const data = {
+                  _id: item._id,
+                  confirmed: true,
+                }
+                await this.$store.dispatch('rule/setConfirmationBrokerageUser', data)
+                Object.assign(this.comparisonListRulesOfFile[this.editedIndex], {
+                  ...this.ruleItem,
+                  confirmed: true,
+                })
+                this.$toast.success('عملیات با موفقیت انجام شد')
+              }
+            },
+          },
+        )
       },
       closeVideoTags () {
         this.$emit('closeDialog')
