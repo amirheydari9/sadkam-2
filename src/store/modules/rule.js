@@ -26,6 +26,14 @@ export const getters = {
 }
 
 export const actions = {
+  async setDescriptionForPlatform ({ commit }, payload) {
+    try {
+      return await ruleService().setDescriptionForPlatform(payload)
+    } catch (e) {
+      console.log(e)
+    }
+  },
+
   async fetchAllListRulesOfFile ({ commit }, fileId) {
     try {
       const { data } = await ruleService().getListRuleOfFile(fileId)

@@ -19,7 +19,7 @@
             </v-col>
             <!--        زمانبندی-->
             <v-col
-              v-if="hasPermission"
+              v-if="canManageRule"
               cols="6"
             >
               <v-card>
@@ -105,6 +105,7 @@
           </v-row>
 
           <v-row>
+
             <v-col cols="6">
               <v-autocomplete
                 v-model="fileId"
@@ -146,7 +147,7 @@
                 </template>
                 <template v-slot:item.actions="{ item }">
                   <v-icon
-                    v-if="hasPermission"
+                    v-if="canManageRule"
                     small
                     class="mr-2"
                     @click="editItem(item)"
@@ -154,7 +155,7 @@
                     mdi-pencil
                   </v-icon>
                   <v-icon
-                    v-if="hasPermission"
+                    v-if="canManageRule"
                     small
                     class="mr-2"
                     @click="deleteItem(item)"
@@ -177,7 +178,9 @@
                 </template>
               </v-data-table>
             </v-col>
+
             <v-col cols="6">
+
               <!--        لیست رول ها request-->
               <v-data-table
                 v-if="type==='assessmentRequest'"
@@ -211,7 +214,7 @@
                 </template>
                 <template v-slot:item.actions="{ item }">
                   <v-icon
-                    v-if="hasPermission"
+                    v-if="canManageRule"
                     small
                     class="mr-2"
                     @click="editItem(item)"
@@ -219,12 +222,20 @@
                     mdi-pencil
                   </v-icon>
                   <v-icon
-                    v-if="hasPermission"
+                    v-if="canManageRule"
                     small
                     class="mr-2"
                     @click="deleteItem(item)"
                   >
                     mdi-delete
+                  </v-icon>
+                  <v-icon
+                    v-if="canSetDesc"
+                    small
+                    class="mr-2"
+                    @click="setDesc(item)"
+                  >
+                    mdi-comment
                   </v-icon>
                   <v-icon
                     small
@@ -279,7 +290,7 @@
                   <!--                  small-->
                   <!--                  class="mr-2"-->
                   <!--                  @click="editItem(item)"-->
-                  <!--                  v-if="hasPermission"-->
+                  <!--                  v-if="canManageRule"-->
                   <!--              >-->
                   <!--                mdi-pencil-->
                   <!--              </v-icon>-->
@@ -287,7 +298,7 @@
                   <!--                  small-->
                   <!--                  class="mr-2"-->
                   <!--                  @click="deleteItem(item)"-->
-                  <!--                  v-if="hasPermission"-->
+                  <!--                  v-if="canManageRule"-->
                   <!--              >-->
                   <!--                mdi-cloud-->
                   <!--              </v-icon>-->
@@ -309,6 +320,7 @@
               <!--        لیست رول ها assessment-->
 
             </v-col>
+
           </v-row>
 
         </div>
@@ -333,6 +345,14 @@
       @handleSave="handleSaveRule"
     />
 
+    <handle-set-description
+      v-if="showRuleDescDialog"
+      :show-dialog="showRuleDescDialog"
+      :item="ruleItem"
+      @closeDialog="closeRuleDescDialog"
+      @handleSave="handleSaveRuleDesc"
+    />
+
   </v-dialog>
 </template>
 
@@ -342,10 +362,12 @@
   import { transformVideoTimeFormat, transformVideoTimeToSecond } from '../../plugins/transformData'
   import { permission } from '../../plugins/permission'
   import HandleRule from './HandleRule'
+  import HandleSetDescription from './HandleSetDescription'
 
   export default {
     name: 'HandleVideoTag',
     components: {
+      HandleSetDescription,
       HandleRule,
       DialogHeadline,
     },
@@ -383,6 +405,7 @@
     data () {
       return {
         showRuleDialog: false,
+        showRuleDescDialog: false,
         ruleItem: null,
         startTime: null,
         endTime: null,
@@ -427,6 +450,10 @@
             value: 'desc',
           },
           {
+            text: 'توضیحات پلتفرم',
+            value: 'platformDesc',
+          },
+          {
             text: 'عملیات',
             value: 'actions',
             sortable: false,
@@ -443,8 +470,11 @@
       show () {
         return this.showDialog
       },
-      hasPermission () {
+      canManageRule () {
         return (permission().isBrokerage() && permission().isOrders())
+      },
+      canSetDesc () {
+        return (permission().isPlatform() && permission().isOrders())
       },
       rulesOfFile: {
         get () {
@@ -464,7 +494,7 @@
     mounted () {
       console.log(this.files, 'files')
       // this.$store.dispatch('rule/fetchAllListRulesOfFile', this.file)
-      if (this.hasPermission) {
+      if (this.canManageRule) {
         this.$refs.video.addEventListener('play', this.handlePlayVideo)
         this.$refs.video.addEventListener('timeupdate', this.handleTimeUpdateVideo)
         this.$refs.video.addEventListener('pause', this.handlePauseVideo)
@@ -581,7 +611,7 @@
         } else {
           if (this.type === 'assessmentRequest') {
             const data = {
-              requestId:this.assessment,
+              requestId: this.assessment,
               fromTime: this.transformVideoTimeToSecond(this.startTime),
               toTime: this.transformVideoTimeToSecond(this.endTime),
               rowNumber: this.rulesOfFile.length ? this.rulesOfFile.length + 1 : 1,
@@ -599,7 +629,7 @@
             this.$toast.success('عملیات با موفقیت انجام شد')
           } else {
             const data = {
-              assessmentId:item.assessment,
+              assessmentId: item.assessment,
               fromTime: this.transformVideoTimeToSecond(this.startTime),
               toTime: this.transformVideoTimeToSecond(this.endTime),
               rowNumber: this.rulesOfFile.length ? this.rulesOfFile.length + 1 : 1,
@@ -634,6 +664,27 @@
             },
           },
         )
+      },
+      setDesc (item) {
+        this.editedIndex = this.rulesOfFile.indexOf(item)
+        this.ruleItem = { ...item }
+        this.showRuleDescDialog = true
+      },
+      closeRuleDescDialog () {
+        this.showRuleDescDialog = false
+      },
+      async handleSaveRuleDesc (desc) {
+        const data = {
+          _id: this.ruleItem._id,
+          desc: desc,
+        }
+        console.log(data)
+        await this.$store.dispatch('rule/setDescriptionForPlatform', data)
+        Object.assign(this.rulesOfFile[this.editedIndex], {
+          ...this.ruleItem,
+          platformDesc: desc,
+        })
+        this.$toast.success('عملیات با موفقیت انجام شد')
       },
       closeVideoTags () {
         this.$emit('closeDialog')

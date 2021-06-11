@@ -3,9 +3,8 @@
     class="mt-1"
     value="file"
   >
-    <v-container>
-      <v-form v-if="canUploadFile" ref="fileForm">
-        <!--      <v-form ref="fileForm">-->
+    <v-container v-if="canUploadFile">
+      <v-form ref="fileForm">
         <v-row>
           <v-col
             cols="12"
@@ -57,6 +56,7 @@
         </v-row>
       </v-form>
     </v-container>
+
     <v-data-table
       :headers="fileHeaders"
       :items="request.files"
@@ -111,32 +111,6 @@
         </v-btn>
       </template>
     </v-data-table>
-
-    <!--    <v-dialog-->
-    <!--      v-model="videoTagDialog"-->
-    <!--      persistent-->
-    <!--    >-->
-    <!--      <v-card>-->
-    <!--        <v-card-text>-->
-    <!--          <video-tag-->
-    <!--            :url="videoUrl"-->
-    <!--            :file="fileId"-->
-    <!--            :assessment="assessmentId"-->
-    <!--            :files="request.files"-->
-    <!--          />-->
-    <!--        </v-card-text>-->
-    <!--        <v-card-actions>-->
-    <!--          <v-spacer />-->
-    <!--          <v-btn-->
-    <!--            color="blue darken-1"-->
-    <!--            text-->
-    <!--            @click="closeVideoTags"-->
-    <!--          >-->
-    <!--            انصراف-->
-    <!--          </v-btn>-->
-    <!--        </v-card-actions>-->
-    <!--      </v-card>-->
-    <!--    </v-dialog>-->
 
     <handle-video-tag
       v-if="videoTagDialog"
