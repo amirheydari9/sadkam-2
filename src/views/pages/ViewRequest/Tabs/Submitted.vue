@@ -5,10 +5,23 @@
   >
     <v-col cols="12">
       <v-data-table
+        :page="page"
+        :pageCount="numberOfPages"
+        :options.sync="options"
+        :server-items-length="totalItems"
+        :loading="loading"
         :headers="headers"
         :items="submitted"
         no-results-text="اطلاعاتی یافت نشد"
         class="w-100"
+        :items-per-page="5"
+        :footer-props="{
+      showFirstLastPage: true,
+      firstIcon: 'mdi-arrow-collapse-left',
+      lastIcon: 'mdi-arrow-collapse-right',
+      prevIcon: 'mdi-plus',
+      nextIcon: 'mdi-minus'
+    }"
       >
 
         <template v-slot:item.actions="{item}">
@@ -55,6 +68,11 @@
     name: 'Submitted',
     data () {
       return {
+        page: 1,
+        totalItems: 0,
+        numberOfPages: 0,
+        loading: true,
+        options: {},
         headers: [
           {
             text: 'وضعیت',
@@ -84,19 +102,44 @@
       },
       submitted: {
         get () {
-          return this.$store.getters['assessmentRequest/getSubmitted']
+          return this.$store.getters['request/getSubmitted']
         },
         set (value) {
-          return this.$store.commit('assessmentRequest/SET_SUBMITTED', value)
+          return this.$store.commit('request/SET_SUBMITTED', value)
         },
       },
     },
+    watch: {
+      options: {
+        handler () {
+          this.readDataFromAPI()
+        },
+      },
+      deep: true,
+    },
     methods: {
+      async readDataFromAPI () {
+        this.loading = true
+        const {
+          page,
+          itemsPerPage,
+        } = this.options
+        let data = await this.$store.dispatch('request/fetchAssessmentListByStatus', {
+          status: 0,
+          page: page,
+          size: itemsPerPage,
+        })
+        console.log(data)
+        this.loading = false
+        this.submitted = data.items
+        this.totalItems = data.paginator.itemCount
+        this.numberOfPages = data.paginator.totalPages
+      },
       changeStatus (item) {
-        this.$emit('changeStatus', { ...item }, 0)
+        this.$emit('changeStatus', { ...item }, 0, this.options.page, this.options.itemsPerPage)
       },
       changeBrokerage (item) {
-        this.$emit('changeBrokerage', { ...item }, 0)
+        this.$emit('changeBrokerage', { ...item }, 0, this.options.page, this.options.itemsPerPage)
       },
       seeDetails (item) {
         this.$emit('seeDetails', { ...item }, 0)

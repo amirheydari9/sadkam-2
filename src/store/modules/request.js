@@ -87,7 +87,7 @@ export const actions = {
   async fetchRequest ({ commit }, requestId) {
     try {
       const { data } = await requestService().getRequest(requestId)
-      if (data,'request') {
+      if (data, 'request') {
         commit('SET_REQUEST', data.data)
       } else {
         commit('SET_REQUEST', null)
@@ -114,20 +114,20 @@ export const actions = {
   async createRequest (context, request) {
     try {
       const { data } = await requestService().createRequest(request)
-      console.log(data.data,'createRequest')
-       return data.data
+      console.log(data.data, 'createRequest')
+      return data.data
     } catch (e) {
       console.log(e)
     }
   },
 
-  async fetchAssessmentListByStatus ({ commit }, status) {
+  async fetchAssessmentListByStatus ({ commit }, payload) {
     try {
-      const { data } = await requestService().getAssessmentListByStatus(status)
-      switch (status) {
+      const { data } = await requestService().getAssessmentListByStatus(payload.status, payload.page, payload.size)
+      switch (payload.status) {
         case 0:
-          commit('SET_SUBMITTED', data.data)
-          break
+          commit('SET_SUBMITTED', data.data.items)
+          return data.data
         case 1:
           commit('SET_INQUEU', data.data)
           break

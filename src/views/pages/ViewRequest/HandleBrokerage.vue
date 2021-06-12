@@ -9,7 +9,7 @@
         <v-select
           v-model="brokerageValue"
           :items="brokerage"
-          item-text="name"
+          item-text="title"
           item-value="_id"
         />
       </v-card-text>
@@ -58,14 +58,14 @@
     },
     methods: {
       close () {
-        this.$emit('saveDialog')
+        this.$emit('closeDialog')
       },
       save () {
         if (!this.brokerageValue) {
           this.$toast.error('کارگزاری را انتخاب کنید')
           return false
         }
-        this.$emit('closeDialog', this.brokerageValue)
+        this.$emit('saveDialog', this.brokerageValue)
         this.close()
       },
     },

@@ -9,37 +9,37 @@
     >
       <v-tab
         href="#submitted"
-        @click="getData(1)"
+        @click="getData(1,1,5)"
       >
         ایجاد شده
       </v-tab>
       <v-tab
         href="#inqueu"
-        @click="getData(2)"
+        @click="getData(2,1,5)"
       >
         در صف
       </v-tab>
       <v-tab
         href="#assigned"
-        @click="getData(3)"
+        @click="getData(3,1,5)"
       >
         ارجاع شده
       </v-tab>
       <v-tab
         href="#confirmed"
-        @click="getData(4)"
+        @click="getData(4,1,5)"
       >
         تایید شده
       </v-tab>
       <v-tab
         href="#working"
-        @click="getData(5)"
+        @click="getData(5,1,5)"
       >
         در حال بررسی
       </v-tab>
       <v-tab
         href="#completed"
-        @click="getData(6)"
+        @click="getData(6,1,5)"
       >
         تکمیل شده
       </v-tab>
@@ -94,372 +94,6 @@
       @closeDialog="closeTabsDialog"
     />
 
-    <!--    تب ها-->
-    <v-dialog
-      v-model="tabsDialog"
-      persistent
-      max-width="800px"
-    >
-      <v-card>
-        <v-card-text>
-          <v-tabs
-            v-model="detailsTabsMenu"
-            class="mt-5"
-            color="grey darken-3"
-          >
-            <v-tab
-              href="#assessment"
-              @click="handleDetailTab1"
-            >
-              ارزیابی
-            </v-tab>
-            <v-tab
-              href="#chat"
-              @click="handleDetailTab2"
-            >
-              گفتگوها
-            </v-tab>
-            <v-tab
-              href="#file"
-              @click="handleDetailTab3"
-            >
-              فایل
-            </v-tab>
-          </v-tabs>
-          <v-divider/>
-
-          <v-tabs-items v-model="detailsTabsMenu">
-            <v-tab-item
-              class="mt-5"
-              value="assessment"
-            >
-              <v-col cols="12">
-                <template>
-                  <v-row v-if="assessmentRequestInfoObject">
-                    <v-col
-                      cols="12"
-                      sm="4"
-                    >
-                      <v-text-field
-                        :value="transformRequestStatus(assessmentRequestInfoObject.status)"
-                        label="وضعیت"
-                        readonly
-                      />
-                    </v-col>
-                    <v-col
-                      cols="12"
-                      sm="4"
-                    >
-                      <v-text-field
-                        :value="transformDateToJalali(assessmentRequestInfoObject.submitDate)"
-                        label="تاریخ ثبت درخواست"
-                        readonly
-                      />
-                    </v-col>
-                    <v-col
-                      cols="12"
-                      sm="4"
-                    >
-                      <v-text-field
-                        v-model="assessmentRequestInfoObject.description"
-                        label="توضیحات"
-                        readonly
-                      />
-                    </v-col>
-                  </v-row>
-                  <!--                  <v-row v-if="!assessmentInfo && canAssignTome">-->
-                  <!--                    <v-btn-->
-                  <!--                        @click="createAssessment"-->
-                  <!--                    >ارزیابی-->
-                  <!--                    </v-btn>-->
-                  <!--                  </v-row>-->
-                </template>
-              </v-col>
-            </v-tab-item>
-
-            <v-tab-item
-              class="mt-1"
-              value="chat"
-            >
-              <v-container>
-                <v-form ref="dialogForm">
-                  <v-row>
-                    <v-col
-                      cols="12"
-                    >
-                      <v-text-field
-                        v-model="dialogEditedItem.message"
-                        :rules="[
-                          required('این فیلد الزامی است'),
-                        ]"
-                        label="متن"
-                      />
-                    </v-col>
-                    <v-col
-                      cols="12"
-                      sm="6"
-                    >
-                      <v-autocomplete
-                        v-model="dialogEditedItem.targetFile"
-                        label="فایل"
-                        :items="targetFiles"
-                        item-text="title"
-                        item-value="id"
-                        dense
-                      />
-                    </v-col>
-                    <v-btn
-                      color="primary"
-                      depressed
-                      class="mr-auto"
-                      @click="saveDialog"
-                    >
-                      ایجاد پیام
-                    </v-btn>
-                  </v-row>
-                </v-form>
-              </v-container>
-              <v-data-table
-                :headers="dialogHeaders"
-                :items="dialogs"
-                :search="dialogSearch"
-                no-results-text="اطلاعاتی یافت نشد"
-                class="elevation-1 w-100 mt-3"
-              >
-                <template v-slot:top>
-                  <v-toolbar
-                    flat
-                  >
-                    <v-text-field
-                      v-model="dialogSearch"
-                      label="جست جو"
-                      single-line
-                      hide-details
-                      autofocus
-                    />
-                  </v-toolbar>
-                </template>
-                <template v-slot:item.submitDate="{ item }">
-                  {{ transformDateToJalali(item.submitDate) }}
-                </template>
-              </v-data-table>
-            </v-tab-item>
-
-            <v-tab-item
-              class="mt-1"
-              value="file"
-            >
-              <v-container>
-                <v-form
-                  v-if="canUploadFile"
-                  ref="fileForm"
-                >
-                  <v-row>
-                    <v-col
-                      cols="12"
-                      sm="6"
-                    >
-                      <v-text-field
-                        v-model="fileEditedItem.fileUrl"
-                        :rules="[
-                          required('این فیلد الزامی است'),
-                        ]"
-                        label="آدرس فایل"
-                      />
-                    </v-col>
-                    <v-col
-                      cols="12"
-                      sm="6"
-                    >
-                      <v-text-field
-                        v-model="fileEditedItem.accessKey"
-                        :rules="[
-                          required('این فیلد الزامی است'),
-                        ]"
-                        label="accessKey"
-                      />
-                    </v-col>
-                    <v-col
-                      cols="12"
-                      sm="6"
-                    >
-                      <v-text-field
-                        v-model="fileEditedItem.secretKey"
-                        :rules="[
-                          required('این فیلد الزامی است'),
-                        ]"
-                        label="secretKey"
-                      />
-                    </v-col>
-                    <v-col
-                      cols="12"
-                      sm="6"
-                    >
-                      <v-text-field
-                        v-model="fileEditedItem.desc"
-                        label="توضیحات"
-                      />
-                    </v-col>
-                    <v-btn
-                      color="primary"
-                      depressed
-                      class="mr-auto"
-                      @click="saveFile"
-                    >
-                      ارسال فایل
-                    </v-btn>
-                  </v-row>
-                </v-form>
-              </v-container>
-              <v-data-table
-                :headers="fileHeaders"
-                :items="files"
-                :search="fileSearch"
-                no-results-text="اطلاعاتی یافت نشد"
-                class="elevation-1 w-100 mt-3"
-              >
-                <template v-slot:top>
-                  <v-toolbar
-                    flat
-                  >
-                    <v-text-field
-                      v-model="fileSearch"
-                      label="جست جو"
-                      single-line
-                      hide-details
-                      autofocus
-                    />
-                  </v-toolbar>
-                </template>
-                <template v-slot:item.submitDate="{ item }">
-                  {{ transformDateToJalali(item.submitDate) }}
-                </template>
-                <template v-slot:item.actions="{ item }">
-                  <v-icon
-                    small
-                    @click="handleFileRule(item)"
-                  >
-                    mdi-pen
-                  </v-icon>
-                  <!--                  <v-btn-->
-                  <!--                      small-->
-                  <!--                      download-->
-                  <!--                      :href="item.fileUrl"-->
-                  <!--                      class="ma-2"-->
-                  <!--                      outlined-->
-                  <!--                      text-->
-                  <!--                  >-->
-                  <!--                    <v-icon-->
-                  <!--                        small-->
-                  <!--                    >-->
-                  <!--                      mdi-cloud-->
-                  <!--                    </v-icon>-->
-                  <!--                  </v-btn>-->
-                </template>
-              </v-data-table>
-            </v-tab-item>
-          </v-tabs-items>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer/>
-          <!--          <v-btn-->
-          <!--              color="blue darken-1"-->
-          <!--              text-->
-          <!--              @click="completeAssessmentRequest"-->
-          <!--              v-if="!assessmentRequestIsCompleted && canAssignTome"-->
-          <!--          >-->
-          <!--            تایید کارگزار-->
-          <!--          </v-btn>-->
-          <!--          <v-btn-->
-          <!--              color="blue darken-1"-->
-          <!--              text-->
-          <!--              @click="viewAllAssessments"-->
-          <!--              v-if="assessmentRequestIsCompleted && canUploadFile"-->
-          <!--          >-->
-          <!--            مشاهده ارزیابی ها-->
-          <!--          </v-btn>-->
-          <v-btn
-            color="blue darken-1"
-            text
-            @click="closeDetailsTabs"
-          >
-            انصراف
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
-    <!--    تب ها-->
-
-    <!--    &lt;!&ndash;    ویدیو تگ&ndash;&gt;-->
-    <!--    <v-dialog-->
-    <!--        v-model="videoTagDialog"-->
-    <!--        persistent-->
-    <!--    >-->
-    <!--      <v-card>-->
-    <!--        <v-card-text>-->
-    <!--          <video-tag :url="videoUrl" :file="fileId" :assessment="assessmentId" :assessment-rules="assessmentRules"-->
-    <!--                     :type="type"/>-->
-    <!--        </v-card-text>-->
-    <!--        <v-card-actions>-->
-    <!--          <v-spacer></v-spacer>-->
-    <!--          <v-btn-->
-    <!--              color="blue darken-1"-->
-    <!--              text-->
-    <!--              @click="closeVideoTags"-->
-    <!--          >-->
-    <!--            انصراف-->
-    <!--          </v-btn>-->
-    <!--        </v-card-actions>-->
-    <!--      </v-card>-->
-    <!--    </v-dialog>-->
-    <!--    &lt;!&ndash;    ویدیو تگ&ndash;&gt;-->
-
-    <!--    ویدیو تگ-->
-    <v-dialog
-      v-model="videoTagDialog"
-      persistent
-    >
-      <v-card>
-        <v-card-text>
-          <video-tag
-            :url="videoUrl"
-            :file="fileId"
-            :assessment="assessmentId"
-          />
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer/>
-          <v-btn
-            color="blue darken-1"
-            text
-            @click="closeVideoTags"
-          >
-            انصراف
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
-    <!--    ویدیو تگ-->
-
-    <!--    &lt;!&ndash;    دیدبن assessment ها&ndash;&gt;-->
-    <!--    <v-dialog-->
-    <!--        v-model="assessmentDialog"-->
-    <!--        persistent-->
-    <!--    >-->
-    <!--      <v-card>-->
-    <!--        <v-card-text>-->
-
-    <!--        </v-card-text>-->
-    <!--        <v-card-actions>-->
-    <!--          <v-btn-->
-    <!--              @click="closeAssessmentDialog"-->
-    <!--          >-->
-    <!--            بستن-->
-    <!--          </v-btn>-->
-    <!--        </v-card-actions>-->
-    <!--      </v-card>-->
-    <!--    </v-dialog>-->
-    <!--    &lt;!&ndash;    دیدبن assessment ها&ndash;&gt;-->
   </v-container>
 </template>
 
@@ -504,100 +138,14 @@
         tabsDialog: false,
         currentItem: null,
         currentTab: null,
+        page: null,
+        size: null,
         assessmentRequestStatus,
         statusSelectValue: 0,
         brokerageValue: null,
         transformDateToJalali,
         transformRequestStatus,
         required,
-        detailsTabsMenu: null,
-        dialogs: [],
-        files: [],
-        assessmentRequestInfoObject: null,
-        assessmentInfo: null,
-        dialogEditedItem: {
-          message: '',
-          targetFile: '',
-        },
-        dialogEditedDefaultItem: {
-          message: '',
-          targetFile: '',
-        },
-        targetFiles: [],
-        dialogHeaders: [
-          {
-            text: 'متن پیام',
-            value: 'message',
-          },
-          {
-            text: 'ارسال کننده',
-            value: 'user.nickname',
-          },
-          {
-            text: 'تاریخ ارسال',
-            value: 'submitDate',
-          },
-          {
-            text: 'شناسه کوتاه',
-            value: 'humanId',
-          },
-        ],
-        fileHeaders: [
-          {
-            text: 'آدرس فایل',
-            value: 'fileUrl',
-          },
-          {
-            text: 'آپلود کننده',
-            value: 'user.nickname',
-          },
-          {
-            text: 'تاریخ ارسال',
-            value: 'submitDate',
-          },
-          {
-            text: 'شناسه کوتاه',
-            value: 'humanId',
-          },
-          {
-            text: 'مدت زمان',
-            value: 'duration',
-          },
-          {
-            text: 'توضیحات',
-            value: 'desc',
-          },
-          {
-            text: 'عملیات',
-            value: 'actions',
-            sortable: false,
-          },
-        ],
-        dialogSearch: '',
-        fileSearch: '',
-        fileEditedItem: {
-          desc: '',
-          fileUrl: 'http://techslides.com/demos/sample-videos/small.mp4',
-          accessKey: '',
-          secretKey: '',
-        },
-        fileEditedDefaultItem: {
-          desc: '',
-          fileUrl: 'http://techslides.com/demos/sample-videos/small.mp4',
-          accessKey: '',
-          secretKey: '',
-        },
-        videoTagDialog: false,
-        videoUrl: null,
-        fileId: null,
-        currentEpisode: null,
-        assessmentId: null,
-        assessmentRules: [],
-        type: 'assessment',
-        assessmentRequestIsCompleted: false,
-        canViewAllAssessments: false,
-        assessmentDialog: false,
-        assessmentDialogData: [],
       }
     },
     computed: {
@@ -623,22 +171,28 @@
       this.$store.commit('assessmentRequest/SET_COMPLETED', [])
     },
     mounted () {
-      this.getData(0)
+      this.getData(0, 1, 5)
       if (this.canSetStatusAndAssignToBrokerage) {
         this.$store.dispatch('fetchOrganizations')
       }
       this.$store.commit('SET_BREADCRUMBS', this.breadcrumbs)
     },
     methods: {
-      getData (status) {
-        this.$store.dispatch('request/fetchAssessmentListByStatus', status)
+      getData (status, page, size) {
+        this.$store.dispatch('request/fetchAssessmentListByStatus', {
+          status: status,
+          page: page,
+          size: size,
+        })
       },
 
       // handle status
-      changeStatus (item, currentTab) {
+      changeStatus (item, currentTab, page, size) {
         this.statusDialog = true
-        this.item = item
+        this.currentItem = item
         this.currentTab = currentTab
+        this.page = page
+        this.size = size
       },
       closeStatus () {
         this.statusDialog = false
@@ -646,19 +200,21 @@
       async saveStatus (status) {
         const data = {
           status: status,
-          requestId: this.item._id,
+          requestId: this.currentItem._id,
         }
         await this.$store.dispatch('request/setStatusOfRequest', data)
-        await this.getData(this.currentTab)
+        await this.getData(this.currentTab, this.page, this.size)
         this.$toast.success('عملیات با موفقیت انجام شد')
       },
       // handle status
 
       // handle brokerage
-      changeBrokerage (item, currentTab) {
+      changeBrokerage (item, currentTab, page, size) {
         this.brokerageDialog = true
-        this.item = item
+        this.currentItem = item
         this.currentTab = currentTab
+        this.page = page
+        this.size = size
       },
       closeBrokerage () {
         this.brokerageDialog = false
@@ -666,10 +222,10 @@
       async saveBrokerage (brokerageValue) {
         const data = {
           brokerageId: brokerageValue,
-          requestId: this.item._id,
+          requestId: this.currentItem._id,
         }
         await this.$store.dispatch('request/assignRequestToBrokerage', data)
-        await this.getData(this.currentTab)
+        await this.getData(this.currentTab, this.page, this.size)
         this.$toast.success('عملیات با موفقیت انجام شد')
       },
       // handle brokerage
@@ -678,7 +234,7 @@
       async assignedToMe (item, index) {
         const data = {
           brokerageId: brokerageValue,
-          requestId: this.item._id,
+          requestId: this.currentItem._id,
         }
         await this.$store.dispatch('request/assignRequestToBrokerage', data)
         await this.getData(index)
@@ -717,13 +273,13 @@
         //   })
         //   this.dialogs = data.data.dialogs
         //   this.tabsDialog = true
-          // if (data.data.assessment) {
-          //   this.assessmentInfo = data.data.assessment
-          // } else {
-          //   if (this.canAssignTome) {
-          //     this.$toast.info('حداقل یک فایل بارگزاری کنید')
-          //   }
-          // }
+        // if (data.data.assessment) {
+        //   this.assessmentInfo = data.data.assessment
+        // } else {
+        //   if (this.canAssignTome) {
+        //     this.$toast.info('حداقل یک فایل بارگزاری کنید')
+        //   }
+        // }
         // }).catch(() => this.$toast.error('خطایی رخ داده است'))
       },
 

@@ -58,10 +58,10 @@
     },
     methods: {
       close () {
-        this.$emit('saveDialog')
+        this.$emit('closeDialog')
       },
       save () {
-        this.$emit('closeDialog', this.status)
+        this.$emit('saveDialog', this.status)
         this.close()
       },
     },
