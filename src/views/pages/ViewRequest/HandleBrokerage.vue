@@ -7,10 +7,10 @@
     <v-card>
       <v-card-text>
         <v-select
-          v-model="status"
-          :items="assessmentRequestStatus"
-          item-text="fa"
-          item-value="code"
+          v-model="brokerageValue"
+          :items="brokerage"
+          item-text="name"
+          item-value="_id"
         />
       </v-card-text>
       <v-card-actions>
@@ -18,7 +18,7 @@
         <v-btn
           color="blue darken-1"
           text
-          @click="save()"
+          @click="save"
         >
           تایید
         </v-btn>
@@ -35,10 +35,8 @@
 </template>
 
 <script>
-  import { assessmentRequestStatus } from '../../../plugins/constant'
-
   export default {
-    name: 'HandleChangeStatus',
+    name: 'HandleBrokerage',
     props: {
       showDialog: {
         Boolean,
@@ -47,11 +45,13 @@
     },
     data () {
       return {
-        status: 0,
-        assessmentRequestStatus,
+        brokerageValue: null,
       }
     },
     computed: {
+      brokerage () {
+        return this.$store.getters.getBrokerage
+      },
       show () {
         return this.showDialog
       },
@@ -61,7 +61,11 @@
         this.$emit('saveDialog')
       },
       save () {
-        this.$emit('closeDialog', this.status)
+        if (!this.brokerageValue) {
+          this.$toast.error('کارگزاری را انتخاب کنید')
+          return false
+        }
+        this.$emit('closeDialog', this.brokerageValue)
         this.close()
       },
     },

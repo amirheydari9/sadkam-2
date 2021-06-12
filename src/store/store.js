@@ -61,7 +61,7 @@ export default new Vuex.Store({
       return state.organizationTypes
     },
     getBrokerage (state) {
-      return state.organizations.filter(item => item.organizationType === 'brokerage')
+      return state.organizations.filter(item => item.organizationType === 'BROKERAGE')
     },
     getAllRoles (state) {
       return state.roles
