@@ -236,9 +236,6 @@
               >
                 <v-text-field
                   v-model="product.description"
-                  :rules="[
-                    required('این فیلد الزامی است'),
-                  ]"
                   label="توضیحات"
                 />
               </v-col>

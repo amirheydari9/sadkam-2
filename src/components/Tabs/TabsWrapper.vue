@@ -280,7 +280,7 @@
               text
               @click="close"
             >
-              انصراف
+              بستن
             </v-btn>
           </v-card-actions>
         </v-tabs-items>

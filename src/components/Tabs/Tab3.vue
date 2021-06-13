@@ -21,7 +21,6 @@
             sm="6"
           >
             <v-text-field
-              :rules="[required('این فیلد الزامی است')]"
               v-model="form.accessKey"
               label="accessKey"
             ></v-text-field>
@@ -31,7 +30,6 @@
             sm="6"
           >
             <v-text-field
-              :rules="[required('این فیلد الزامی است')]"
               v-model="form.secretKey"
               label="secretKey"
             ></v-text-field>
