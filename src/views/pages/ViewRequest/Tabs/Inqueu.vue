@@ -25,6 +25,14 @@
       >
         <template v-slot:item.actions="{item}">
           <v-icon
+            v-if="canSetStatusAndAssignToBrokerage"
+            small
+            class="mr-2"
+            @click="changeStatus(item)"
+          >
+            mdi-refresh
+          </v-icon>
+          <v-icon
             v-if="canAssignTome"
             small
             class="mr-2"
@@ -88,6 +96,9 @@
       }
     },
     computed: {
+      canSetStatusAndAssignToBrokerage () {
+        return permission().isSecretariant() && permission().isOrders()
+      },
       canAssignTome () {
         return permission().isBrokerage() && permission().isOrders()
       },
@@ -116,6 +127,9 @@
         this.inqueu = data.data.items
         this.totalItems = data.data.paginator.itemCount
         this.numberOfPages = data.data.paginator.totalPages
+      },
+      changeStatus (item) {
+        this.$emit('changeStatus', { ...item }, 1, this.options.page, this.options.itemsPerPage)
       },
       assignedToMe (item) {
         this.$emit('assignToMe', { ...item }, 1, this.options.page, this.options.itemsPerPage)

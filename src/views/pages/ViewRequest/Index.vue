@@ -55,20 +55,25 @@
         @seeDetails="seeDetails"
       />
       <Inqueu
+        @changeStatus="changeStatus"
         @assignToMe="assignedToMe"
         @seeDetails="seeDetails"
       />
       <Assigned
+        @changeStatus="changeStatus"
         @unAssignMe="unAssignMe"
         @seeDetails="seeDetails"
       />
       <Confirmed
+        @changeStatus="changeStatus"
         @seeDetails="seeDetails"
       />
       <Working
+        @changeStatus="changeStatus"
         @seeDetails="seeDetails"
       />
       <Completed
+        @changeStatus="changeStatus"
         @seeDetails="seeDetails"
       />
 

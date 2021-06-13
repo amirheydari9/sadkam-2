@@ -31,6 +31,14 @@
         </template>
         <template v-slot:item.actions="{item}">
           <v-icon
+            v-if="canSetStatusAndAssignToBrokerage"
+            small
+            class="mr-2"
+            @click="changeStatus(item)"
+          >
+            mdi-refresh
+          </v-icon>
+          <v-icon
             small
             class="mr-2"
             @click="seeDetails(item,0)"
@@ -45,6 +53,7 @@
 
 <script>
   import { transformDateToJalali, transformRequestStatus } from '../../../../plugins/transformData'
+  import { permission } from '../../../../plugins/permission'
 
   export default {
     name: 'Completed',
@@ -87,6 +96,9 @@
           return this.$store.commit('request/SET_COMPLETED', value)
         },
       },
+      canSetStatusAndAssignToBrokerage () {
+        return permission().isSecretariant() && permission().isOrders()
+      },
     },
     methods: {
       async readDataFromAPI () {
@@ -104,6 +116,9 @@
         this.working = data.data.items
         this.totalItems = data.data.paginator.itemCount
         this.numberOfPages = data.data.paginator.totalPages
+      },
+      changeStatus (item) {
+        this.$emit('changeStatus', { ...item }, 5, this.options.page, this.options.itemsPerPage)
       },
       seeDetails (item) {
         this.$emit('seeDetails', { ...item })
