@@ -39,6 +39,14 @@
             mdi-refresh
           </v-icon>
           <v-icon
+            v-if="canSetStatusAndAssignToBrokerage"
+            small
+            class="mr-2"
+            @click="calculateCost(item)"
+          >
+            mdi-cash
+          </v-icon>
+          <v-icon
             small
             class="mr-2"
             @click="seeDetails(item)"
@@ -119,6 +127,9 @@
       },
       changeStatus (item) {
         this.$emit('changeStatus', { ...item }, 3, this.options.page, this.options.itemsPerPage)
+      },
+      calculateCost (item) {
+        this.$emit('calculateCost', { ...item }, 3, this.options.page, this.options.itemsPerPage)
       },
       seeDetails (item) {
         this.$emit('seeDetails', { ...item })

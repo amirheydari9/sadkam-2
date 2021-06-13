@@ -79,6 +79,14 @@ export function requestService () {
     }
   }
 
+  const calculateCost = async (requestId) => {
+    try {
+      return await axiosInstance.get(`/request/calculateCost/${requestId}`)
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
   return {
     getAllRequests,
     getRequest,
@@ -90,5 +98,6 @@ export function requestService () {
     assignRequestToBrokerage,
     setStatusOfRequest,
     unAssignRequestToBrokerage,
+    calculateCost,
   }
 }

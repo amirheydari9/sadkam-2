@@ -67,6 +67,7 @@
       <Confirmed
         @changeStatus="changeStatus"
         @seeDetails="seeDetails"
+        @calculateCost="calculateCost"
       />
       <Working
         @changeStatus="changeStatus"
@@ -99,6 +100,13 @@
       @closeDialog="closeTabsDialog"
     />
 
+    <handle-cost
+      v-if="costDialog"
+      :show-dialog="costDialog"
+      @closeDialog="closeCostDialog"
+      @saveDialog="saveCost"
+    />
+
   </v-container>
 </template>
 
@@ -113,10 +121,12 @@
   import HandleChangeStatus from './HandleChangeStatus'
   import HandleBrokerage from './HandleBrokerage'
   import TabsWrapper from '../../../components/Tabs/TabsWrapper'
+  import HandleCost from './HandleCost'
 
   export default {
     name: 'Index',
     components: {
+      HandleCost,
       HandleChangeStatus,
       HandleBrokerage,
       Completed,
@@ -133,6 +143,7 @@
         statusDialog: false,
         brokerageDialog: false,
         tabsDialog: false,
+        costDialog: false,
         currentItem: null,
         currentTab: null,
         page: null,
@@ -245,6 +256,19 @@
         this.tabsDialog = false
       },
       // see details
+
+      // handle cost
+      async calculateCost (item) {
+        await this.$store.dispatch('request/calculateCost', item._id)
+      },
+      async saveCost (item) {
+        await this.$store.dispatch('episode/getEpisode', item.episode)
+        this.tabsDialog = true
+      },
+      closeCostDialog () {
+        this.costDialog = false
+      },
+      // handle cost
     },
   }
 </script>

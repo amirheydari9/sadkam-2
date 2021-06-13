@@ -173,4 +173,12 @@ export const actions = {
     }
   },
 
+  async calculateCost (context, requestId) {
+    try {
+      return await requestService().calculateCost(requestId)
+    } catch (e) {
+      console.log(e)
+    }
+  },
+
 }
