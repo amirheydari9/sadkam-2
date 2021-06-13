@@ -5,10 +5,23 @@
   >
     <v-col cols="12">
       <v-data-table
+        :page="page"
+        :pageCount="numberOfPages"
+        :options.sync="options"
+        :server-items-length="totalItems"
+        :loading="loading"
         :headers="headers"
         :items="assigned"
         no-results-text="اطلاعاتی یافت نشد"
         class="w-100"
+        :items-per-page="5"
+        :footer-props="{
+      showFirstLastPage: true,
+      firstIcon: 'mdi-arrow-collapse-left',
+      lastIcon: 'mdi-arrow-collapse-right',
+      prevIcon: 'mdi-plus',
+      nextIcon: 'mdi-minus'
+    }"
       >
         <template v-slot:item.actions="{item}">
           <v-icon
@@ -46,6 +59,11 @@
     name: 'Assigned',
     data () {
       return {
+        page: 1,
+        totalItems: 0,
+        numberOfPages: 0,
+        loading: true,
+        options: {},
         headers: [
           {
             text: 'وضعیت',
@@ -75,20 +93,44 @@
       },
       assigned: {
         get () {
-          return this.$store.getters['assessmentRequest/getAssigned']
+          return this.$store.getters['request/getAssigned']
         },
         set (value) {
-          return this.$store.commit('assessmentRequest/SET_ASSIGNED', value)
+          return this.$store.commit('request/SET_ASSIGNED', value)
         },
       },
     },
     methods: {
+      async readDataFromAPI () {
+        this.loading = true
+        const {
+          page,
+          itemsPerPage,
+        } = this.options
+        let data = await this.$store.dispatch('request/fetchAssessmentListByStatus', {
+          status: 2,
+          page: page,
+          size: itemsPerPage,
+        })
+        this.loading = false
+        this.assigned = data.data.items
+        this.totalItems = data.data.paginator.itemCount
+        this.numberOfPages = data.data.paginator.totalPages
+      },
       unAssignMe (item) {
-        this.$emit('unAssignMe', { ...item }, 2)
+        this.$emit('unAssignMe', { ...item }, 2, this.options.page, this.options.itemsPerPage)
       },
       seeDetails (item) {
         this.$emit('seeDetails', { ...item }, 0)
       },
+    },
+    watch: {
+      options: {
+        handler () {
+          this.readDataFromAPI()
+        },
+      },
+      deep: true,
     },
   }
 </script>

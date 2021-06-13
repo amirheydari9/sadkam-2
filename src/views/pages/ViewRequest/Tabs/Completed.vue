@@ -5,10 +5,23 @@
   >
     <v-col cols="12">
       <v-data-table
+        :page="page"
+        :pageCount="numberOfPages"
+        :options.sync="options"
+        :server-items-length="totalItems"
+        :loading="loading"
         :headers="headers"
         :items="completed"
         no-results-text="اطلاعاتی یافت نشد"
         class="w-100"
+        :items-per-page="5"
+        :footer-props="{
+      showFirstLastPage: true,
+      firstIcon: 'mdi-arrow-collapse-left',
+      lastIcon: 'mdi-arrow-collapse-right',
+      prevIcon: 'mdi-plus',
+      nextIcon: 'mdi-minus'
+    }"
       >
         <template v-slot:item.status="{ item }">
           {{ transformRequestStatus(item.status) }}
@@ -37,6 +50,11 @@
     name: 'Completed',
     data () {
       return {
+        page: 1,
+        totalItems: 0,
+        numberOfPages: 0,
+        loading: true,
+        options: {},
         headers: [
           {
             text: 'وضعیت',
@@ -63,17 +81,41 @@
     computed: {
       completed: {
         get () {
-          return this.$store.getters['assessmentRequest/getCompleted']
+          return this.$store.getters['request/getCompleted']
         },
         set (value) {
-          return this.$store.commit('assessmentRequest/SET_COMPLETED', value)
+          return this.$store.commit('request/SET_COMPLETED', value)
         },
       },
     },
     methods: {
+      async readDataFromAPI () {
+        this.loading = true
+        const {
+          page,
+          itemsPerPage,
+        } = this.options
+        let data = await this.$store.dispatch('request/fetchAssessmentListByStatus', {
+          status: 5,
+          page: page,
+          size: itemsPerPage,
+        })
+        this.loading = false
+        this.working = data.data.items
+        this.totalItems = data.data.paginator.itemCount
+        this.numberOfPages = data.data.paginator.totalPages
+      },
       seeDetails (item) {
         this.$emit('seeDetails', { ...item }, 0)
       },
+    },
+    watch: {
+      options: {
+        handler () {
+          this.readDataFromAPI()
+        },
+      },
+      deep: true,
     },
   }
 </script>

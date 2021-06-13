@@ -9,37 +9,37 @@
     >
       <v-tab
         href="#submitted"
-        @click="getData(1,1,5)"
+        @click="getData(0,1,5)"
       >
         ایجاد شده
       </v-tab>
       <v-tab
         href="#inqueu"
-        @click="getData(2,1,5)"
+        @click="getData(1,1,5)"
       >
         در صف
       </v-tab>
       <v-tab
         href="#assigned"
-        @click="getData(3,1,5)"
+        @click="getData(2,1,5)"
       >
         ارجاع شده
       </v-tab>
       <v-tab
         href="#confirmed"
-        @click="getData(4,1,5)"
+        @click="getData(3,1,5)"
       >
         تایید شده
       </v-tab>
       <v-tab
         href="#working"
-        @click="getData(5,1,5)"
+        @click="getData(4,1,5)"
       >
         در حال بررسی
       </v-tab>
       <v-tab
         href="#completed"
-        @click="getData(6,1,5)"
+        @click="getData(5,1,5)"
       >
         تکمیل شده
       </v-tab>
@@ -231,22 +231,22 @@
       // handle brokerage
 
       // handle assign
-      async assignedToMe (item, index) {
+      async assignedToMe (item, index, page, size) {
         const data = {
           brokerageId: brokerageValue,
           requestId: this.currentItem._id,
         }
         await this.$store.dispatch('request/assignRequestToBrokerage', data)
-        await this.getData(index)
+        await this.getData(index, page, size)
         this.$toast.success('عملیات با موفقیت انجام شد')
       },
 
-      async unAssignMe (item, index) {
+      async unAssignMe (item, index, page, size) {
         const data = {
           requestId: item._id,
         }
         await this.$store.dispatch('request/unAssignRequestToBrokerage', data)
-        await this.getData(index)
+        await this.getData(index, page, size)
         this.$toast.success('عملیات با موفقیت انجام شد')
       },
       // handle assign

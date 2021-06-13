@@ -127,22 +127,22 @@ export const actions = {
       switch (payload.status) {
         case 0:
           commit('SET_SUBMITTED', data.data.items)
-          return data.data
+          return data
         case 1:
-          commit('SET_INQUEU', data.data)
-          break
+          commit('SET_INQUEU', data.data.items)
+          return data
         case 2:
-          commit('SET_ASSIGNED', data.data)
-          break
+          commit('SET_ASSIGNED', data.data.items)
+          return data
         case 3:
-          commit('SET_CONFIRMED', data.data)
-          break
+          commit('SET_CONFIRMED', data.data.items)
+          return data
         case 4:
-          commit('SET_WORKING', data.data)
-          break
+          commit('SET_WORKING', data.data.items)
+          return data
         case 5:
-          commit('SET_COMPLETED', data.data)
-          break
+          commit('SET_COMPLETED', data.data.items)
+          return data
       }
     } catch (e) {
       console.log(e)

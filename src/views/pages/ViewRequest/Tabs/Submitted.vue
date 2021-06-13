@@ -23,7 +23,6 @@
       nextIcon: 'mdi-minus'
     }"
       >
-
         <template v-slot:item.actions="{item}">
           <v-icon
             v-if="canSetStatusAndAssignToBrokerage"
@@ -131,9 +130,9 @@
         })
         console.log(data)
         this.loading = false
-        this.submitted = data.items
-        this.totalItems = data.paginator.itemCount
-        this.numberOfPages = data.paginator.totalPages
+        this.submitted = data.data.items
+        this.totalItems = data.data.paginator.itemCount
+        this.numberOfPages = data.data.paginator.totalPages
       },
       changeStatus (item) {
         this.$emit('changeStatus', { ...item }, 0, this.options.page, this.options.itemsPerPage)
