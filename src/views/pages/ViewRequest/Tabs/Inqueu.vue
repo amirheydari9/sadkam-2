@@ -121,7 +121,7 @@
         this.$emit('assignToMe', { ...item }, 1, this.options.page, this.options.itemsPerPage)
       },
       seeDetails (item) {
-        this.$emit('seeDetails', { ...item }, 0)
+        this.$emit('seeDetails', { ...item })
       },
     },
     watch: {

@@ -98,12 +98,7 @@
 </template>
 
 <script>
-  import { transformDateToJalali, transformRequestStatus } from '../../../plugins/transformData'
-  import { assessmentRequestStatus } from '../../../plugins/constant'
   import { permission } from '../../../plugins/permission'
-  import { requestService } from '../../../service/requestService'
-  import { required } from '../../../plugins/rule'
-  import VideoTag from '../../../components/VideoTag'
   import Assigned from './Tabs/Assigned'
   import Submitted from './Tabs/Submitted'
   import Inqueu from './Tabs/Inqueu'
@@ -113,8 +108,6 @@
   import HandleChangeStatus from './HandleChangeStatus'
   import HandleBrokerage from './HandleBrokerage'
   import TabsWrapper from '../../../components/Tabs/TabsWrapper'
-  // import {assessmentService} from "../../../service/assessmentService";
-  // import {ruleService} from "../../../service/ruleService";
 
   export default {
     name: 'Index',
@@ -127,7 +120,6 @@
       Inqueu,
       Submitted,
       Assigned,
-      VideoTag,
       TabsWrapper,
     },
     data () {
@@ -140,35 +132,21 @@
         currentTab: null,
         page: null,
         size: null,
-        assessmentRequestStatus,
-        statusSelectValue: 0,
-        brokerageValue: null,
-        transformDateToJalali,
-        transformRequestStatus,
-        required,
       }
     },
     computed: {
-      // canUploadFile () {
-      //   return permission().isPlatform() && permission().isOrders()
-      // },
       canSetStatusAndAssignToBrokerage () {
         return permission().isSecretariant() && permission().isOrders()
       },
-      // canAssignTome () {
-      //   return permission().isBrokerage() && permission().isOrders()
-      // },
-      // brokerage () {
-      //   return this.$store.getters.getBrokerage
-      // },
     },
     beforeDestroy () {
-      this.$store.commit('assessmentRequest/SET_SUBMITTED', [])
-      this.$store.commit('assessmentRequest/SET_INQUEU', [])
-      this.$store.commit('assessmentRequest/SET_ASSIGNED', [])
-      this.$store.commit('assessmentRequest/SET_CONFIRMED', [])
-      this.$store.commit('assessmentRequest/SET_WORKING', [])
-      this.$store.commit('assessmentRequest/SET_COMPLETED', [])
+      this.$store.commit('request/SET_SUBMITTED', [])
+      this.$store.commit('request/SET_INQUEU', [])
+      this.$store.commit('request/SET_ASSIGNED', [])
+      this.$store.commit('request/SET_CONFIRMED', [])
+      this.$store.commit('request/SET_WORKING', [])
+      this.$store.commit('request/SET_COMPLETED', [])
+      this.$store.commit('episode/SET_EPISODE', null)
     },
     mounted () {
       this.getData(0, 1, 5)
@@ -233,8 +211,8 @@
       // handle assign
       async assignedToMe (item, index, page, size) {
         const data = {
-          brokerageId: brokerageValue,
-          requestId: this.currentItem._id,
+          brokerageId: this.$store.getters.getCurrentUser.organization,
+          requestId: item._id,
         }
         await this.$store.dispatch('request/assignRequestToBrokerage', data)
         await this.getData(index, page, size)
@@ -251,132 +229,17 @@
       },
       // handle assign
 
-      seeDetails (item) {
-        this.$store.commit('episode/SET_EPISODE', item.episode._id)
-        // this.currentEpisode = item.episode
-        this.tabsDialog = true
-
-        // requestService().getRequest(item._id).then(({ data }) => {
-        //   this.assessmentRequestInfoObject = data.data
-        //   this.files = data.data.files
-        //   data.data.dialogs.forEach(value => {
-        //     const obj = this.files.find(item => {
-        //       if (value.targetFile) {
-        //         return item._id === value.targetFile
-        //       }
-        //     })
-        //     if (obj) {
-        //       value.humanId = obj.desc ? `${obj.desc}-${obj.humanId}` : `${obj.humanId}`
-        //     } else {
-        //       value.humanId = 'ندارد'
-        //     }
-        //   })
-        //   this.dialogs = data.data.dialogs
-        //   this.tabsDialog = true
-        // if (data.data.assessment) {
-        //   this.assessmentInfo = data.data.assessment
-        // } else {
-        //   if (this.canAssignTome) {
-        //     this.$toast.info('حداقل یک فایل بارگزاری کنید')
-        //   }
-        // }
-        // }).catch(() => this.$toast.error('خطایی رخ داده است'))
-      },
-
-      saveDialog () {
-        if (this.$refs.dialogForm.validate()) {
-          const dialog = {
-            ...this.dialogEditedItem,
-            _id: this.assessmentRequestInfoObject._id,
-          }
-          requestService().createDialog(dialog).then(() => {
-            this.seeDetails(this.assessmentRequestInfoObject)
-            this.$refs.dialogForm.reset()
-            this.$refs.dialogForm.resetValidation()
-          })
-        }
-      },
-      saveFile () {
-        if (this.$refs.fileForm.validate()) {
-          const file = {
-            ...this.fileEditedItem,
-            _id: this.assessmentRequestInfoObject._id,
-          }
-          requestService().createFile(file).then(() => {
-            this.seeDetails(this.assessmentRequestInfoObject)
-            this.$refs.fileForm.reset()
-            this.$refs.fileForm.resetValidation()
-          })
-        }
-      },
-      async handleFileRule (item) {
-        try {
-          await this.$store.dispatch('rule/fetchAllListRulesOfFile', item._id)
-          this.videoUrl = item.fileUrl
-          this.assessmentId = this.assessmentRequestInfoObject._id
-          this.fileId = item._id
-          this.videoTagDialog = true
-        } catch (e) {
-          this.$toast.error('خطایی رخ داده است')
-        }
-      },
-      closeVideoTags () {
-        this.videoTagDialog = false
-        this.$nextTick(() => {
-          this.videoUrl = null
-          this.assessmentId = null
-          this.fileId = null
+      // see details
+      async seeDetails (item) {
+        await this.$store.dispatch('episode/getEpisode', item.episode).then(() => {
+          this.tabsDialog = true
         })
       },
       closeTabsDialog () {
-        this.tabsDialog = false
         this.$store.commit('episode/SET_EPISODE', null)
-        this.assessmentRequestInfoObject = null
-        this.assessmentInfo = null
-        this.currentEpisode = null
-        this.assessmentRequestIsCompleted = false
-        this.canViewAllAssessments = false
+        this.tabsDialog = false
       },
-
-      // createAssessment() {
-      //   try {
-      //     const assessment = {
-      //       episode: this.currentEpisode,
-      //       assessmentRequest: this.assessmentRequestInfoObject._id
-      //     }
-      //     console.log(assessment, 'assessment')
-      //     this.$store.dispatch('assessment/createAssessment', assessment).then((data) => {
-      //       console.log(data, 'forid', data.data.id);
-      //       assessmentService().getRulesByAssessmentId(data.data.id).then((value) => {
-      //         this.videoTagDialog = true
-      //         this.videoUrl = this.assessmentRequestInfoObject.files[0].fileUrl;
-      //         this.fileId = this.assessmentRequestInfoObject.files[0]._id
-      //         this.assessmentId = data.data.id
-      //         console.log(value, 'value', value.data.data.rules);
-      //         this.assessmentRules = value.data.data.rules
-      //       })
-      //     })
-      //   } catch (e) {
-      //     this.$toast.error('عملیات انجام نشد')
-      //   }
-      // },
-
-      // completeAssessmentRequest() {
-      //   console.log(this.assessmentInfo, 'this.assessmentInfo')
-      //   const data = {
-      //     status: 4,
-      //     _id: this.assessmentInfo._id
-      //   }
-      //   this.$store.dispatch('assessmentRequest/setStatusOfAssessmentRequest', data).then(() => {
-      //     this.assessmentRequestIsCompleted = true
-      //   })
-      // },
-      // viewAllAssessments() {
-      //     ruleService().getListRulesOfAssessment(this.assessmentId)
-      // },
-      // closeAssessmentDialog() {
-      //   this.assessmentDialog = false
-      // }
+      // see details
     },
   }
 </script>

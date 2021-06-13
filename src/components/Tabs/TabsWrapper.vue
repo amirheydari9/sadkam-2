@@ -334,8 +334,6 @@
     methods: {
       getData () {
         this.$store.dispatch('request/fetchRequestByEpisodeId', this.episode._id).then(() => {
-
-          console.log(this.requestInfoByEpisodeId,'requestInfoByEpisodeId')
           if(this.requestInfoByEpisodeId){
             this.$store.dispatch('request/fetchRequest', this.requestInfoByEpisodeId._id).then(() => {
               this.request.dialogs.forEach(value => {

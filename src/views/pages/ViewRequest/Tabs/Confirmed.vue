@@ -106,7 +106,7 @@
         this.numberOfPages = data.data.paginator.totalPages
       },
       seeDetails (item) {
-        this.$emit('seeDetails', { ...item }, 0)
+        this.$emit('seeDetails', { ...item })
       },
     },
     watch: {
