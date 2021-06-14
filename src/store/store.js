@@ -12,6 +12,7 @@ import * as assessment from './modules/assessment'
 import * as user from './modules/user'
 import * as organization from './modules/organization'
 import * as ticket from './modules/ticket'
+import * as dashboard from './modules/dashboard'
 import router from '../router'
 
 Vue.use(Vuex)
@@ -191,5 +192,6 @@ export default new Vuex.Store({
     rule,
     assessment,
     ticket,
+    dashboard
   },
 })
