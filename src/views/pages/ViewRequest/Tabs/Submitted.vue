@@ -128,11 +128,13 @@
           page: page,
           size: itemsPerPage,
         })
-        console.log(data)
+        console.log(data.data.paginator,'assi')
         this.loading = false
         this.submitted = data.data.items
         this.totalItems = data.data.paginator.itemCount
         this.numberOfPages = data.data.paginator.totalPages
+        this.options.page = data.data.paginator.currentPage;
+        this.options.itemsPerPage = +data.data.paginator.perPage;
       },
       changeStatus (item) {
         this.$emit('changeStatus', { ...item }, 0, this.options.page, this.options.itemsPerPage)
