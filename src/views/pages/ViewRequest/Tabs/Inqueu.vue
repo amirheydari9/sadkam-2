@@ -24,29 +24,47 @@
     }"
       >
         <template v-slot:item.actions="{item}">
-          <v-icon
-            v-if="canSetStatusAndAssignToBrokerage"
-            small
-            class="mr-2"
-            @click="changeStatus(item)"
-          >
-            mdi-refresh
-          </v-icon>
-          <v-icon
-            v-if="canAssignTome"
-            small
-            class="mr-2"
-            @click="assignedToMe(item)"
-          >
-            mdi-plus-box
-          </v-icon>
-          <v-icon
-            small
-            class="mr-2"
-            @click="seeDetails(item)"
-          >
-            mdi-eye
-          </v-icon>
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on }">
+              <v-icon
+                v-on="on"
+                v-if="canSetStatusAndAssignToBrokerage"
+                small
+                class="mr-2"
+                @click="changeStatus(item)"
+              >
+                mdi-refresh
+              </v-icon>
+            </template>
+            <span>تغییر وضعیت</span>
+          </v-tooltip>
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on }">
+              <v-icon
+                v-on="on"
+                v-if="canAssignTome"
+                small
+                class="mr-2"
+                @click="assignedToMe(item)"
+              >
+                mdi-plus-box
+              </v-icon>
+            </template>
+            <span>اختصاص به من</span>
+          </v-tooltip>
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on }">
+              <v-icon
+                v-on="on"
+                small
+                class="mr-2"
+                @click="seeDetails(item)"
+              >
+                mdi-eye
+              </v-icon>
+            </template>
+            <span>مشاهد جزئیات</span>
+          </v-tooltip>
         </template>
         <template v-slot:item.status="{ item }">
           {{ transformRequestStatus(item.status) }}

@@ -24,29 +24,47 @@
     }"
       >
         <template v-slot:item.actions="{item}">
-          <v-icon
-            v-if="canSetStatusAndAssignToBrokerage"
-            small
-            class="mr-2"
-            @click="changeStatus(item)"
-          >
-            mdi-refresh
-          </v-icon>
-          <v-icon
-            v-if="canSetStatusAndAssignToBrokerage"
-            small
-            class="mr-2"
-            @click="changeBrokerage(item)"
-          >
-            mdi-account-convert
-          </v-icon>
-          <v-icon
-            small
-            class="mr-2"
-            @click="seeDetails(item)"
-          >
-            mdi-eye
-          </v-icon>
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on }">
+              <v-icon
+                v-on="on"
+                v-if="canSetStatusAndAssignToBrokerage"
+                small
+                class="mr-2"
+                @click="changeStatus(item)"
+              >
+                mdi-refresh
+              </v-icon>
+            </template>
+            <span>تغییر وضعیت</span>
+          </v-tooltip>
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on }">
+              <v-icon
+                v-on="on"
+                v-if="canSetStatusAndAssignToBrokerage"
+                small
+                class="mr-2"
+                @click="changeBrokerage(item)"
+              >
+                mdi-account-convert
+              </v-icon>
+            </template>
+            <span>ارجاع به کارگزاری</span>
+          </v-tooltip>
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on }">
+              <v-icon
+                v-on="on"
+                small
+                class="mr-2"
+                @click="seeDetails(item)"
+              >
+                mdi-eye
+              </v-icon>
+            </template>
+            <span>مشاهد جزئیات</span>
+          </v-tooltip>
         </template>
         <template v-slot:item.status="{ item }">
           {{ transformRequestStatus(item.status) }}
@@ -128,13 +146,13 @@
           page: page,
           size: itemsPerPage,
         })
-        console.log(data.data.paginator,'assi')
+        console.log(data.data.paginator, 'assi')
         this.loading = false
         this.submitted = data.data.items
         this.totalItems = data.data.paginator.itemCount
         this.numberOfPages = data.data.paginator.totalPages
-        this.options.page = data.data.paginator.currentPage;
-        this.options.itemsPerPage = +data.data.paginator.perPage;
+        this.options.page = data.data.paginator.currentPage
+        this.options.itemsPerPage = +data.data.paginator.perPage
       },
       changeStatus (item) {
         this.$emit('changeStatus', { ...item }, 0, this.options.page, this.options.itemsPerPage)

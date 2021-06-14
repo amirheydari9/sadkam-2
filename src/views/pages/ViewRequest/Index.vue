@@ -1,7 +1,7 @@
 <template>
 
   <v-container>
-
+    <breadcrumbs :items="breadcrumbs"/>
     <v-tabs
       v-model="tabsMenu"
       class="mt-5"
@@ -122,10 +122,12 @@
   import HandleBrokerage from './HandleBrokerage'
   import TabsWrapper from '../../../components/Tabs/TabsWrapper'
   import HandleCost from './HandleCost'
+  import Breadcrumbs from '../../../components/Breadcrumbs'
 
   export default {
     name: 'Index',
     components: {
+      Breadcrumbs,
       HandleCost,
       HandleChangeStatus,
       HandleBrokerage,
@@ -148,6 +150,19 @@
         currentTab: null,
         page: null,
         size: null,
+        breadcrumbs: [
+          {
+            text: 'داشبورد',
+            disabled: false,
+            to: { name: 'Panel' },
+            exact: true,
+          },
+          {
+            text: 'مشاهده درخواست ارزیابی',
+            disabled: true,
+            exact: true,
+          },
+        ],
       }
     },
     computed: {

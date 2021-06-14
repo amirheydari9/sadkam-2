@@ -30,21 +30,33 @@
           {{ transformDateToJalali(item.submitDate) }}
         </template>
         <template v-slot:item.actions="{item}">
-          <v-icon
-            v-if="canSetStatusAndAssignToBrokerage"
-            small
-            class="mr-2"
-            @click="changeStatus(item)"
-          >
-            mdi-refresh
-          </v-icon>
-          <v-icon
-            small
-            class="mr-2"
-            @click="seeDetails(item,0)"
-          >
-            mdi-eye
-          </v-icon>
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on }">
+              <v-icon
+                v-on="on"
+                v-if="canSetStatusAndAssignToBrokerage"
+                small
+                class="mr-2"
+                @click="changeStatus(item)"
+              >
+                mdi-refresh
+              </v-icon>
+            </template>
+            <span>تغییر وضعیت</span>
+          </v-tooltip>
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on }">
+              <v-icon
+                v-on="on"
+                small
+                class="mr-2"
+                @click="seeDetails(item)"
+              >
+                mdi-eye
+              </v-icon>
+            </template>
+            <span>مشاهد جزئیات</span>
+          </v-tooltip>
         </template>
       </v-data-table>
     </v-col>
