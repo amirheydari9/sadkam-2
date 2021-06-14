@@ -12,7 +12,6 @@
       :headers="headers"
       :items="working"
       no-results-text="اطلاعاتی یافت نشد"
-      class="w-100"
       :items-per-page="5"
       :footer-props="{
       showFirstLastPage: true,
