@@ -38,14 +38,14 @@
           >
             mdi-refresh
           </v-icon>
-          <v-icon
-            v-if="canSetStatusAndAssignToBrokerage"
-            small
-            class="mr-2"
-            @click="calculateCost(item)"
-          >
-            mdi-cash
-          </v-icon>
+<!--          <v-icon-->
+<!--            v-if="canSetStatusAndAssignToBrokerage"-->
+<!--            small-->
+<!--            class="mr-2"-->
+<!--            @click="calculateCost(item)"-->
+<!--          >-->
+<!--            mdi-cash-->
+<!--          </v-icon>-->
           <v-icon
             small
             class="mr-2"
