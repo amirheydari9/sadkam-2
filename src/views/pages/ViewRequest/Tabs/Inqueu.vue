@@ -96,6 +96,12 @@
 
   export default {
     name: 'Inqueu',
+    props: {
+      getData: {
+        Boolean,
+        isRequired: true,
+      },
+    },
     components: {
       HandleChangeStatus,
       TabsWrapper
@@ -216,11 +222,17 @@
     },
     watch: {
       options: {
+        deep: true,
         handler () {
           this.readDataFromAPI()
         },
       },
-      deep: true,
+      getData (val) {
+        if (val) {
+          this.readDataFromAPI()
+          this.$emit('loaded')
+        }
+      },
     },
   }
 </script>

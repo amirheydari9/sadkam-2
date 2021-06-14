@@ -7,107 +7,162 @@
       class="mt-5"
       color="grey darken-3"
     >
+      <!--      <v-tab-->
+      <!--        href="#submitted"-->
+      <!--        @click="getData(0,1,5)"-->
+      <!--      >-->
+      <!--        ایجاد شده-->
+      <!--      </v-tab>-->
+      <!--      <v-tab-->
+      <!--        href="#inqueu"-->
+      <!--        @click="getData(1,1,5)"-->
+      <!--      >-->
+      <!--        در صف-->
+      <!--      </v-tab>-->
+      <!--      <v-tab-->
+      <!--        href="#assigned"-->
+      <!--        @click="getData(2,1,5)"-->
+      <!--      >-->
+      <!--        ارجاع شده-->
+      <!--      </v-tab>-->
+      <!--      <v-tab-->
+      <!--        href="#confirmed"-->
+      <!--        @click="getData(3,1,5)"-->
+      <!--      >-->
+      <!--        تایید شده-->
+      <!--      </v-tab>-->
+      <!--      <v-tab-->
+      <!--        href="#working"-->
+      <!--        @click="getData(4,1,5)"-->
+      <!--      >-->
+      <!--        در حال بررسی-->
+      <!--      </v-tab>-->
+      <!--      <v-tab-->
+      <!--        href="#completed"-->
+      <!--        @click="getData(5,1,5)"-->
+      <!--      >-->
+      <!--        تکمیل شده-->
+      <!--      </v-tab>-->
+
       <v-tab
         href="#submitted"
-        @click="getData(0,1,5)"
+        @click="fetchSubmitted = true"
       >
         ایجاد شده
       </v-tab>
       <v-tab
         href="#inqueu"
-        @click="getData(1,1,5)"
+        @click="fetchInqueu=true"
       >
         در صف
       </v-tab>
       <v-tab
         href="#assigned"
-        @click="getData(2,1,5)"
+        @click="fetchAssigned=true"
       >
         ارجاع شده
       </v-tab>
       <v-tab
         href="#confirmed"
-        @click="getData(3,1,5)"
+        @click="fetchConfirmed=true"
       >
         تایید شده
       </v-tab>
       <v-tab
         href="#working"
-        @click="getData(4,1,5)"
+        @click="fetchWorking=true"
       >
         در حال بررسی
       </v-tab>
       <v-tab
         href="#completed"
-        @click="getData(5,1,5)"
+        @click="fetchCompleted=true"
       >
         تکمیل شده
       </v-tab>
+
     </v-tabs>
 
     <v-divider/>
 
     <v-tabs-items v-model="tabsMenu">
 
-<!--      <Submitted-->
-<!--        @changeStatus="changeStatus"-->
-<!--        @changeBrokerage="changeBrokerage"-->
-<!--        @seeDetails="seeDetails"-->
-<!--      />-->
-<!--      <Inqueu-->
-<!--        @changeStatus="changeStatus"-->
-<!--        @assignToMe="assignedToMe"-->
-<!--        @seeDetails="seeDetails"-->
-<!--      />-->
-<!--      <Assigned-->
-<!--        @changeStatus="changeStatus"-->
-<!--        @unAssignMe="unAssignMe"-->
-<!--        @seeDetails="seeDetails"-->
-<!--      />-->
-<!--      <Confirmed-->
-<!--        @changeStatus="changeStatus"-->
-<!--        @seeDetails="seeDetails"-->
-<!--        @calculateCost="calculateCost"-->
-<!--      />-->
-<!--      <Working-->
-<!--        @changeStatus="changeStatus"-->
-<!--        @seeDetails="seeDetails"-->
-<!--      />-->
-<!--      <Completed-->
-<!--        @changeStatus="changeStatus"-->
-<!--        @seeDetails="seeDetails"-->
-<!--      />-->
+      <!--      <Submitted-->
+      <!--        @changeStatus="changeStatus"-->
+      <!--        @changeBrokerage="changeBrokerage"-->
+      <!--        @seeDetails="seeDetails"-->
+      <!--      />-->
+      <!--      <Inqueu-->
+      <!--        @changeStatus="changeStatus"-->
+      <!--        @assignToMe="assignedToMe"-->
+      <!--        @seeDetails="seeDetails"-->
+      <!--      />-->
+      <!--      <Assigned-->
+      <!--        @changeStatus="changeStatus"-->
+      <!--        @unAssignMe="unAssignMe"-->
+      <!--        @seeDetails="seeDetails"-->
+      <!--      />-->
+      <!--      <Confirmed-->
+      <!--        @changeStatus="changeStatus"-->
+      <!--        @seeDetails="seeDetails"-->
+      <!--        @calculateCost="calculateCost"-->
+      <!--      />-->
+      <!--      <Working-->
+      <!--        @changeStatus="changeStatus"-->
+      <!--        @seeDetails="seeDetails"-->
+      <!--      />-->
+      <!--      <Completed-->
+      <!--        @changeStatus="changeStatus"-->
+      <!--        @seeDetails="seeDetails"-->
+      <!--      />-->
 
-      <Submitted/>
-      <Inqueu/>
-      <Assigned/>
+      <Submitted
+        :getData="fetchSubmitted"
+        @loaded="fetchSubmitted = false"
+      />
+      <Inqueu
+        :getData="fetchInqueu"
+        @loaded="fetchInqueu = false"
+      />
+      <Assigned
+        :getData="fetchAssigned"
+        @loaded="fetchAssigned = false"
+      />
       <Confirmed
         @calculateCost="calculateCost"
+        :getData="fetchConfirmed"
+        @loaded="fetchConfirmed = false"
       />
-      <Working/>
-      <Completed/>
+      <Working
+        :getData="fetchWorking"
+        @loaded="fetchWorking = false"
+      />
+      <Completed
+        :getData="fetchCompleted"
+        @loaded="fetchCompleted = false"
+      />
 
     </v-tabs-items>
 
-<!--    <HandleChangeStatus-->
-<!--      v-if="statusDialog"-->
-<!--      :show-dialog="statusDialog"-->
-<!--      @closeDialog="closeStatus"-->
-<!--      @saveDialog="saveStatus"-->
-<!--    />-->
+    <!--    <HandleChangeStatus-->
+    <!--      v-if="statusDialog"-->
+    <!--      :show-dialog="statusDialog"-->
+    <!--      @closeDialog="closeStatus"-->
+    <!--      @saveDialog="saveStatus"-->
+    <!--    />-->
 
-<!--    <HandleBrokerage-->
-<!--      v-if="brokerageDialog"-->
-<!--      :show-dialog="brokerageDialog"-->
-<!--      @closeDialog="closeBrokerage"-->
-<!--      @saveDialog="saveBrokerage"-->
-<!--    />-->
+    <!--    <HandleBrokerage-->
+    <!--      v-if="brokerageDialog"-->
+    <!--      :show-dialog="brokerageDialog"-->
+    <!--      @closeDialog="closeBrokerage"-->
+    <!--      @saveDialog="saveBrokerage"-->
+    <!--    />-->
 
-<!--    <tabs-wrapper-->
-<!--      v-if="tabsDialog"-->
-<!--      :show-dialog="tabsDialog"-->
-<!--      @closeDialog="closeTabsDialog"-->
-<!--    />-->
+    <!--    <tabs-wrapper-->
+    <!--      v-if="tabsDialog"-->
+    <!--      :show-dialog="tabsDialog"-->
+    <!--      @closeDialog="closeTabsDialog"-->
+    <!--    />-->
 
     <handle-cost
       v-if="costDialog"
@@ -154,6 +209,12 @@
         // statusDialog: false,
         // brokerageDialog: false,
         // tabsDialog: false,
+        fetchSubmitted: false,
+        fetchInqueu: false,
+        fetchAssigned: false,
+        fetchConfirmed: false,
+        fetchCompleted: false,
+        fetchWorking: false,
         costDialog: false,
         currentItem: null,
         currentTab: null,
@@ -189,20 +250,20 @@
       this.$store.commit('episode/SET_EPISODE', null)
     },
     mounted () {
-      this.getData(0, 1, 5)
+      // this.getData(0, 1, 5)
       if (this.canSetStatusAndAssignToBrokerage) {
         this.$store.dispatch('fetchOrganizations')
       }
       this.$store.commit('SET_BREADCRUMBS', this.breadcrumbs)
     },
     methods: {
-      getData (status, page, size) {
-        this.$store.dispatch('request/fetchAssessmentListByStatus', {
-          status: status,
-          page: page,
-          size: size,
-        })
-      },
+      // getData (status, page, size) {
+      //   this.$store.dispatch('request/fetchAssessmentListByStatus', {
+      //     status: status,
+      //     page: page,
+      //     size: size,
+      //   })
+      // },
 
       // handle status
 
