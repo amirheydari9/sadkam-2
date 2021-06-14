@@ -3,7 +3,7 @@ import { dashboardService } from '../../service/dashboardService'
 export const namespaced = true
 
 export const state = {
-  home: null,
+  home: [],
 }
 
 export const mutations = {
@@ -19,10 +19,10 @@ export const getters = {
 }
 
 export const actions = {
-  async fetchHomeData (context) {
+  async fetchHomeData ({ commit }) {
     try {
       const { data } = await dashboardService().home()
-      console.log(data)
+      commit('SET_HOME', data.data)
     } catch (e) {
       console.log(e)
     }

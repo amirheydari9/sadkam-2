@@ -18,12 +18,12 @@
       </div>
     </template>
 
-    <v-col
-      cols="12"
-      class="px-0"
-    >
-      <v-divider />
-    </v-col>
+    <!--    <v-col-->
+    <!--      cols="12"-->
+    <!--      class="px-0"-->
+    <!--    >-->
+    <!--      <v-divider />-->
+    <!--    </v-col>-->
 
     <v-icon
       :color="subIconColor"
@@ -76,7 +76,7 @@
         default: undefined,
       },
       value: {
-        type: String,
+        type: [String, Number],
         default: undefined,
       },
       smallValue: {
