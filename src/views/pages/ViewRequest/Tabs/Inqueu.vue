@@ -79,6 +79,12 @@
       @saveDialog="saveStatus"
     />
 
+    <tabs-wrapper
+      v-if="tabsDialog"
+      :show-dialog="tabsDialog"
+      @closeDialog="closeTabsDialog"
+    />
+
   </v-tab-item>
 </template>
 
@@ -86,15 +92,18 @@
   import { permission } from '../../../../plugins/permission'
   import { transformDateToJalali, transformRequestStatus } from '../../../../plugins/transformData'
   import HandleChangeStatus from '../HandleChangeStatus'
+  import TabsWrapper from '../../../../components/Tabs/TabsWrapper'
 
   export default {
     name: 'Inqueu',
     components: {
       HandleChangeStatus,
+      TabsWrapper
     },
     data () {
       return {
         statusDialog: false,
+        tabsDialog: false,
         currentItem: null,
         page: 1,
         totalItems: 0,
@@ -159,6 +168,26 @@
         this.$toast.success('عملیات با موفقیت انجام شد')
       },
 
+      async assignedToMe (item) {
+        const data = {
+          brokerageId: this.$store.getters.getCurrentUser.organization,
+          requestId: item._id,
+        }
+        await this.$store.dispatch('request/assignRequestToBrokerage', data)
+        await this.readDataFromAPI()
+        this.$toast.success('عملیات با موفقیت انجام شد')
+      },
+
+      async seeDetails (item) {
+        await this.$store.dispatch('episode/getEpisode', item.episode).then(() => {
+          this.tabsDialog = true
+        })
+      },
+      closeTabsDialog () {
+        this.$store.commit('episode/SET_EPISODE', null)
+        this.tabsDialog = false
+      },
+
       async readDataFromAPI () {
         this.loading = true
         const {
@@ -178,12 +207,12 @@
       // changeStatus (item) {
       //   this.$emit('changeStatus', { ...item }, 1, this.options.page, this.options.itemsPerPage)
       // },
-      assignedToMe (item) {
-        this.$emit('assignToMe', { ...item }, 1, this.options.page, this.options.itemsPerPage)
-      },
-      seeDetails (item) {
-        this.$emit('seeDetails', { ...item })
-      },
+      // assignedToMe (item) {
+      //   this.$emit('assignToMe', { ...item }, 1, this.options.page, this.options.itemsPerPage)
+      // },
+      // seeDetails (item) {
+      //   this.$emit('seeDetails', { ...item })
+      // },
     },
     watch: {
       options: {

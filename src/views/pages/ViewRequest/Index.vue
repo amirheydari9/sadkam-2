@@ -49,56 +49,65 @@
 
     <v-tabs-items v-model="tabsMenu">
 
-      <Submitted
-        @changeStatus="changeStatus"
-        @changeBrokerage="changeBrokerage"
-        @seeDetails="seeDetails"
-      />
-      <Inqueu
-        @changeStatus="changeStatus"
-        @assignToMe="assignedToMe"
-        @seeDetails="seeDetails"
-      />
-      <Assigned
-        @changeStatus="changeStatus"
-        @unAssignMe="unAssignMe"
-        @seeDetails="seeDetails"
-      />
+<!--      <Submitted-->
+<!--        @changeStatus="changeStatus"-->
+<!--        @changeBrokerage="changeBrokerage"-->
+<!--        @seeDetails="seeDetails"-->
+<!--      />-->
+<!--      <Inqueu-->
+<!--        @changeStatus="changeStatus"-->
+<!--        @assignToMe="assignedToMe"-->
+<!--        @seeDetails="seeDetails"-->
+<!--      />-->
+<!--      <Assigned-->
+<!--        @changeStatus="changeStatus"-->
+<!--        @unAssignMe="unAssignMe"-->
+<!--        @seeDetails="seeDetails"-->
+<!--      />-->
+<!--      <Confirmed-->
+<!--        @changeStatus="changeStatus"-->
+<!--        @seeDetails="seeDetails"-->
+<!--        @calculateCost="calculateCost"-->
+<!--      />-->
+<!--      <Working-->
+<!--        @changeStatus="changeStatus"-->
+<!--        @seeDetails="seeDetails"-->
+<!--      />-->
+<!--      <Completed-->
+<!--        @changeStatus="changeStatus"-->
+<!--        @seeDetails="seeDetails"-->
+<!--      />-->
+
+      <Submitted/>
+      <Inqueu/>
+      <Assigned/>
       <Confirmed
-        @changeStatus="changeStatus"
-        @seeDetails="seeDetails"
         @calculateCost="calculateCost"
       />
-      <Working
-        @changeStatus="changeStatus"
-        @seeDetails="seeDetails"
-      />
-      <Completed
-        @changeStatus="changeStatus"
-        @seeDetails="seeDetails"
-      />
+      <Working/>
+      <Completed/>
 
     </v-tabs-items>
 
-    <HandleChangeStatus
-      v-if="statusDialog"
-      :show-dialog="statusDialog"
-      @closeDialog="closeStatus"
-      @saveDialog="saveStatus"
-    />
+<!--    <HandleChangeStatus-->
+<!--      v-if="statusDialog"-->
+<!--      :show-dialog="statusDialog"-->
+<!--      @closeDialog="closeStatus"-->
+<!--      @saveDialog="saveStatus"-->
+<!--    />-->
 
-    <HandleBrokerage
-      v-if="brokerageDialog"
-      :show-dialog="brokerageDialog"
-      @closeDialog="closeBrokerage"
-      @saveDialog="saveBrokerage"
-    />
+<!--    <HandleBrokerage-->
+<!--      v-if="brokerageDialog"-->
+<!--      :show-dialog="brokerageDialog"-->
+<!--      @closeDialog="closeBrokerage"-->
+<!--      @saveDialog="saveBrokerage"-->
+<!--    />-->
 
-    <tabs-wrapper
-      v-if="tabsDialog"
-      :show-dialog="tabsDialog"
-      @closeDialog="closeTabsDialog"
-    />
+<!--    <tabs-wrapper-->
+<!--      v-if="tabsDialog"-->
+<!--      :show-dialog="tabsDialog"-->
+<!--      @closeDialog="closeTabsDialog"-->
+<!--    />-->
 
     <handle-cost
       v-if="costDialog"
@@ -142,9 +151,9 @@
     data () {
       return {
         tabsMenu: null,
-        statusDialog: false,
-        brokerageDialog: false,
-        tabsDialog: false,
+        // statusDialog: false,
+        // brokerageDialog: false,
+        // tabsDialog: false,
         costDialog: false,
         currentItem: null,
         currentTab: null,
@@ -196,80 +205,92 @@
       },
 
       // handle status
-      changeStatus (item, currentTab, page, size) {
-        this.statusDialog = true
-        this.currentItem = item
-        this.currentTab = currentTab
-        this.page = page
-        this.size = size
-      },
-      closeStatus () {
-        this.statusDialog = false
-      },
-      async saveStatus (status) {
-        const data = {
-          status: status,
-          requestId: this.currentItem._id,
-        }
-        await this.$store.dispatch('request/setStatusOfRequest', data)
-        await this.getData(this.currentTab, this.page, this.size)
-        this.$toast.success('عملیات با موفقیت انجام شد')
-      },
+
+      // changeStatus (item, currentTab, page, size) {
+      //   this.statusDialog = true
+      //   this.currentItem = item
+      //   this.currentTab = currentTab
+      //   this.page = page
+      //   this.size = size
+      // },
+      // closeStatus () {
+      //   this.statusDialog = false
+      // },
+      // async saveStatus (status) {
+      //   const data = {
+      //     status: status,
+      //     requestId: this.currentItem._id,
+      //   }
+      //   await this.$store.dispatch('request/setStatusOfRequest', data)
+      //   await this.getData(this.currentTab, this.page, this.size)
+      //   this.$toast.success('عملیات با موفقیت انجام شد')
+      // },
+
       // handle status
 
       // handle brokerage
-      changeBrokerage (item, currentTab, page, size) {
-        this.brokerageDialog = true
-        this.currentItem = item
-        this.currentTab = currentTab
-        this.page = page
-        this.size = size
-      },
-      closeBrokerage () {
-        this.brokerageDialog = false
-      },
-      async saveBrokerage (brokerageValue) {
-        const data = {
-          brokerageId: brokerageValue,
-          requestId: this.currentItem._id,
-        }
-        await this.$store.dispatch('request/assignRequestToBrokerage', data)
-        await this.getData(this.currentTab, this.page, this.size)
-        this.$toast.success('عملیات با موفقیت انجام شد')
-      },
+
+      // changeBrokerage (item, currentTab, page, size) {
+      //   this.brokerageDialog = true
+      //   this.currentItem = item
+      //   this.currentTab = currentTab
+      //   this.page = page
+      //   this.size = size
+      // },
+      // closeBrokerage () {
+      //   this.brokerageDialog = false
+      // },
+      // async saveBrokerage (brokerageValue) {
+      //   const data = {
+      //     brokerageId: brokerageValue,
+      //     requestId: this.currentItem._id,
+      //   }
+      //   await this.$store.dispatch('request/assignRequestToBrokerage', data)
+      //   await this.getData(this.currentTab, this.page, this.size)
+      //   this.$toast.success('عملیات با موفقیت انجام شد')
+      // },
+
       // handle brokerage
 
       // handle assign
-      async assignedToMe (item, index, page, size) {
-        const data = {
-          brokerageId: this.$store.getters.getCurrentUser.organization,
-          requestId: item._id,
-        }
-        await this.$store.dispatch('request/assignRequestToBrokerage', data)
-        await this.getData(index, page, size)
-        this.$toast.success('عملیات با موفقیت انجام شد')
-      },
 
-      async unAssignMe (item, index, page, size) {
-        const data = {
-          requestId: item._id,
-        }
-        await this.$store.dispatch('request/unAssignRequestToBrokerage', data)
-        await this.getData(index, page, size)
-        this.$toast.success('عملیات با موفقیت انجام شد')
-      },
+      // async assignedToMe (item, index, page, size) {
+      //   const data = {
+      //     brokerageId: this.$store.getters.getCurrentUser.organization,
+      //     requestId: item._id,
+      //   }
+      //   await this.$store.dispatch('request/assignRequestToBrokerage', data)
+      //   await this.getData(index, page, size)
+      //   this.$toast.success('عملیات با موفقیت انجام شد')
+      // },
+
       // handle assign
 
+      // handle unAssign
+
+      // async unAssignMe (item, index, page, size) {
+      //   const data = {
+      //     requestId: item._id,
+      //   }
+      //   await this.$store.dispatch('request/unAssignRequestToBrokerage', data)
+      //   await this.getData(index, page, size)
+      //   this.$toast.success('عملیات با موفقیت انجام شد')
+      // },
+
+      // handle unAssign
+
       // see details
-      async seeDetails (item) {
-        await this.$store.dispatch('episode/getEpisode', item.episode).then(() => {
-          this.tabsDialog = true
-        })
-      },
-      closeTabsDialog () {
-        this.$store.commit('episode/SET_EPISODE', null)
-        this.tabsDialog = false
-      },
+
+      // async seeDetails (item) {
+      //   await this.$store.dispatch('episode/getEpisode', item.episode).then(() => {
+      //     this.tabsDialog = true
+      //   })
+      // },
+      // closeTabsDialog () {
+      //   this.$store.commit('episode/SET_EPISODE', null)
+      //   this.tabsDialog = false
+      // },
+
       // see details
 
       // handle cost

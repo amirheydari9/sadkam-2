@@ -79,6 +79,19 @@
       @saveDialog="saveStatus"
     />
 
+    <HandleBrokerage
+      v-if="brokerageDialog"
+      :show-dialog="brokerageDialog"
+      @closeDialog="closeBrokerage"
+      @saveDialog="saveBrokerage"
+    />
+
+    <tabs-wrapper
+      v-if="tabsDialog"
+      :show-dialog="tabsDialog"
+      @closeDialog="closeTabsDialog"
+    />
+
   </v-tab-item>
 
 </template>
@@ -87,15 +100,21 @@
   import { transformDateToJalali, transformRequestStatus } from '../../../../plugins/transformData'
   import { permission } from '../../../../plugins/permission'
   import HandleChangeStatus from '../HandleChangeStatus'
+  import HandleBrokerage from '../HandleBrokerage'
+  import TabsWrapper from '../../../../components/Tabs/TabsWrapper'
 
   export default {
     name: 'Submitted',
     components: {
       HandleChangeStatus,
+      HandleBrokerage,
+      TabsWrapper
     },
     data () {
       return {
         statusDialog: false,
+        brokerageDialog: false,
+        tabsDialog: false,
         currentItem: null,
         page: 1,
         totalItems: 0,
@@ -165,6 +184,33 @@
         this.$toast.success('عملیات با موفقیت انجام شد')
       },
 
+      changeBrokerage (item) {
+        this.brokerageDialog = true
+        this.currentItem = item
+      },
+      closeBrokerage () {
+        this.brokerageDialog = false
+      },
+      async saveBrokerage (brokerageValue) {
+        const data = {
+          brokerageId: brokerageValue,
+          requestId: this.currentItem._id,
+        }
+        await this.$store.dispatch('request/assignRequestToBrokerage', data)
+        await this.readDataFromAPI()
+        this.$toast.success('عملیات با موفقیت انجام شد')
+      },
+
+      async seeDetails (item) {
+        await this.$store.dispatch('episode/getEpisode', item.episode).then(() => {
+          this.tabsDialog = true
+        })
+      },
+      closeTabsDialog () {
+        this.$store.commit('episode/SET_EPISODE', null)
+        this.tabsDialog = false
+      },
+
       async readDataFromAPI () {
         this.loading = true
         const {
@@ -176,7 +222,6 @@
           page: page,
           size: itemsPerPage,
         })
-        console.log(data.data.paginator, 'assi')
         this.loading = false
         this.submitted = data.data.items
         this.totalItems = data.data.paginator.itemCount
@@ -187,12 +232,12 @@
       // changeStatus (item) {
       //   this.$emit('changeStatus', { ...item }, 0, this.options.page, this.options.itemsPerPage)
       // },
-      changeBrokerage (item) {
-        this.$emit('changeBrokerage', { ...item }, 0, this.options.page, this.options.itemsPerPage)
-      },
-      seeDetails (item) {
-        this.$emit('seeDetails', { ...item })
-      },
+      // changeBrokerage (item) {
+      //   this.$emit('changeBrokerage', { ...item }, 0, this.options.page, this.options.itemsPerPage)
+      // },
+      // seeDetails (item) {
+      //   this.$emit('seeDetails', { ...item })
+      // },
     },
   }
 </script>

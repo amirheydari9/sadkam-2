@@ -65,6 +65,12 @@
       @saveDialog="saveStatus"
     />
 
+    <tabs-wrapper
+      v-if="tabsDialog"
+      :show-dialog="tabsDialog"
+      @closeDialog="closeTabsDialog"
+    />
+
   </v-tab-item>
 </template>
 
@@ -72,15 +78,18 @@
   import { transformDateToJalali, transformRequestStatus } from '../../../../plugins/transformData'
   import { permission } from '../../../../plugins/permission'
   import HandleChangeStatus from '../HandleChangeStatus'
+  import TabsWrapper from '../../../../components/Tabs/TabsWrapper'
 
   export default {
     name: 'Completed',
     components: {
       HandleChangeStatus,
+      TabsWrapper
     },
     data () {
       return {
         statusDialog: false,
+        tabsDialog: false,
         currentItem: null,
         page: 1,
         totalItems: 0,
@@ -142,6 +151,16 @@
         this.$toast.success('عملیات با موفقیت انجام شد')
       },
 
+      async seeDetails (item) {
+        await this.$store.dispatch('episode/getEpisode', item.episode).then(() => {
+          this.tabsDialog = true
+        })
+      },
+      closeTabsDialog () {
+        this.$store.commit('episode/SET_EPISODE', null)
+        this.tabsDialog = false
+      },
+
       async readDataFromAPI () {
         this.loading = true
         const {
@@ -161,9 +180,9 @@
       // changeStatus (item) {
       //   this.$emit('changeStatus', { ...item }, 5, this.options.page, this.options.itemsPerPage)
       // },
-      seeDetails (item) {
-        this.$emit('seeDetails', { ...item })
-      },
+      // seeDetails (item) {
+      //   this.$emit('seeDetails', { ...item })
+      // },
     },
     watch: {
       options: {
