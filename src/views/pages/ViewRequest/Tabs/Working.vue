@@ -57,17 +57,31 @@
         </v-tooltip>
       </template>
     </v-data-table>
+
+    <HandleChangeStatus
+      v-if="statusDialog"
+      :show-dialog="statusDialog"
+      @closeDialog="closeStatus"
+      @saveDialog="saveStatus"
+    />
+
   </v-tab-item>
 </template>
 
 <script>
   import { transformDateToJalali, transformRequestStatus } from '../../../../plugins/transformData'
   import { permission } from '../../../../plugins/permission'
+  import HandleChangeStatus from '../HandleChangeStatus'
 
   export default {
     name: 'Working',
+    components: {
+      HandleChangeStatus,
+    },
     data () {
       return {
+        statusDialog: false,
+        currentItem: null,
         page: 1,
         totalItems: 0,
         numberOfPages: 0,
@@ -110,6 +124,24 @@
       },
     },
     methods: {
+
+      changeStatus (item) {
+        this.statusDialog = true
+        this.currentItem = item
+      },
+      closeStatus () {
+        this.statusDialog = false
+      },
+      async saveStatus (status) {
+        const data = {
+          status: status,
+          requestId: this.currentItem._id,
+        }
+        await this.$store.dispatch('request/setStatusOfRequest', data)
+        await this.readDataFromAPI()
+        this.$toast.success('عملیات با موفقیت انجام شد')
+      },
+
       async readDataFromAPI () {
         this.loading = true
         const {
@@ -126,9 +158,9 @@
         this.totalItems = data.data.paginator.itemCount
         this.numberOfPages = data.data.paginator.totalPages
       },
-      changeStatus (item) {
-        this.$emit('changeStatus', { ...item }, 4, this.options.page, this.options.itemsPerPage)
-      },
+      // changeStatus (item) {
+      //   this.$emit('changeStatus', { ...item }, 4, this.options.page, this.options.itemsPerPage)
+      // },
       seeDetails (item) {
         this.$emit('seeDetails', { ...item })
       },
