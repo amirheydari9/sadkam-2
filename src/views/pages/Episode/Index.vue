@@ -96,7 +96,6 @@
             // }
             this.filteredProducts = result
           }
-          // eslint-disable-next-line no-return-assign
         }).finally(() => this.isLoading = false)
       },
     },
