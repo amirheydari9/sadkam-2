@@ -84,28 +84,20 @@ export const actions = {
       console.log(e)
     }
   },
-  async fetchRequest ({ commit }, requestId) {
+
+  async fetchRequestByEpisodeId ({ commit }, id) {
     try {
-      const { data } = await requestService().getRequest(requestId)
-      if (data, 'request') {
-        commit('SET_REQUEST', data.data)
-      } else {
-        commit('SET_REQUEST', null)
-      }
+      const { data } = await requestService().getRequestByEpisode(id)
+      commit('SET_REQUEST_INFO_BY_EPISODE_ID', data.data.items[0])
     } catch (e) {
       console.log(e)
     }
   },
 
-  async fetchRequestByEpisodeId ({ commit }, id) {
+  async fetchRequest ({ commit }, requestId) {
     try {
-      const { data } = await requestService().getRequestByEpisode(id)
-      console.log(data.data.items, 'action')
-      if (data.data.items && data.data.items.length > 0) {
-        commit('SET_REQUEST_INFO_BY_EPISODE_ID', data.data.items[0])
-      } else {
-        commit('SET_REQUEST_INFO_BY_EPISODE_ID', null)
-      }
+      const { data } = await requestService().getRequest(requestId)
+      commit('SET_REQUEST', data.data)
     } catch (e) {
       console.log(e)
     }
