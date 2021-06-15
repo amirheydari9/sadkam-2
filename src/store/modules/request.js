@@ -113,6 +113,23 @@ export const actions = {
     }
   },
 
+  async createDialog (context, dialog) {
+    try {
+      return await requestService().createDialog(dialog)
+    } catch (e) {
+      console.log(e)
+    }
+  },
+
+  async createFile (context, file) {
+    try {
+      return await requestService().createFile(file)
+    } catch (e) {
+      console.log(e)
+    }
+  },
+
+
   async fetchAssessmentListByStatus ({ commit }, payload) {
     try {
       const { data } = await requestService().getAssessmentListByStatus(payload.status, payload.page, payload.size)

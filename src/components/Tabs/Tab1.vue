@@ -41,7 +41,7 @@
       <template v-if="!request">
         <template v-if="canCreateRequest">
           <v-text-field
-            v-model="tab1Desc"
+            v-model="description"
             outlined
             label="توضیحات"
           />
@@ -85,7 +85,7 @@
       return {
         transformDateToJalali,
         transformRequestStatus,
-        tab1Desc: '',
+        description: '',
       }
     },
     computed: {
@@ -106,12 +106,12 @@
       createRequest () {
         const data = {
           episode: this.episode._id,
-          description: this.tab1Desc,
+          description: this.description,
         }
         this.$store.dispatch('request/createRequest', data).then(async (res) => {
           console.log(res,'dispatch')
           await this.$store.dispatch('request/fetchRequest', res.id)
-          this.$emit('getData')
+          await this.$emit('getData')
         })
       },
     },

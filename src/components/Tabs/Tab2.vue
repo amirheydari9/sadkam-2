@@ -125,27 +125,18 @@
         return this.$store.getters['request/getRequest']
       },
     },
-    mounted () {
-      // this.$emit('getData')
-    },
     methods: {
-      createRequest () {
-        this.$store.dispatch('request/createRequest', this.episode._id).then(({ data }) => {
-          this.$store.dispatch('request/fetchRequest', data.data.id)
-        })
-      },
-      saveDialog () {
+      async saveDialog () {
         if (this.$refs.dialogForm.validate()) {
           const dialog = {
             ...this.form,
             _id: this.request._id,
           }
-          requestService().createDialog(dialog).then(() => {
-            this.$emit('getData')
-            this.$toast.success('عملیات با موفقیت انجام شد')
-            this.$refs.dialogForm.reset()
-            this.$refs.dialogForm.resetValidation()
-          })
+          await this.$store.dispatch('request/createDialog', dialog)
+          await this.$emit('getData')
+          this.$toast.success('عملیات با موفقیت انجام شد')
+          this.$refs.dialogForm.reset()
+          this.$refs.dialogForm.resetValidation()
         }
       },
     },

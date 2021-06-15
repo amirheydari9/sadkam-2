@@ -192,24 +192,22 @@
       },
     },
     methods: {
-      saveFile () {
+      async saveFile () {
         if (this.$refs.fileForm.validate()) {
           const file = {
             ...this.form,
             _id: this.request._id,
           }
-          requestService().createFile(file).then(() => {
-            this.$emit('getData')
-            this.$toast.success('عملیات با موفقیت انجام شد')
-            // this.$refs.fileForm.reset()
-            this.form = {
-              desc: '',
-              fileUrl: 'http://techslides.com/demos/sample-videos/small.mp4',
-              accessKey: '',
-              secretKey: '',
-            }
-            this.$refs.fileForm.resetValidation()
-          })
+          await this.$store.dispatch('request/createFile', file)
+          await this.$emit('getData')
+          this.form = {
+            desc: '',
+            fileUrl: 'http://techslides.com/demos/sample-videos/small.mp4',
+            accessKey: '',
+            secretKey: '',
+          }
+          this.$refs.fileForm.resetValidation()
+          this.$toast.success('عملیات با موفقیت انجام شد')
         }
       },
       async handleFileRule (item) {
