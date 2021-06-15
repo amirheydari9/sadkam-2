@@ -190,6 +190,8 @@
         this.confirmed = data.data.items
         this.totalItems = data.data.paginator.itemCount
         this.numberOfPages = data.data.paginator.totalPages
+        this.options.page = data.data.paginator.currentPage
+        this.options.itemsPerPage = +data.data.paginator.perPage
       },
       // changeStatus (item) {
       //   this.$emit('changeStatus', { ...item }, 3, this.options.page, this.options.itemsPerPage)

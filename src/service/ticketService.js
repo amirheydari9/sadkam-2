@@ -9,8 +9,8 @@ export function ticketService () {
     return await axiosInstance.post('/ticket/message', message)
   }
 
-  const getSingleTicket = async (ticketId) => {
-    return await axiosInstance.get(`/ticket/${ticketId}`)
+  const getSingleTicket = async (ticketId, page, size) => {
+    return await axiosInstance.get(`/ticket/${ticketId}?page=${page}&count=${size}`)
   }
   const createTicket = async (ticket) => {
     return await axiosInstance.post('/ticket', ticket)

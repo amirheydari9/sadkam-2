@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <breadcrumbs :items="breadcrumbs" />
+    <breadcrumbs :items="breadcrumbs"/>
     <div class="w-100">
       <v-data-table
         :headers="headers"
@@ -20,7 +20,7 @@
               hide-details
               autofocus
             />
-            <v-spacer />
+            <v-spacer/>
             <v-btn
               color="primary"
               dark
@@ -64,7 +64,10 @@
 
   export default {
     name: 'Index',
-    components: { CreateTicket, Breadcrumbs },
+    components: {
+      CreateTicket,
+      Breadcrumbs,
+    },
     data: () => ({
       showDialog: false,
       isCreate: true,
@@ -138,7 +141,11 @@
     },
     methods: {
       async createMessage (item) {
-        await this.$store.dispatch('ticket/fetchTicket', item._id)
+        await this.$store.dispatch('ticket/fetchTicket', {
+          ticketId: item._id,
+          page: 1,
+          size: 5,
+        })
         this.ticketId = item._id
         this.isCreate = false
         this.showDialog = true

@@ -6,7 +6,7 @@
       persistent
     >
       <v-card>
-        <dialog-headline :title="formTitle " />
+        <dialog-headline :title="formTitle "/>
         <v-card-text>
           <v-container>
             <v-form
@@ -39,23 +39,29 @@
               v-else
               :headers="headers"
               :items="ticket[0].messages"
-              :items-per-page="5"
-              :search="search"
               no-results-text="اطلاعاتی یافت نشد"
               class="elevation-1 w-100"
+              :items-per-page="5"
+              :footer-props="{
+      showFirstLastPage: true,
+      firstIcon: 'mdi-arrow-collapse-left',
+      lastIcon: 'mdi-arrow-collapse-right',
+      prevIcon: 'mdi-plus',
+      nextIcon: 'mdi-minus'
+    }"
             >
               <template v-slot:top>
                 <v-toolbar
                   flat
                 >
-                  <v-text-field
-                    v-model="search"
-                    label="جست جو"
-                    single-line
-                    hide-details
-                    autofocus
-                  />
-                  <v-spacer />
+<!--                  <v-text-field-->
+<!--                    v-model="search"-->
+<!--                    label="جست جو"-->
+<!--                    single-line-->
+<!--                    hide-details-->
+<!--                    autofocus-->
+<!--                  />-->
+                  <v-spacer/>
                   <v-btn
                     color="primary"
                     dark
@@ -84,7 +90,7 @@
           </v-container>
         </v-card-text>
         <v-card-actions>
-          <v-spacer />
+          <v-spacer/>
           <v-btn
             color="primary"
             rounded
@@ -119,7 +125,10 @@
 
   export default {
     name: 'CreateTicket',
-    components: { MessageDialog, DialogHeadline },
+    components: {
+      MessageDialog,
+      DialogHeadline,
+    },
     props: {
       showDialog: {
         Boolean,
@@ -132,6 +141,11 @@
     },
     data () {
       return {
+        page: 1,
+        totalItems: 0,
+        numberOfPages: 0,
+        loading: true,
+        options: {},
         showMessageDialog: false,
         headers: [
           {
@@ -169,7 +183,35 @@
         return this.isCreate ? 'ایجاد تیکت' : 'مدیریت پیغام ها'
       },
     },
+    watch: {
+      options: {
+        handler () {
+          this.readDataFromAPI()
+        },
+      },
+      deep: true,
+    },
     methods: {
+
+      async readDataFromAPI () {
+        this.loading = true
+        const {
+          page,
+          itemsPerPage,
+        } = this.options
+        let data = await this.$store.dispatch('ticket/fetchTicket', {
+          ticketId: this.ticket[0]._id,
+          page: page,
+          size: itemsPerPage,
+        })
+        this.loading = false
+        // this.ticket = data.data.items[0].messages
+        this.totalItems = data.data.paginator.itemCount
+        this.numberOfPages = data.data.paginator.totalPages
+        this.options.page = data.data.paginator.currentPage
+        this.options.itemsPerPage = +data.data.paginator.perPage
+      },
+
       close () {
         if (this.$refs.ticketForm) {
           this.$refs.ticketForm.resetValidation()
@@ -186,6 +228,7 @@
           this.close()
         }
       },
+
       createMessage () {
         this.showMessageDialog = true
       },
@@ -199,7 +242,8 @@
         }
         try {
           await this.$store.dispatch('ticket/createMessage', data)
-          await this.$store.dispatch('ticket/fetchTicket', this.ticket[0]._id)
+          // await this.$store.dispatch('ticket/fetchTicket', this.ticket[0]._id)
+          await this.readDataFromAPI()
           this.$toast.success('عملیات با موفقیت انجام شد')
         } catch (e) {
           this.$toast.success('عملیات انجام نشد')

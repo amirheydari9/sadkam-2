@@ -34,10 +34,11 @@ export const actions = {
       console.log(e)
     }
   },
-  async fetchTicket ({ commit }, ticketId) {
+  async fetchTicket ({ commit }, payload) {
     try {
-      const { data } = await ticketService().getSingleTicket(ticketId)
-      commit('SET_TICKET', data.data)
+      const { data } = await ticketService().getSingleTicket(payload.ticketId, payload.page, payload.size)
+      commit('SET_TICKET', data.data.items)
+      return data
     } catch (e) {
       console.log(e)
     }
