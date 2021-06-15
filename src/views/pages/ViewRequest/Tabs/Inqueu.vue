@@ -104,7 +104,7 @@
     },
     components: {
       HandleChangeStatus,
-      TabsWrapper
+      TabsWrapper,
     },
     data () {
       return {
@@ -202,8 +202,8 @@
         } = this.options
         let data = await this.$store.dispatch('request/fetchAssessmentListByStatus', {
           status: 1,
-          page: page,
-          size: itemsPerPage,
+          page: page ? page : 1,
+          size: itemsPerPage ? itemsPerPage : 5,
         })
         this.loading = false
         this.inqueu = data.data.items

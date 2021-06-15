@@ -183,8 +183,8 @@
         } = this.options
         let data = await this.$store.dispatch('request/fetchAssessmentListByStatus', {
           status: 3,
-          page: page,
-          size: itemsPerPage,
+          page: page ? page : 1,
+          size: itemsPerPage ? itemsPerPage : 5,
         })
         this.loading = false
         this.confirmed = data.data.items
