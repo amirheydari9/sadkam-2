@@ -5,6 +5,7 @@
     max-width="850px"
   >
     <v-card>
+      <dialog-headline title="مدیریت درخواست"/>
       <v-card-text>
         <v-tabs
           v-model="tabsMenu"
@@ -66,6 +67,7 @@
   import Tab1 from './Tab1'
   import Tab2 from './Tab2'
   import tab3 from './Tab3'
+  import DialogHeadline from '../DialogHeadline'
 
   export default {
     name: 'TabsWrapper',
@@ -73,6 +75,7 @@
       Tab1,
       Tab2,
       tab3,
+      DialogHeadline
     },
     props: {
       showDialog: {

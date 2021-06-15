@@ -5,6 +5,7 @@
     max-width="300px"
   >
     <v-card>
+      <dialog-headline title="ارجاع به کارگزاری"/>
       <v-card-text>
         <v-select
           v-model="brokerageValue"
@@ -16,8 +17,8 @@
       <v-card-actions>
         <v-spacer/>
         <v-btn
-          color="blue darken-1"
-          text
+          color="primary"
+          rounded
           @click="save"
         >
           تایید
@@ -35,8 +36,11 @@
 </template>
 
 <script>
+  import DialogHeadline from '../../../components/DialogHeadline'
+
   export default {
     name: 'HandleBrokerage',
+    components: { DialogHeadline },
     props: {
       showDialog: {
         Boolean,

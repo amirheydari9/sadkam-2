@@ -5,6 +5,7 @@
     max-width="300px"
   >
     <v-card>
+      <dialog-headline title="مدیریت وضعیت درخواست"/>
       <v-card-text>
         <v-select
           v-model="status"
@@ -16,8 +17,8 @@
       <v-card-actions>
         <v-spacer/>
         <v-btn
-          color="blue darken-1"
-          text
+          color="primary"
+          rounded
           @click="save()"
         >
           تایید
@@ -36,9 +37,11 @@
 
 <script>
   import { assessmentRequestStatus } from '../../../plugins/constant'
+  import DialogHeadline from '../../../components/DialogHeadline'
 
   export default {
     name: 'HandleChangeStatus',
+    components: { DialogHeadline },
     props: {
       showDialog: {
         Boolean,
