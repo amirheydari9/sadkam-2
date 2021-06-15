@@ -87,26 +87,31 @@
         {{ transformDateToJalali(item.submitDate) }}
       </template>
       <template v-slot:item.actions="{ item }">
-        <v-icon
-          small
-          @click="handleFileRule(item)"
-        >
-          mdi-pen
-        </v-icon>
-        <v-btn
-          small
-          download
-          :href="item.fileUrl"
-          class="ma-2"
-          outlined
-          text
-        >
-          <v-icon
-            small
-          >
-            mdi-cloud
-          </v-icon>
-        </v-btn>
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on }">
+            <v-icon
+              v-on="on"
+              small
+              @click="handleFileRule(item)"
+            >
+              mdi-pen
+            </v-icon>
+          </template>
+          <span>مدیریت رول</span>
+        </v-tooltip>
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on }">
+            <v-icon
+              class="mr-2"
+              v-on="on"
+              small
+              @click="downloadFile(item)"
+            >
+              mdi-download
+            </v-icon>
+          </template>
+          <span>دانلود فایل</span>
+        </v-tooltip>
       </template>
     </v-data-table>
 
@@ -177,6 +182,7 @@
             text: 'عملیات',
             value: 'actions',
             sortable: false,
+            width:'80px'
           },
         ],
         required,
@@ -192,6 +198,9 @@
       },
     },
     methods: {
+      downloadFile (item) {
+        window.open(item.fileUrl, '_blank')
+      },
       async saveFile () {
         if (this.$refs.fileForm.validate()) {
           const file = {
