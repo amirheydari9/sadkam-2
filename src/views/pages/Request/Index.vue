@@ -46,13 +46,19 @@
         <!--          {{ transformDateToJalali(item.lastUpdate) }}-->
         <!--        </template>-->
         <template v-slot:item.actions="{ item }">
-          <v-icon
-            small
-            class="mr-2"
-            @click="goToTabsOrSeeEpisodes(item)"
-          >
-            mdi-pencil
-          </v-icon>
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on }">
+              <v-icon
+                v-on="on"
+                small
+                class="mr-2"
+                @click="goToTabsOrSeeEpisodes(item)"
+              >
+                mdi-pencil
+              </v-icon>
+            </template>
+            <span>مدیریت درخواست</span>
+          </v-tooltip>
         </template>
       </v-data-table>
       <dialog-list-episode

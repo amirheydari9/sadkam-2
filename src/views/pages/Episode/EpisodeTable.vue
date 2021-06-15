@@ -49,20 +49,32 @@
         {{ transformDateToJalali(item.releaseDate) }}
       </template>
       <template v-slot:item.actions="{ item }">
-        <v-icon
-          small
-          class="mr-2"
-          @click="editItem(item)"
-        >
-          mdi-pencil
-        </v-icon>
-        <v-icon
-          small
-          class="mr-2"
-          @click="goToAssessment(item)"
-        >
-          mdi-eye
-        </v-icon>
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on }">
+            <v-icon
+              v-on="on"
+              small
+              class="mr-2"
+              @click="editItem(item)"
+            >
+              mdi-pencil
+            </v-icon>
+          </template>
+          <span>ویرایش اپیزود</span>
+        </v-tooltip>
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on }">
+            <v-icon
+              v-on="on"
+              small
+              class="mr-2"
+              @click="goToAssessment(item)"
+            >
+              mdi-eye
+            </v-icon>
+          </template>
+          <span>مدیریت درخواست</span>
+        </v-tooltip>
       </template>
     </v-data-table>
     <episode-details-dialog

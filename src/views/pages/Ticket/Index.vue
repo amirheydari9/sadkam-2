@@ -37,13 +37,20 @@
           {{ transformOrganization(item.originalOwner) }}
         </template>
         <template v-slot:item.actions="{ item }">
-          <v-icon
-            small
-            class="mr-2"
-            @click="createMessage(item)"
-          >
-            mdi-pencil
-          </v-icon>
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on }">
+              <v-icon
+                v-on="on"
+                small
+                class="mr-2"
+                @click="createMessage(item)"
+              >
+                mdi-plus
+              </v-icon>
+            </template>
+            <span>افزودون پیام</span>
+          </v-tooltip>
+
         </template>
       </v-data-table>
       <create-ticket
