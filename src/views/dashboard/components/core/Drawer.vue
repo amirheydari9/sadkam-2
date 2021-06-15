@@ -148,7 +148,7 @@
         },
         {
           title: 'درخواست ارزیابی',
-          icon: 'mdi-account-circle',
+          icon: 'mdi-flash-outline',
           to: '/request',
           roles: ['USER_MANAGER'],
           organizationTypes: ['SECRETARIAT', 'PLATFORM','BROKERAGE'],
@@ -162,7 +162,7 @@
         // },
         {
           title: 'مشاهده درخواست ارزیابی',
-          icon: 'mdi-account-circle',
+          icon: 'mdi-table-eye',
           to: '/viewRequest',
           roles: ['ORDERS'],
           organizationTypes: ['SECRETARIAT', 'PLATFORM','BROKERAGE'],
