@@ -24,13 +24,13 @@
         <v-toolbar
           flat
         >
-          <v-text-field
-            v-model="search"
-            label="جست جو"
-            single-line
-            hide-details
-            autofocus
-          />
+<!--          <v-text-field-->
+<!--            v-model="search"-->
+<!--            label="جست جو"-->
+<!--            single-line-->
+<!--            hide-details-->
+<!--            autofocus-->
+<!--          />-->
           <v-spacer/>
           <v-btn
             color="primary"
