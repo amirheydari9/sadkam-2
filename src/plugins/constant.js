@@ -31,11 +31,11 @@ export const organizationRoles = [
 export const entryType = [
     {
         en: 'single',
-        fa: 'تکی',
+        fa: 'فیلم',
     },
     {
         en: 'multiple',
-        fa: 'چندتایی',
+        fa: 'سریال',
     },
 ]
 
