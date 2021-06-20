@@ -22,7 +22,7 @@
         href="#productCategory"
         @click="handleTab3"
       >
-        مدیریت دسته بندی محصولات
+        مدیریت دسته بندی محتوا
       </v-tab>
     </v-tabs>
     <v-divider />

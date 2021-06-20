@@ -6,7 +6,7 @@
     v-on="$listeners"
   >
     <template v-slot:after-heading>
-      <div class="ml-auto text-right">
+      <div class="ml-auto text-left">
         <div
           class="body-3 grey--text font-weight-light"
           v-text="title"

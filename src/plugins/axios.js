@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { authService } from '../service/authService'
 import store from '../store/store'
+import Vue from 'vue'
 import router from '../router'
 
 const axiosInstance = axios.create({
@@ -22,6 +23,9 @@ axiosInstance.interceptors.response.use(response => {
   setTimeout(() => {
       store.commit('SET_OVERLAY', false)
   }, 1500)
+  if (response.status === 201 || response.status === 202) {
+    Vue.$toast.success('عملیات با موفقیت انجام شد')
+  }
   return response
 }, async error => {
   if (error.response.status === 401 || error.response.status === 403) {

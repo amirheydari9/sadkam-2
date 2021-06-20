@@ -7,7 +7,7 @@
     >
       <v-text-field
         v-model="productSearch"
-        label="جستجو در محصولات"
+        label="جستجو در محتوا"
         :loading="isLoading"
         outlined
       />
@@ -24,12 +24,12 @@
             v-bind="attrs"
             v-on="on"
           >
-            افزودن محصول جدید
+            افزودن محتوا جدید
           </v-btn>
         </template>
         <v-card>
           <v-card-title>
-            <span class="text-h5">محصول جدید</span>
+            <span class="text-h5">محتوا جدید</span>
           </v-card-title>
 
           <v-card-text>

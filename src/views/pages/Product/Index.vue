@@ -39,7 +39,7 @@
               dark
               @click="createProductItem"
             >
-              افزودن محصول جدید
+              افزودن محتوا جدید
             </v-btn>
           </v-toolbar>
         </template>
@@ -70,7 +70,7 @@
                 mdi-pencil
               </v-icon>
             </template>
-            <span>ویرایش محصول</span>
+            <span>ویرایش محتوا</span>
           </v-tooltip>
           <v-tooltip bottom>
             <template v-slot:activator="{ on }">
@@ -188,7 +188,7 @@
           exact: true,
         },
         {
-          text: 'مدیریت محصولات',
+          text: 'مدیریت محتوا',
           disabled: true,
           exact: true,
         },
@@ -282,7 +282,7 @@
           this.showEpisodesListDialog = true
         } else {
           await this.$store.commit('episode/SET_PARENT_ID', null)
-          this.$toast.info('امکلن تعریف اپیزود برای این محصول امکان پدیر نیست')
+          this.$toast.info('امکلن تعریف اپیزود برای این محتوا امکان پدیر نیست')
         }
       },
       closeEpisodeListDialog () {

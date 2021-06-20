@@ -318,7 +318,7 @@
       //   return this.$store.getters['organization/getOrganizations']
       // },
       formTitle () {
-        return this.isCreate ? 'افزودن محصول' : 'ویرایش محصول'
+        return this.isCreate ? 'افزودن محتوا' : 'ویرایش محتوا'
       },
     },
     mounted () {

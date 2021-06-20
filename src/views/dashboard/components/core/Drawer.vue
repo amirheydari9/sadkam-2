@@ -131,7 +131,7 @@
           isSuperAdmin: true,
         },
         {
-          title: 'مدیریت محصولات',
+          title: 'مدیریت محتوا',
           icon: 'mdi-video',
           to: '/products',
           roles: ['ORDERS'],

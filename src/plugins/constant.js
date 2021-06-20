@@ -24,7 +24,7 @@ export const organizationRoles = [
     },
     {
         role: 'ORDERS',
-        fa: 'مدیریت سفارش و محصولات',
+        fa: 'مدیریت سفارش و محتوا',
     },
 ]
 

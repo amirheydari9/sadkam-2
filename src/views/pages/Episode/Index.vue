@@ -12,7 +12,7 @@
           :search-input.sync="productSearch"
           item-text="enTitle"
           item-value="_id"
-          label="جستجو در محصولات"
+          label="جستجو در محتوا"
           return-object
           outlined
           @change="findEpisodes"

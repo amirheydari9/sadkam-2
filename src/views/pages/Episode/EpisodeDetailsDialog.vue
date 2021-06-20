@@ -116,7 +116,7 @@
               <!--                    :search-input.sync="productSearch"-->
               <!--                    item-text="enTitle"-->
               <!--                    :item-value="episode.parent"-->
-              <!--                    label="نام محصول"-->
+              <!--                    label="نام محتوا"-->
               <!--                    @change="handleSelectProductName"-->
               <!--                    return-object-->
               <!--                ></v-autocomplete>-->

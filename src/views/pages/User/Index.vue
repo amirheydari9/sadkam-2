@@ -242,12 +242,12 @@
           await this.$store.dispatch('user/updateUser', user)
           Object.assign(this.users[this.editedIndex], user)
           this.editedIndex = -1
-          this.$toast.success('عملیات با موفقیت انجام شد')
+          // this.$toast.success('عملیات با موفقیت انجام شد')
         } else {
           await this.$store.dispatch('user/createUser', user)
           // await this.$store.dispatch('user/fetchUsers')
           await this.readDataFromAPI()
-          this.$toast.success('عملیات با موفقیت انجام شد')
+          // this.$toast.success('عملیات با موفقیت انجام شد')
         }
       },
       closeDialog () {

@@ -5,7 +5,7 @@
       class="mr-3"
       @click="addProduct"
     >
-      افزودن محصول
+      افزودن محتوا
     </v-btn>
     <product-details-dialog
       v-if="productDialog"

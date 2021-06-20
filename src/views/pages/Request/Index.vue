@@ -9,7 +9,7 @@
       >
         <v-text-field
           v-model="productSearch"
-          label="جستجو در محصولات"
+          label="جستجو در محتوا"
           :loading="isLoading"
           outlined
         />
