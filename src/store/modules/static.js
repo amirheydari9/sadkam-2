@@ -20,6 +20,30 @@ export const mutations = {
   SET_ORGANIZATION_TYPES (state, payload) {
     state.organizationTypes = payload
   },
+  SET_SUBJECT_RULE (state, payload) {
+    const subjects = [];
+    payload.forEach(item => subjects.push(item.fa))
+    state.rulesList = {
+      ...state.rulesList,
+      subjects: subjects,
+    }
+  },
+  SET_ACTION_RULE (state, payload) {
+    const actions = [];
+    payload.forEach(item => actions.push(item.fa))
+    state.rulesList = {
+      ...state.rulesList,
+      actions: actions,
+    }
+  },
+  SET_TYPE_RULE (state, payload) {
+    const types = [];
+    payload.forEach(item => types.push(item.fa))
+    state.rulesList = {
+      ...state.rulesList,
+      type: types,
+    }
+  },
   SET_GENERES (state, payload) {
     state.generes = payload
   },
@@ -34,40 +58,40 @@ export const getters = {
     return state.rulesList.subjects
   },
   getSubjectRuleForStaticData (state) {
-      const data = []
-      state.rulesList.subjects.forEach(item => {
-        const row = {
-          fa: item,
-        }
-        data.push(row)
-      })
-      return data
+    const data = []
+    state.rulesList.subjects.forEach(item => {
+      const row = {
+        fa: item,
+      }
+      data.push(row)
+    })
+    return data
   },
   getActionsRule (state) {
     return state.rulesList.actions
   },
   getActionRuleForStaticData (state) {
-     const data = []
+    const data = []
     state.rulesList.actions.forEach(item => {
-       const row = {
-         fa: item,
-       }
-       data.push(row)
-     })
-     return data
+      const row = {
+        fa: item,
+      }
+      data.push(row)
+    })
+    return data
   },
   getTypesRule (state) {
     return state.rulesList.type
   },
   getTypeRuleForStaticData (state) {
-     const data = []
+    const data = []
     state.rulesList.type.forEach(item => {
-       const row = {
-         fa: item,
-       }
-       data.push(row)
-     })
-     return data
+      const row = {
+        fa: item,
+      }
+      data.push(row)
+    })
+    return data
   },
   getRoles (state) {
     return state.roles

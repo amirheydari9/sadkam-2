@@ -76,7 +76,7 @@
                         color="primary"
                         dark
                         class="mb-2"
-                        @click="createProductCategory"
+                        @click="createRule('subject')"
                       >
                         ایجاد موضوع
                       </v-btn>
@@ -89,6 +89,13 @@
                       @click="editRule(item,'subject')"
                     >
                       mdi-pencil
+                    </v-icon>
+                    <v-icon
+                      small
+                      class="mr-2"
+                      @click="deleteRule(item,'subject')"
+                    >
+                      mdi-delete
                     </v-icon>
                   </template>
                 </v-data-table>
@@ -138,7 +145,7 @@
                         color="primary"
                         dark
                         class="mb-2"
-                        @click="createProductCategory"
+                        @click="createRule('action')"
                       >
                         ایجاد اکشن
                       </v-btn>
@@ -152,6 +159,13 @@
                       @click="editRule(item,'action')"
                     >
                       mdi-pencil
+                    </v-icon>
+                    <v-icon
+                      small
+                      class="mr-2"
+                      @click="deleteRule(item,'action')"
+                    >
+                      mdi-delete
                     </v-icon>
                   </template>
                 </v-data-table>
@@ -201,7 +215,7 @@
                         color="primary"
                         dark
                         class="mb-2"
-                        @click="createProductCategory"
+                        @click="createRule('type')"
                       >
                         ایجاد نوع
                       </v-btn>
@@ -215,6 +229,13 @@
                       @click="editRule(item,'type')"
                     >
                       mdi-pencil
+                    </v-icon>
+                    <v-icon
+                      small
+                      class="mr-2"
+                      @click="deleteRule(item,'type')"
+                    >
+                      mdi-delete
                     </v-icon>
                   </template>
                 </v-data-table>
@@ -389,9 +410,9 @@
     },
     data () {
       return {
-        searchSubject:'',
-        searchAction:'',
-        searchType:'',
+        searchSubject: '',
+        searchAction: '',
+        searchType: '',
         searchGenere: '',
         searchProductCategory: '',
         breadcrumbs: [
@@ -462,14 +483,29 @@
       }
     },
     computed: {
-      subjectsRule () {
-        return this.$store.getters['staticData/getSubjectRuleForStaticData']
+      subjectsRule: {
+        get () {
+          return this.$store.getters['staticData/getSubjectRuleForStaticData']
+        },
+        set (value) {
+          this.$store.commit('staticData/SET_SUBJECT_RULE', value)
+        },
       },
-      actionRule () {
-        return this.$store.getters['staticData/getActionRuleForStaticData']
+      actionRule: {
+        get () {
+          return this.$store.getters['staticData/getActionRuleForStaticData']
+        },
+        set (value) {
+          this.$store.commit('staticData/SET_ACTION_RULE', value)
+        },
       },
-      typeRule () {
-        return this.$store.getters['staticData/getTypeRuleForStaticData']
+      typeRule: {
+        get () {
+          return this.$store.getters['staticData/getTypeRuleForStaticData']
+        },
+        set(value){
+          this.$store.commit('staticData/SET_TYPE_RULE', value)
+        }
       },
       generes: {
         get () {
@@ -498,6 +534,8 @@
       handleTab3 () {
         this.$store.dispatch('staticData/fetchListOfCategoryData')
       },
+
+      //handle Rule
       editRule (item, ruleType) {
         this.rule = { ...item }
         this.ruleType = ruleType
@@ -514,6 +552,12 @@
         }
         this.showRuleDialog = true
       },
+      createRule (ruleType) {
+        this.ruleType = ruleType
+        this.ruleIndex = -1
+        this.rule = {}
+        this.showRuleDialog = true
+      },
       closeRule () {
         this.rule = null
         this.ruleType = null
@@ -521,37 +565,55 @@
         this.showRuleDialog = false
       },
       async handleRuleSave (rule) {
-        const data = {
-          subjects: this.subjectsRule,
-          actions: this.actionRule,
-          type: this.typeRule,
-        }
         switch (this.ruleType) {
           case 'subject':
-            Object.assign(this.subjectsRule[this.ruleIndex], rule)
+            if (this.ruleIndex > -1) {
+              Object.assign(this.subjectsRule[this.ruleIndex], rule)
+            } else {
+              this.subjectsRule = [...this.subjectsRule, rule]
+            }
             break
           case 'action':
-            Object.assign(this.actionRule[this.ruleIndex], rule)
+            if (this.ruleIndex > -1) {
+              Object.assign(this.actionRule[this.ruleIndex], rule)
+            } else {
+              this.actionRule = [...this.actionRule, rule]
+            }
             break
           case 'type':
-            Object.assign(this.typeRule[this.ruleIndex], rule)
+            if (this.ruleIndex > -1) {
+              Object.assign(this.typeRule[this.ruleIndex], rule)
+            } else {
+              this.typeRule = [...this.typeRule, rule]
+            }
             break
         }
+        // const data = {
+        //   subjects: this.subjectsRule,
+        //   actions: this.actionRule,
+        //   type: this.typeRule,
+        // }
         const finalData = {
           subjects: [],
           actions: [],
           type: [],
         }
-        data.subjects.forEach(item => finalData.subjects.push(item.fa))
-        data.actions.forEach(item => finalData.actions.push(item.fa))
-        data.type.forEach(item => finalData.type.push(item.fa))
+        console.log(this.subjectsRule)
+        this.subjectsRule.forEach(item => finalData.subjects.push(item.fa))
+        this.actionRule.forEach(item => finalData.actions.push(item.fa))
+        this.typeRule.forEach(item => finalData.type.push(item.fa))
+        console.log(finalData, 'final')
         await this.$store.dispatch('staticData/updateRulesData', finalData)
         await this.$store.dispatch('staticData/fetchRulesList')
         this.rule = null
         this.ruleType = null
         this.ruleIndex = -1
-        this.$toast.success('عملیات با موفقیت انجام شد')
       },
+
+      deleteRule (item, ruleType) {
+
+      },
+      //handle Rule
 
       //handle Genere
       editGenere (item) {
