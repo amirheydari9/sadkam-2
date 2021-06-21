@@ -503,9 +503,9 @@
         get () {
           return this.$store.getters['staticData/getTypeRuleForStaticData']
         },
-        set(value){
+        set (value) {
           this.$store.commit('staticData/SET_TYPE_RULE', value)
-        }
+        },
       },
       generes: {
         get () {
@@ -588,21 +588,14 @@
             }
             break
         }
-        // const data = {
-        //   subjects: this.subjectsRule,
-        //   actions: this.actionRule,
-        //   type: this.typeRule,
-        // }
         const finalData = {
           subjects: [],
           actions: [],
           type: [],
         }
-        console.log(this.subjectsRule)
         this.subjectsRule.forEach(item => finalData.subjects.push(item.fa))
         this.actionRule.forEach(item => finalData.actions.push(item.fa))
         this.typeRule.forEach(item => finalData.type.push(item.fa))
-        console.log(finalData, 'final')
         await this.$store.dispatch('staticData/updateRulesData', finalData)
         await this.$store.dispatch('staticData/fetchRulesList')
         this.rule = null
@@ -611,6 +604,44 @@
       },
 
       deleteRule (item, ruleType) {
+        this.$confirm(
+          {
+            message: 'آیا از حذف این رکورد اظمینان دارید ؟',
+            button: {
+              no: 'خیر',
+              yes: 'بله',
+            },
+            callback: async confirm => {
+              if (confirm) {
+                const finalData = {
+                  subjects: [],
+                  actions: [],
+                  type: [],
+                }
+                if (ruleType === 'subject') {
+                  const subject = this.subjectsRule.find(value => value.fa === item.fa)
+                  this.subjectsRule = this.subjectsRule.filter(value => value.fa !== subject.fa)
+                }
+                if (ruleType === 'action') {
+                  const action = this.actionRule.find(value => value.fa === item.fa)
+                  this.actionRule = this.actionRule.filter(value => value.fa !== action.fa)
+                }
+                if (ruleType === 'type') {
+                  const type = this.typeRule.find(value => value.fa === item.fa)
+                  this.typeRule = this.typeRule.filter(value => value.fa !== type.fa)
+                }
+                this.subjectsRule.forEach(item => finalData.subjects.push(item.fa))
+                this.actionRule.forEach(item => finalData.actions.push(item.fa))
+                this.typeRule.forEach(item => finalData.type.push(item.fa))
+                await this.$store.dispatch('staticData/updateRulesData', finalData)
+                await this.$store.dispatch('staticData/fetchRulesList')
+                this.rule = null
+                this.ruleType = null
+                this.ruleIndex = -1
+              }
+            },
+          },
+        )
 
       },
       //handle Rule
