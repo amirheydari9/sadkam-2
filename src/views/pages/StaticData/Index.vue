@@ -142,15 +142,36 @@
           :items="generes"
           no-results-text="اطلاعاتی یافت نشد"
           class="w-100"
+          :search="searchGenere"
+          :footer-props="{
+      showFirstLastPage: true,
+      firstIcon: 'mdi-arrow-collapse-left',
+      lastIcon: 'mdi-arrow-collapse-right',
+      prevIcon: 'mdi-plus',
+      nextIcon: 'mdi-minus'
+    }"
         >
           <template v-slot:top>
-            <v-spacer/>
-            <v-btn
-              color="primary"
-              @click="createGenere"
+            <v-toolbar
+              flat
             >
-              افزودن ژانر
-            </v-btn>
+              <v-text-field
+                v-model="searchGenere"
+                label="جست جو"
+                single-line
+                hide-details
+                autofocus
+              />
+              <v-spacer/>
+              <v-btn
+                color="primary"
+                dark
+                class="mb-2"
+                @click="createGenere"
+              >
+                افزودن ژانر
+              </v-btn>
+            </v-toolbar>
           </template>
           <template v-slot:item.actions="{ item }">
             <v-icon
@@ -176,11 +197,42 @@
         class="mt-5"
       >
         <v-data-table
+          :items-per-page="5"
           :headers="listOfCategoryHeader"
           :items="listOfProductCategory"
           no-results-text="اطلاعاتی یافت نشد"
+          :search="searchProductCategory"
           class="w-100"
+          :footer-props="{
+      showFirstLastPage: true,
+      firstIcon: 'mdi-arrow-collapse-left',
+      lastIcon: 'mdi-arrow-collapse-right',
+      prevIcon: 'mdi-plus',
+      nextIcon: 'mdi-minus'
+    }"
         >
+          <template v-slot:top>
+            <v-toolbar
+              flat
+            >
+              <v-text-field
+                v-model="searchProductCategory"
+                label="جست جو"
+                single-line
+                hide-details
+                autofocus
+              />
+              <v-spacer/>
+              <v-btn
+                color="primary"
+                dark
+                class="mb-2"
+                @click="createProductCategory"
+              >
+               ایجاد دسته بندی محتوا
+              </v-btn>
+            </v-toolbar>
+          </template>
           <template v-slot:item.actions="{ item }">
             <v-icon
               small
@@ -188,6 +240,13 @@
               @click="editProductCategory(item)"
             >
               mdi-pencil
+            </v-icon>
+            <v-icon
+              small
+              class="mr-2"
+              @click="deleteProductCategory(item)"
+            >
+              mdi-delete
             </v-icon>
           </template>
         </v-data-table>
@@ -238,6 +297,8 @@
     },
     data () {
       return {
+        searchGenere: '',
+        searchProductCategory: '',
         breadcrumbs: [
           {
             text: 'داشبورد',
@@ -457,14 +518,41 @@
         this.productCategoryIndex = -1
         this.showProductCategoryDialog = false
       },
+      createProductCategory(){
+        this.productCategory = {}
+        this.productCategoryIndex = -1
+        this.showProductCategoryDialog = true
+      },
       async handleSaveProductCategory (productCategory) {
-        Object.assign(this.listOfProductCategory[this.productCategoryIndex], productCategory)
+        if (this.productCategoryIndex > -1) {
+          Object.assign(this.listOfProductCategory[this.productCategoryIndex], productCategory)
+        } else {
+          this.listOfProductCategory = [...this.listOfProductCategory, productCategory]
+        }
         await this.$store.dispatch('staticData/updateProductCategoryData', this.listOfProductCategory)
         await this.$store.dispatch('staticData/fetchListOfCategoryData')
         this.productCategory = null
         this.productCategoryIndex = -1
-        this.$toast.success('عملیات با موفقیت انجام شد')
       },
+      deleteProductCategory(item){
+        this.$confirm(
+          {
+            message: 'آیا از حذف این رکورد اظمینان دارید ؟',
+            button: {
+              no: 'خیر',
+              yes: 'بله',
+            },
+            callback: async confirm => {
+              if (confirm) {
+                const index = this.listOfProductCategory.indexOf(item)
+                this.listOfProductCategory.splice(index, 1)
+                await this.$store.dispatch('staticData/updateProductCategoryData', this.listOfProductCategory)
+                await this.$store.dispatch('staticData/fetchListOfCategoryData')
+              }
+            },
+          },
+        )
+      }
       //handle Product Category
 
     },
