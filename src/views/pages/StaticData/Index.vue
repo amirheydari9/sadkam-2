@@ -48,10 +48,40 @@
               <v-card-text>
                 <v-data-table
                   :items-per-page="5"
+                  :search="searchSubject"
                   :headers="headers"
                   :items="subjectsRule"
                   no-results-text="اطلاعاتی یافت نشد"
+                  :footer-props="{
+      showFirstLastPage: true,
+      firstIcon: 'mdi-arrow-collapse-left',
+      lastIcon: 'mdi-arrow-collapse-right',
+      prevIcon: 'mdi-plus',
+      nextIcon: 'mdi-minus'
+    }"
                 >
+                  <template v-slot:top>
+                    <v-toolbar
+                      flat
+                    >
+                      <v-text-field
+                        v-model="searchSubject"
+                        label="جست جو"
+                        single-line
+                        hide-details
+                        autofocus
+                      />
+                      <v-spacer/>
+                      <v-btn
+                        color="primary"
+                        dark
+                        class="mb-2"
+                        @click="createProductCategory"
+                      >
+                        ایجاد موضوع
+                      </v-btn>
+                    </v-toolbar>
+                  </template>
                   <template v-slot:item.actions="{ item }">
                     <v-icon
                       small
@@ -82,8 +112,39 @@
                   :items-per-page="5"
                   :headers="headers"
                   :items="actionRule"
+                  :search="searchAction"
                   no-results-text="اطلاعاتی یافت نشد"
+                  :footer-props="{
+      showFirstLastPage: true,
+      firstIcon: 'mdi-arrow-collapse-left',
+      lastIcon: 'mdi-arrow-collapse-right',
+      prevIcon: 'mdi-plus',
+      nextIcon: 'mdi-minus'
+    }"
                 >
+                  <template v-slot:top>
+                    <v-toolbar
+                      flat
+                    >
+                      <v-text-field
+                        v-model="searchAction"
+                        label="جست جو"
+                        single-line
+                        hide-details
+                        autofocus
+                      />
+                      <v-spacer/>
+                      <v-btn
+                        color="primary"
+                        dark
+                        class="mb-2"
+                        @click="createProductCategory"
+                      >
+                        ایجاد اکشن
+                      </v-btn>
+                    </v-toolbar>
+                  </template>
+
                   <template v-slot:item.actions="{ item }">
                     <v-icon
                       small
@@ -112,10 +173,41 @@
               <v-card-text>
                 <v-data-table
                   :items-per-page="5"
+                  :search="searchType"
                   :headers="headers"
                   :items="typeRule"
                   no-results-text="اطلاعاتی یافت نشد"
+                  :footer-props="{
+      showFirstLastPage: true,
+      firstIcon: 'mdi-arrow-collapse-left',
+      lastIcon: 'mdi-arrow-collapse-right',
+      prevIcon: 'mdi-plus',
+      nextIcon: 'mdi-minus'
+    }"
                 >
+                  <template v-slot:top>
+                    <v-toolbar
+                      flat
+                    >
+                      <v-text-field
+                        v-model="searchType"
+                        label="جست جو"
+                        single-line
+                        hide-details
+                        autofocus
+                      />
+                      <v-spacer/>
+                      <v-btn
+                        color="primary"
+                        dark
+                        class="mb-2"
+                        @click="createProductCategory"
+                      >
+                        ایجاد نوع
+                      </v-btn>
+                    </v-toolbar>
+                  </template>
+
                   <template v-slot:item.actions="{ item }">
                     <v-icon
                       small
@@ -229,7 +321,7 @@
                 class="mb-2"
                 @click="createProductCategory"
               >
-               ایجاد دسته بندی محتوا
+                ایجاد دسته بندی محتوا
               </v-btn>
             </v-toolbar>
           </template>
@@ -297,6 +389,9 @@
     },
     data () {
       return {
+        searchSubject:'',
+        searchAction:'',
+        searchType:'',
         searchGenere: '',
         searchProductCategory: '',
         breadcrumbs: [
@@ -518,7 +613,7 @@
         this.productCategoryIndex = -1
         this.showProductCategoryDialog = false
       },
-      createProductCategory(){
+      createProductCategory () {
         this.productCategory = {}
         this.productCategoryIndex = -1
         this.showProductCategoryDialog = true
@@ -534,7 +629,7 @@
         this.productCategory = null
         this.productCategoryIndex = -1
       },
-      deleteProductCategory(item){
+      deleteProductCategory (item) {
         this.$confirm(
           {
             message: 'آیا از حذف این رکورد اظمینان دارید ؟',
@@ -552,7 +647,7 @@
             },
           },
         )
-      }
+      },
       //handle Product Category
 
     },
