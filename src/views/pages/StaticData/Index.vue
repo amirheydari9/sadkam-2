@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <breadcrumbs :items="breadcrumbs" />
+    <breadcrumbs :items="breadcrumbs"/>
     <v-tabs
       v-model="tabsMenu"
       class="mt-5"
@@ -25,8 +25,9 @@
         مدیریت دسته بندی محتوا
       </v-tab>
     </v-tabs>
-    <v-divider />
+    <v-divider/>
     <v-tabs-items v-model="tabsMenu">
+
       <v-tab-item
         class="mt-5"
         value="rules"
@@ -130,6 +131,7 @@
           </v-col>
         </div>
       </v-tab-item>
+
       <v-tab-item
         value="generesHeader"
         class="mt-5"
@@ -141,6 +143,15 @@
           no-results-text="اطلاعاتی یافت نشد"
           class="w-100"
         >
+          <template v-slot:top>
+            <v-spacer/>
+            <v-btn
+              color="primary"
+              @click="createGenere"
+            >
+              افزودن ژانر
+            </v-btn>
+          </template>
           <template v-slot:item.actions="{ item }">
             <v-icon
               small
@@ -149,9 +160,17 @@
             >
               mdi-pencil
             </v-icon>
+            <v-icon
+              small
+              class="mr-2"
+              @click="deleteGenere(item)"
+            >
+              mdi-delete
+            </v-icon>
           </template>
         </v-data-table>
       </v-tab-item>
+
       <v-tab-item
         value="productCategory"
         class="mt-5"
@@ -173,7 +192,9 @@
           </template>
         </v-data-table>
       </v-tab-item>
+
     </v-tabs-items>
+
     <rule
       v-if="showRuleDialog"
       :show-dialog="showRuleDialog"
@@ -181,6 +202,7 @@
       @handleSave="handleRuleSave"
       @closeDialog="closeRule"
     />
+
     <genere
       v-if="showGenereDialog"
       :show-dialog="showGenereDialog"
@@ -188,6 +210,7 @@
       @handleSave="handleSaveGenere"
       @closeDialog="closeGenere"
     />
+
     <product-category
       v-if="showProductCategoryDialog"
       :show-dialog="showProductCategoryDialog"
@@ -195,6 +218,7 @@
       @handleSave="handleSaveProductCategory"
       @closeDialog="closeProductCategory"
     />
+
   </v-container>
 </template>
 
@@ -372,6 +396,8 @@
         this.ruleIndex = -1
         this.$toast.success('عملیات با موفقیت انجام شد')
       },
+
+      //handle Genere
       editGenere (item) {
         this.genere = { ...item }
         this.genereIndex = this.generes.indexOf(item)
@@ -382,14 +408,45 @@
         this.genereIndex = -1
         this.showGenereDialog = false
       },
+      createGenere () {
+        this.showGenereDialog = true
+        this.genereIndex = -1
+        this.genere = {}
+      },
       async handleSaveGenere (genere) {
-        Object.assign(this.generes[this.genereIndex], genere)
+        if (this.genereIndex > -1) {
+          Object.assign(this.generes[this.genereIndex], genere)
+        } else {
+          this.generes = [...this.generes, genere]
+        }
         await this.$store.dispatch('staticData/updateGeneresData', this.generes)
         await this.$store.dispatch('staticData/fetchAllGeneres')
         this.genere = null
         this.genereIndex = -1
-        this.$toast.success('عملیات با موفقیت انجام شد')
       },
+
+      async deleteGenere (item) {
+        this.$confirm(
+          {
+            message: 'آیا از حذف این رکورد اظمینان دارید ؟',
+            button: {
+              no: 'خیر',
+              yes: 'بله',
+            },
+            callback: async confirm => {
+              if (confirm) {
+                const index = this.generes.indexOf(item)
+                this.generes.splice(index, 1)
+                await this.$store.dispatch('staticData/updateGeneresData', this.generes)
+                await this.$store.dispatch('staticData/fetchAllGeneres')
+              }
+            },
+          },
+        )
+      },
+      //handle Genere
+
+      //handle Product Category
       editProductCategory (item) {
         this.productCategory = { ...item }
         this.productCategoryIndex = this.listOfProductCategory.indexOf(item)
@@ -408,6 +465,8 @@
         this.productCategoryIndex = -1
         this.$toast.success('عملیات با موفقیت انجام شد')
       },
+      //handle Product Category
+
     },
   }
 </script>

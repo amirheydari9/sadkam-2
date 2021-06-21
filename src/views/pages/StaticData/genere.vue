@@ -5,7 +5,7 @@
     persistent
   >
     <v-card>
-      <dialog-headline title="ویرایش ژانر" />
+      <dialog-headline title="ویرایش ژانر"/>
       <v-card-text>
         <v-container>
           <v-form
@@ -35,7 +35,7 @@
         </v-container>
       </v-card-text>
       <v-card-actions>
-        <v-spacer />
+        <v-spacer/>
         <v-btn
           color="primary"
           rounded
@@ -69,7 +69,7 @@
       },
       genere: {
         Object,
-        isRequired: true,
+        isRequired: false,
       },
     },
     data () {
