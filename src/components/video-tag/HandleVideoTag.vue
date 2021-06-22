@@ -642,7 +642,7 @@
       deleteItem (item) {
         this.$confirm(
           {
-            message: 'آیا از حذف این رکورد اظمینان دارید ؟',
+            message: 'آیا از حذف این رکورد اطمینان دارید ؟',
             button: {
               no: 'خیر',
               yes: 'بله',
