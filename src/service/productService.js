@@ -1,68 +1,30 @@
 import axiosInstance from '../plugins/axios'
 
 export function productService () {
-    const searchProduct = async (search) => {
-        try {
-            return await axiosInstance.get(`/products/search/${search}?noPagination=true`)
-        } catch (e) {
-            console.log(e)
-        }
-    }
+  const searchProduct = async (search) => {
+    return await axiosInstance.get(`/products/search/${search}?noPagination=true`)
+  }
 
-    const getAllProducts = async (page, size) => {
-        try {
-            return await axiosInstance.get(`/products?page=${page}&count=${size}`)
-        } catch (e) {
-            console.log(e)
-        }
-    }
-    const getProduct = async (id) => {
-        try {
-            return await axiosInstance.get(`/products/${id}`)
-        } catch (e) {
-            console.log(e)
-        }
-    }
+  const getAllProducts = async (page, size) => {
+    return await axiosInstance.get(`/products?page=${page}&count=${size}`)
+  }
+  const getProduct = async (id) => {
+    return await axiosInstance.get(`/products/${id}`)
+  }
 
-    const createProduct = async (product) => {
-        try {
-           return await axiosInstance.post('/products', product)
-        } catch (e) {
-            console.log(e)
-        }
-    }
+  const createProduct = async (product) => {
+    return await axiosInstance.post('/products', product)
+  }
 
-    const updateProduct = async (product) => {
-        try {
-            await axiosInstance.put('/products', product)
-        } catch (e) {
-            console.log(e)
-        }
-    }
+  const updateProduct = async (product) => {
+    await axiosInstance.put('/products', product)
+  }
 
-    // const getAllGeneres = async () => {
-    //     try {
-    //         return await axiosInstance.get('/products/related/generes')
-    //     } catch (e) {
-    //         console.log(e)
-    //     }
-    // }
-
-    // const getAllTitleType = async () => {
-    //     try {
-    //         return await axiosInstance.get('/products/related/types')
-    //     } catch (e) {
-    //         console.log(e)
-    //     }
-    // }
-
-    return {
-        searchProduct,
-        getAllProducts,
-        getProduct,
-        createProduct,
-        updateProduct,
-        // getAllGeneres,
-        // getAllTitleType,
-    }
+  return {
+    searchProduct,
+    getAllProducts,
+    getProduct,
+    createProduct,
+    updateProduct,
+  }
 }

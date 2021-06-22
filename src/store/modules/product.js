@@ -5,8 +5,6 @@ export const namespaced = true
 export const state = {
   products: [],
   product: {},
-  // generes: [],
-  // titleTypes: [],
 }
 
 export const mutations = {
@@ -16,12 +14,6 @@ export const mutations = {
   SET_PRODUCT (state, payload) {
     state.product = payload
   },
-  // SET_GENERES (state, payload) {
-  //     state.generes = payload
-  // },
-  // SET_TITLE_TYPES (state, payload) {
-  //     state.titleTypes = payload
-  // },
 }
 
 export const getters = {
@@ -31,12 +23,6 @@ export const getters = {
   getProduct (state) {
     return state.product
   },
-  // getGeneres (state) {
-  //     return state.generes
-  // },
-  // getTitleTypes (state) {
-  //     return state.titleTypes
-  // },
 }
 
 export const actions = {
@@ -80,20 +66,4 @@ export const actions = {
       console.log(e)
     }
   },
-  // async fetchAllGeneres ({ commit }) {
-  //     try {
-  //         const { data } = await productService().getAllGeneres()
-  //         commit('SET_GENERES', data)
-  //     } catch (e) {
-  //         console.log(e)
-  //     }
-  // },
-  // async fetchAllTitleTypes ({ commit }) {
-  //     try {
-  //         const { data } = await productService().getAllTitleType()
-  //         commit('SET_TITLE_TYPES', data)
-  //     } catch (e) {
-  //         console.log(e)
-  //     }
-  // },
 }

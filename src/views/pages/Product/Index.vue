@@ -259,12 +259,10 @@
           await this.$store.dispatch('product/updateProduct', product)
           Object.assign(this.products[this.editedIndex], product)
           this.editedIndex = -1
-          this.$toast.success('عملیات با موفقیت اننجام شد')
         } else {
           await this.$store.dispatch('product/createProduct', product)
           // await this.$store.dispatch('product/fetchAllProducts')
           await this.readDataFromAPI()
-          this.$toast.success('عملیات با موفقیت اننجام شد')
         }
       },
       closeProductDetailsDialog () {
@@ -282,7 +280,7 @@
           this.showEpisodesListDialog = true
         } else {
           await this.$store.commit('episode/SET_PARENT_ID', null)
-          this.$toast.info('امکلن تعریف اپیزود برای این محتوا امکان پدیر نیست')
+          this.$toast.info('امکان تعریف اپیزود برای این محتوا امکان پذیر نیست')
         }
       },
       closeEpisodeListDialog () {
