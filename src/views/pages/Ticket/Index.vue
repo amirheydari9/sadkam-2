@@ -8,6 +8,14 @@
         :search="search"
         no-results-text="اطلاعاتی یافت نشد"
         class="elevation-1 w-100"
+        :items-per-page="5"
+        :footer-props="{
+      showFirstLastPage: true,
+      firstIcon: 'mdi-arrow-collapse-left',
+      lastIcon: 'mdi-arrow-collapse-right',
+      prevIcon: 'mdi-plus',
+      nextIcon: 'mdi-minus'
+    }"
       >
         <template v-slot:top>
           <v-toolbar
@@ -24,7 +32,7 @@
             <v-btn
               color="primary"
               dark
-              @click="createItem"
+              @click="createTicket"
             >
               ایجاد تیکت جدید
             </v-btn>
@@ -106,14 +114,9 @@
           sortable: false,
         },
       ],
-      ticketId: null,
       defaultItem: {
-        nickname: '',
-        phone: '',
-        organizationType: '',
-        organizationRoles: [],
-        organization: '',
-        active: false,
+        title: '',
+        message: '',
       },
       breadcrumbs: [
         {
@@ -153,32 +156,17 @@
           page: 1,
           size: 5,
         })
-        this.ticketId = item._id
         this.isCreate = false
         this.showDialog = true
       },
-      async createItem () {
+      async createTicket () {
         await this.$store.commit('ticket/SET_TICKET', { ...this.defaultItem })
         this.isCreate = true
         this.showDialog = true
-        this.ticketId = null
       },
       async handleSave (ticket) {
-        if (this.ticketId) {
-          const message = {
-            ticketId: this.ticketId,
-            message: ticket,
-          }
-          await this.$store.dispatch('ticket/createMessage', message)
-          this.$store.commit('ticket/SET_TICKET', null)
-          // Object.assign(this.tickets[this.editedIndex], ticket)
-          this.ticketId = null
-          this.$toast.success('عملیات با موفقیت انجام شد')
-        } else {
-          await this.$store.dispatch('ticket/createTicket', ticket)
-          await this.$store.dispatch('ticket/fetchAllTickets')
-          this.$toast.success('عملیات با موفقیت انجام شد')
-        }
+        await this.$store.dispatch('ticket/createTicket', ticket)
+        await this.$store.dispatch('ticket/fetchAllTickets')
       },
       closeDialog () {
         this.showDialog = false

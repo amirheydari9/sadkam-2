@@ -54,13 +54,13 @@
                 <v-toolbar
                   flat
                 >
-<!--                  <v-text-field-->
-<!--                    v-model="search"-->
-<!--                    label="جست جو"-->
-<!--                    single-line-->
-<!--                    hide-details-->
-<!--                    autofocus-->
-<!--                  />-->
+                  <!--                  <v-text-field-->
+                  <!--                    v-model="search"-->
+                  <!--                    label="جست جو"-->
+                  <!--                    single-line-->
+                  <!--                    hide-details-->
+                  <!--                    autofocus-->
+                  <!--                  />-->
                   <v-spacer/>
                   <v-btn
                     color="primary"
@@ -240,14 +240,8 @@
           ticketId: this.ticket[0]._id,
           message: message,
         }
-        try {
-          await this.$store.dispatch('ticket/createMessage', data)
-          // await this.$store.dispatch('ticket/fetchTicket', this.ticket[0]._id)
-          await this.readDataFromAPI()
-          this.$toast.success('عملیات با موفقیت انجام شد')
-        } catch (e) {
-          this.$toast.success('عملیات انجام نشد')
-        }
+        await this.$store.dispatch('ticket/createMessage', data)
+        await this.readDataFromAPI()
       },
     },
   }
