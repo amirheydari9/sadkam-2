@@ -90,25 +90,21 @@
                 cols="12"
                 sm="6"
               >
-<!--                <v-text-field-->
-<!--                  id="my-custom-input"-->
-<!--                  persistent-hint-->
-<!--                  readonly-->
-<!--                  v-model="episode.releaseDate"-->
-<!--                  label="زمان انتشار"-->
-<!--                  :rules="[required('این فیلد الزامی است')]"-->
-<!--                ></v-text-field>-->
+                <v-text-field
+                  id="date"
+                  persistent-hint
+                  readonly
+                  v-model="episode.releaseDate"
+                  label="زمان انتشار"
+                  :rules="[required('این فیلد الزامی است')]"
+                ></v-text-field>
                 <date-picker
                   v-model="episode.releaseDate"
                   auto-submit
                   format="jYYYY/jMM/jDD"
+                  element="date"
+                  @change="changeDate"
                 />
-                <date-picker
-                  element="my-custom-element"
-                  v-model="episode.releaseDate"
-                  auto-submit
-                  placeholder="زمان انتشار"
-                ></date-picker>
               </v-col>
 
               <!--              <v-col cols="12">-->
@@ -202,8 +198,13 @@
       show () {
         return this.showDialog
       },
-      episode () {
-        return this.$store.getters['episode/getEpisode']
+      episode: {
+        get () {
+          return this.$store.getters['episode/getEpisode']
+        },
+        set (value) {
+          this.$store.commit('episode/SET_EPISODE', value)
+        },
       },
       // releaseDate: {
       //   get () {
@@ -251,9 +252,14 @@
         this.$refs.episodeForm.resetValidation()
         this.$emit('closeDialog')
       },
+      changeDate (date) {
+        this.episode = {
+          ...this.episode,
+          releaseDate: date,
+        }
+      },
       save () {
         if (this.$refs.episodeForm.validate()) {
-          console.log(this.episode,'episode')
           let data = {
             ...this.episode,
             releaseDate: new Date(transformJalaliDateToGeorgian(this.episode.releaseDate)).getTime(),
@@ -264,7 +270,6 @@
               parent: this.$store.getters['episode/getParentId'],
             }
           }
-          console.log(data, 'data')
           this.$emit('handleSave', data)
           this.close()
         }
