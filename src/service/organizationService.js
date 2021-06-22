@@ -1,42 +1,21 @@
 import axiosInstance from '../plugins/axios'
 
 export function organizationService () {
-    const getAllOrganization = async () => {
-        try {
-            return await axiosInstance.get('/organizations?count=10000')
-        } catch (e) {
-            console.log(e)
-        }
-    }
+  const getAllOrganization = async () => {
+    return await axiosInstance.get('/organizations?count=10000')
+  }
 
-    const createOrganization = async (organization) => {
-        try {
-            await axiosInstance.post('/organizations', organization)
-        } catch (e) {
-            console.log(e)
-        }
-    }
+  const createOrganization = async (organization) => {
+    await axiosInstance.post('/organizations', organization)
+  }
 
-    const updateOrganization = async (organization) => {
-        try {
-            await axiosInstance.put('/organizations', organization)
-        } catch (e) {
-            console.log(e)
-        }
-    }
+  const updateOrganization = async (organization) => {
+    await axiosInstance.put('/organizations', organization)
+  }
 
-    const getOrganizationTypes = async () => {
-        try {
-            return await axiosInstance.get('/organizations/types')
-        } catch (e) {
-            console.log(e)
-        }
-    }
-
-    return {
-        getAllOrganization,
-        getOrganizationTypes,
-        createOrganization,
-        updateOrganization,
-    }
+  return {
+    getAllOrganization,
+    createOrganization,
+    updateOrganization,
+  }
 }

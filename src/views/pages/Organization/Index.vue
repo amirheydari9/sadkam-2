@@ -189,11 +189,9 @@
           await this.$store.dispatch('organization/updateOrganization', organization)
           Object.assign(this.organizations[this.editedIndex], organization)
           this.editedIndex = -1
-          this.$toast.success('عملیات با موفقیت انجام شد')
         } else {
           await this.$store.dispatch('organization/createOrganization', organization)
           await this.$store.dispatch('organization/fetchOrganizations')
-          this.$toast.success('عملیات با موفقیت انجام شد')
         }
       },
       closeDialog () {
