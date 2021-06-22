@@ -29,35 +29,19 @@ export function requestService () {
   }
 
   const getAssessmentListByStatus = async (status, page, size) => {
-    try {
-      return await axiosInstance.get(`/request/find/byStatus/${status}?page=${page}&count=${size}`)
-    } catch (e) {
-      console.log(e)
-    }
+    return await axiosInstance.get(`/request/find/byStatus/${status}?page=${page}&count=${size}`)
   }
 
   const assignRequestToBrokerage = async (assign) => {
-    try {
-      return await axiosInstance.patch('/request/assign', assign)
-    } catch (e) {
-      console.log(e)
-    }
+    return await axiosInstance.patch('/request/assign', assign)
   }
 
   const unAssignRequestToBrokerage = async (requestId) => {
-    try {
-      return await axiosInstance.patch('/request/unassign', requestId)
-    } catch (e) {
-      console.log(e)
-    }
+    return await axiosInstance.patch('/request/unassign', requestId)
   }
 
   const setStatusOfRequest = async (status) => {
-    try {
-      return await axiosInstance.patch('/request/status', status)
-    } catch (e) {
-      console.log(e)
-    }
+    return await axiosInstance.patch('/request/status', status)
   }
 
   const calculateCost = async (requestId) => {

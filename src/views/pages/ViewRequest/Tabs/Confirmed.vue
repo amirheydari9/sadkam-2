@@ -162,7 +162,7 @@
         }
         await this.$store.dispatch('request/setStatusOfRequest', data)
         await this.readDataFromAPI()
-        this.$toast.success('عملیات با موفقیت انجام شد')
+        // this.$toast.success('عملیات با موفقیت انجام شد')
       },
 
       async seeDetails (item) {
