@@ -1,5 +1,5 @@
 import { episodeService } from '../../service/episodeService'
-
+import {transformDateToJalali} from "../../plugins/transformData";
 export const namespaced = true
 
 export const state = {
@@ -25,7 +25,13 @@ export const getters = {
     return state.episodes
   },
   getEpisode (state) {
-    return state.episode
+    return {
+      ...state.episode,
+      releaseDate: state.episode.releaseDate
+        ? transformDateToJalali(state.episode.releaseDate)
+        : transformDateToJalali(new Date()),
+    }
+    //  return state.episode
   },
   getParentId (state) {
     return state.parentId

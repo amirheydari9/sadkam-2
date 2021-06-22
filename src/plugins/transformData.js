@@ -3,9 +3,9 @@ import { entryType, assessmentRequestStatus } from './constant'
 import Jmoment from 'moment-jalaali'
 import moment from 'moment'
 
-Jmoment.loadPersian({
-  usePersianDigits: true,
-})
+// Jmoment.loadPersian({
+//   usePersianDigits: true,
+// })
 
 export const transformRoles = (value) => {
   const roles = []

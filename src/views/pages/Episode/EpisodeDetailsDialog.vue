@@ -5,7 +5,7 @@
     persistent
   >
     <v-card>
-      <dialog-headline :title="formTitle" />
+      <dialog-headline :title="formTitle"/>
       <v-card-text>
         <v-container>
           <v-form ref="episodeForm">
@@ -90,20 +90,25 @@
                 cols="12"
                 sm="6"
               >
-                <v-text-field
-                  id="my-custom-input"
-                  persistent-hint
-                  readonly
-                  v-model="episode.releaseDate"
-                  label="زمان انتشار"
-                  :rules="[required('این فیلد الزامی است')]"
-                ></v-text-field>
-                <v-date-picker
+<!--                <v-text-field-->
+<!--                  id="my-custom-input"-->
+<!--                  persistent-hint-->
+<!--                  readonly-->
+<!--                  v-model="episode.releaseDate"-->
+<!--                  label="زمان انتشار"-->
+<!--                  :rules="[required('این فیلد الزامی است')]"-->
+<!--                ></v-text-field>-->
+                <date-picker
                   v-model="episode.releaseDate"
                   auto-submit
-                  element="my-custom-input"
                   format="jYYYY/jMM/jDD"
                 />
+                <date-picker
+                  element="my-custom-element"
+                  v-model="episode.releaseDate"
+                  auto-submit
+                  placeholder="زمان انتشار"
+                ></date-picker>
               </v-col>
 
               <!--              <v-col cols="12">-->
@@ -137,7 +142,7 @@
       </v-card-text>
 
       <v-card-actions>
-        <v-spacer />
+        <v-spacer/>
         <v-btn
           color="primary"
           rounded
@@ -172,8 +177,14 @@
       DialogHeadline,
     },
     props: {
-      showDialog: { Boolean, isRequired: true },
-      isCreate: { Boolean, isRequired: true },
+      showDialog: {
+        Boolean,
+        isRequired: true,
+      },
+      isCreate: {
+        Boolean,
+        isRequired: true,
+      },
     },
     data () {
       return {
@@ -242,6 +253,7 @@
       },
       save () {
         if (this.$refs.episodeForm.validate()) {
+          console.log(this.episode,'episode')
           let data = {
             ...this.episode,
             releaseDate: new Date(transformJalaliDateToGeorgian(this.episode.releaseDate)).getTime(),
@@ -252,6 +264,7 @@
               parent: this.$store.getters['episode/getParentId'],
             }
           }
+          console.log(data, 'data')
           this.$emit('handleSave', data)
           this.close()
         }
