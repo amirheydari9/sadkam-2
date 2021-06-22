@@ -2,67 +2,35 @@ import axiosInstance from '../plugins/axios'
 
 export function staticService () {
   const getRulesListData = async () => {
-    try {
-      return await axiosInstance.get('/staticData/rulesData')
-    } catch (e) {
-      console.log(e)
-    }
+    return await axiosInstance.get('/staticData/rulesData')
   }
 
   const getListOfUserRoles = async () => {
-    try {
-      return await axiosInstance.get('/staticData/userRolesData')
-    } catch (e) {
-      console.log(e)
-    }
+    return await axiosInstance.get('/staticData/userRolesData')
   }
 
   const getListOfOrganizationTypes = async () => {
-    try {
-      return await axiosInstance.get('/staticData/organizationTypesData')
-    } catch (e) {
-      console.log(e)
-    }
+    return await axiosInstance.get('/staticData/organizationTypesData')
   }
 
   const getListOfGeneresData = async () => {
-    try {
-      return await axiosInstance.get('/staticData/generesData')
-    } catch (e) {
-      console.log(e)
-    }
+    return await axiosInstance.get('/staticData/generesData')
   }
 
   const getListOfProductCategoryData = async () => {
-    try {
-      return await axiosInstance.get('/staticData/productCategoryData')
-    } catch (e) {
-      console.log(e)
-    }
+    return await axiosInstance.get('/staticData/productCategoryData')
   }
 
   const updateRulesData = async (data) => {
-    try {
-      return await axiosInstance.put('/staticData/rulesData', data)
-    } catch (e) {
-      console.log(e)
-    }
+    return await axiosInstance.put('/staticData/rulesData', data)
   }
 
   const updateGeneresData = async (data) => {
-    try {
-      return await axiosInstance.put('/staticData/generesData', data)
-    } catch (e) {
-      console.log(e)
-    }
+    return await axiosInstance.put('/staticData/generesData', data)
   }
 
   const updateProductCategoryData = async (data) => {
-    try {
-      return await axiosInstance.put('/staticData/productCategoryData', data)
-    } catch (e) {
-      console.log(e)
-    }
+    return await axiosInstance.put('/staticData/productCategoryData', data)
   }
 
   return {
