@@ -8,7 +8,6 @@
       :loading="loading"
       :headers="headers"
       :items="episodes"
-      :search="search"
       no-results-text="اطلاعاتی یافت نشد"
       class="elevation-1 w-100"
       :items-per-page="5"
@@ -24,13 +23,6 @@
         <v-toolbar
           flat
         >
-<!--          <v-text-field-->
-<!--            v-model="search"-->
-<!--            label="جست جو"-->
-<!--            single-line-->
-<!--            hide-details-->
-<!--            autofocus-->
-<!--          />-->
           <v-spacer/>
           <v-btn
             color="primary"
@@ -211,12 +203,9 @@
           await this.$store.dispatch('episode/updateEpisode', episode)
           Object.assign(this.episodes[this.editedIndex], episode)
           this.editedIndex = -1
-          this.$toast.success('عملیات با موفقیت انجام شد')
         } else {
           await this.$store.dispatch('episode/createEpisode', episode)
-          // await this.$store.dispatch('episode/fetchAllEpisodes', this.$store.getters['episode/getParentId'])
           await this.readDataFromAPI()
-          this.$toast.success('عملیات با موفقیت انجام شد')
         }
       },
       closeDialog () {
