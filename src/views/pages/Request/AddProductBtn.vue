@@ -53,14 +53,9 @@
         this.productDialog = true
       },
       async handleProductDetailsSave (product) {
-        try {
-          await this.$store.dispatch('product/createProduct', product)
-          const { data } = await this.$store.dispatch('product/searchProduct', product.enTitle)
-          await this.$store.commit('product/SET_PRODUCTS', data.data)
-          await this.$toast.success('عملیات با موفقیت انجام نشد')
-        } catch (e) {
-          this.$toast.error('عملیات انجام نشد')
-        }
+        await this.$store.dispatch('product/createProduct', product)
+        const { data } = await this.$store.dispatch('product/searchProduct', product.enTitle)
+        await this.$store.commit('product/SET_PRODUCTS', data.data)
       },
       closeProductDetailsDialog () {
         this.productDialog = false
