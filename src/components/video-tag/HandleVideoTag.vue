@@ -614,7 +614,6 @@
           }
           await this.$store.dispatch('rule/updateRule', data)
           Object.assign(this.rulesOfFile[this.editedIndex], rule)
-          this.$toast.success('عملیات با موفقیت انجام شد')
         } else {
           const data = {
             ...item,
@@ -628,7 +627,6 @@
               ...data,
             })
             await this.$store.dispatch('rule/fetchAllListRulesOfFile', this.fileItem._id)
-            this.$toast.success('عملیات با موفقیت انجام شد')
           } else {
             await this.$store.dispatch('rule/createRuleForAssessment', {
               assessmentId: this.assessment,
@@ -651,7 +649,6 @@
               if (confirm) {
                 await this.$store.dispatch('rule/deleteRule', item._id)
                 await this.$store.dispatch('rule/fetchAllListRulesOfFile', this.fileItem._id)
-                this.$toast.success('عملیات با موفقیت انجام شد')
               }
             },
           },
@@ -675,7 +672,6 @@
           ...this.ruleItem,
           platformDesc: desc,
         })
-        this.$toast.success('عملیات با موفقیت انجام شد')
       },
       handleSetConfirm (item) {
         this.editedIndex = this.comparisonListRulesOfFile.indexOf(item)
@@ -698,7 +694,6 @@
                   ...this.ruleItem,
                   confirmed: true,
                 })
-                this.$toast.success('عملیات با موفقیت انجام شد')
               }
             },
           },

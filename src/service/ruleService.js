@@ -10,11 +10,7 @@ export function ruleService () {
   }
 
   const getListRuleOfFile = async (fileId) => {
-    try {
-      return await axiosInstance.get(`/rules/find/byFile/${fileId}?count=100`)
-    } catch (e) {
-      console.log(e)
-    }
+    return await axiosInstance.get(`/rules/find/byFile/${fileId}?count=100`)
   }
 
   const getListRulesOfAssessmentRequest = async (assessmentRequestId) => {
@@ -34,11 +30,7 @@ export function ruleService () {
   }
 
   const createRuleForRequest = async (rule) => {
-    try {
-      return await axiosInstance.post('/rules/forRequest', rule)
-    } catch (e) {
-      console.log(e)
-    }
+    return await axiosInstance.post('/rules/forRequest', rule)
   }
 
   const createRuleForAssessment = async (rule) => {
@@ -50,19 +42,11 @@ export function ruleService () {
   }
 
   const updateRule = async (rule) => {
-    try {
-      return await axiosInstance.put('/rules', rule)
-    } catch (e) {
-      console.log(e)
-    }
+    return await axiosInstance.put('/rules', rule)
   }
 
   const deleteRule = async (id) => {
-    try {
-      return await axiosInstance.delete(`/rules/${id}`)
-    } catch (e) {
-      console.log(e)
-    }
+    return await axiosInstance.delete(`/rules/${id}`)
   }
 
   return {
