@@ -8,43 +8,24 @@ export function requestService () {
       console.log(e)
     }
   }
-  const getRequest = async (id) => {
-    try {
-      return await axiosInstance.get(`/request/${id}`)
-    } catch (e) {
-      console.log(e)
-    }
-  }
   const getRequestByEpisode = async (episodeId) => {
-    try {
-      return await axiosInstance.get(`/request/find/byEpisode/${episodeId}`)
-    } catch (e) {
-      console.log(e)
-    }
+    return await axiosInstance.get(`/request/find/byEpisode/${episodeId}`)
+  }
+
+  const getRequest = async (id) => {
+    return await axiosInstance.get(`/request/${id}`)
   }
 
   const createRequest = async (request) => {
-    try {
-      return await axiosInstance.post('/request', request)
-    } catch (e) {
-      console.log(e)
-    }
+    return await axiosInstance.post('/request', request)
   }
 
   const createFile = async (file) => {
-    try {
-      return await axiosInstance.post('/request/file', file)
-    } catch (e) {
-      console.log(e)
-    }
+    return await axiosInstance.post('/request/file', file)
   }
 
   const createDialog = async (dialog) => {
-    try {
-      return await axiosInstance.post('/request/dialog', dialog)
-    } catch (e) {
-      console.log(e)
-    }
+    return await axiosInstance.post('/request/dialog', dialog)
   }
 
   const getAssessmentListByStatus = async (status, page, size) => {

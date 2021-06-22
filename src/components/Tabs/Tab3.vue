@@ -94,7 +94,7 @@
               small
               @click="handleFileRule(item)"
             >
-              mdi-pen
+              mdi-pencil
             </v-icon>
           </template>
           <span>مدیریت رول</span>
@@ -182,7 +182,7 @@
             text: 'عملیات',
             value: 'actions',
             sortable: false,
-            width:'80px'
+            width: '80px',
           },
         ],
         required,
@@ -216,18 +216,13 @@
             secretKey: '',
           }
           this.$refs.fileForm.resetValidation()
-          this.$toast.success('عملیات با موفقیت انجام شد')
         }
       },
       async handleFileRule (item) {
-        try {
-          await this.$store.dispatch('rule/fetchAllListRulesOfFile', item._id)
-          this.assessmentId = this.request._id
-          this.fileItem = { ...item }
-          this.videoTagDialog = true
-        } catch (e) {
-          this.$toast.error('خطایی رخ داده است')
-        }
+        await this.$store.dispatch('rule/fetchAllListRulesOfFile', item._id)
+        this.assessmentId = this.request._id
+        this.fileItem = { ...item }
+        this.videoTagDialog = true
       },
       closeVideoTags () {
         this.videoTagDialog = false

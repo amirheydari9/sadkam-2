@@ -109,7 +109,6 @@
           description: this.description,
         }
         this.$store.dispatch('request/createRequest', data).then(async (res) => {
-          console.log(res,'dispatch')
           await this.$store.dispatch('request/fetchRequest', res.id)
           await this.$emit('getData')
         })

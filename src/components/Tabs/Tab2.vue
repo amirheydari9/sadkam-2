@@ -134,7 +134,6 @@
           }
           await this.$store.dispatch('request/createDialog', dialog)
           await this.$emit('getData')
-          this.$toast.success('عملیات با موفقیت انجام شد')
           this.$refs.dialogForm.reset()
           this.$refs.dialogForm.resetValidation()
         }
