@@ -104,6 +104,14 @@ const routes = new Router({
           },
         },
         {
+          name: 'RequestProgress',
+          path: '/requestProgress',
+          component: () => import('@/views/pages/RequestProgress/Index.vue'),
+          meta: {
+            permission: 'ORDERS',
+          },
+        },
+        {
           name: 'Ticket',
           path: '/ticket',
           component: () => import('@/views/pages/Ticket/Index.vue'),

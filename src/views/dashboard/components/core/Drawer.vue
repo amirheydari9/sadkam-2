@@ -18,7 +18,7 @@
       />
     </template>
 
-    <v-divider class="mb-1" />
+    <v-divider class="mb-1"/>
 
     <v-list
       dense
@@ -44,7 +44,7 @@
       </v-list-item>
     </v-list>
 
-    <v-divider class="mb-2" />
+    <v-divider class="mb-2"/>
 
     <v-list
       expand
@@ -52,7 +52,7 @@
     >
       <!-- Style cascading bug  -->
       <!-- https://github.com/vuetifyjs/vuetify/pull/8574 -->
-      <div />
+      <div/>
 
       <template v-for="(item, i) in computedItems">
         <!--        <base-item-group-->
@@ -72,7 +72,7 @@
 
       <!-- Style cascading bug  -->
       <!-- https://github.com/vuetifyjs/vuetify/pull/8574 -->
-      <div />
+      <div/>
     </v-list>
 
     <!--    <template v-slot:append>-->
@@ -151,7 +151,7 @@
           icon: 'mdi-flash-outline',
           to: '/request',
           roles: ['USER_MANAGER'],
-          organizationTypes: ['SECRETARIAT', 'PLATFORM','BROKERAGE'],
+          organizationTypes: ['SECRETARIAT', 'PLATFORM', 'BROKERAGE'],
           isSuperAdmin: false,
         },
         // {
@@ -166,6 +166,14 @@
           to: '/viewRequest',
           roles: ['ORDERS'],
           organizationTypes: ['SECRETARIAT'],
+          isSuperAdmin: false,
+        },
+        {
+          title: 'پیشرفت درخواست ارزیابی',
+          icon: 'mdi-table-eye',
+          to: '/requestProgress',
+          roles: ['ORDERS'],
+          organizationTypes: ['PLATFORM', 'BROKERAGE'],
           isSuperAdmin: false,
         },
         {
