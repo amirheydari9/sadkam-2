@@ -21,7 +21,7 @@ axiosInstance.interceptors.request.use(function (config) {
 
 axiosInstance.interceptors.response.use(response => {
   setTimeout(() => {
-      store.commit('SET_OVERLAY', false)
+    store.commit('SET_OVERLAY', false)
   }, 1500)
   if (response.status === 201 || response.status === 202) {
     Vue.$toast.success('عملیات با موفقیت انجام شد')
@@ -29,13 +29,13 @@ axiosInstance.interceptors.response.use(response => {
   return response
 }, async error => {
   if (error.response.status === 401 || error.response.status === 403) {
-   await store.dispatch('logout')
+    await store.dispatch('logout')
   }
-  if (error.response.status === 404) {
-    // router.push({name: 'not-found'})
+  if (error.response.status === 409) {
+    Vue.$toast.error('عملیات انجام شد')
   }
   setTimeout(() => {
-      store.commit('SET_OVERLAY', false)
+    store.commit('SET_OVERLAY', false)
   }, 1500)
   return Promise.reject(error)
 })

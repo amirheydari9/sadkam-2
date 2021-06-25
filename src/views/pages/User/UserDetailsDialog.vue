@@ -56,20 +56,20 @@
                   @change="checkUsersLimitCount"
                 />
               </v-col>
-<!--              <v-col-->
-<!--                v-if="isSuperAdmin"-->
-<!--                cols="12"-->
-<!--                sm="6"-->
-<!--              >-->
-<!--                <v-autocomplete-->
-<!--                  v-model="user.organizationType"-->
-<!--                  :rules="[ required('این فیلد الزامی است'),]"-->
-<!--                  label="نوع سازمان"-->
-<!--                  :items="organizationType"-->
-<!--                  item-text="fa"-->
-<!--                  item-value="type"-->
-<!--                />-->
-<!--              </v-col>-->
+              <!--              <v-col-->
+              <!--                v-if="isSuperAdmin"-->
+              <!--                cols="12"-->
+              <!--                sm="6"-->
+              <!--              >-->
+              <!--                <v-autocomplete-->
+              <!--                  v-model="user.organizationType"-->
+              <!--                  :rules="[ required('این فیلد الزامی است'),]"-->
+              <!--                  label="نوع سازمان"-->
+              <!--                  :items="organizationType"-->
+              <!--                  item-text="fa"-->
+              <!--                  item-value="type"-->
+              <!--                />-->
+              <!--              </v-col>-->
               <v-col
                 cols="12"
               >
@@ -131,7 +131,7 @@
     },
     data () {
       return {
-        disableSave:false,
+        disableSave: false,
         required,
         verifyMobilePhone,
         verifyUserName,
@@ -189,11 +189,13 @@
       },
       checkUsersLimitCount (value) {
         const organization = this.organizationList.find(item => item._id === value)
-        if (organization.usersLimitCount && organization.users.length >= organization.usersLimitCount) {
+        if (organization.usersLimitCount === -1) return true
+        if (this.currentUser.organizationUsersLimitCount > organization.users.length) {
+          this.disableSave = false
+          return true
+        }else{
           this.$toast.error('محدودیت تعریف کاربر برای این سازمان به پایان رسیده است')
           this.disableSave = true
-        } else {
-          this.disableSave = false
         }
       },
     },

@@ -165,7 +165,7 @@
           icon: 'mdi-table-eye',
           to: '/viewRequest',
           roles: ['ORDERS'],
-          organizationTypes: ['SECRETARIAT', 'PLATFORM','BROKERAGE'],
+          organizationTypes: ['SECRETARIAT'],
           isSuperAdmin: false,
         },
         {
