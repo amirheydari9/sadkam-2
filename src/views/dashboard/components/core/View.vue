@@ -1,9 +1,9 @@
 <template>
   <v-content>
-    <overlay />
-    <router-view />
+    <overlay/>
+    <router-view/>
 
-<!--    <dashboard-core-footer />-->
+    <!--    <dashboard-core-footer />-->
   </v-content>
 </template>
 
@@ -11,7 +11,9 @@
   import Overlay from '../../../../components/Overlay'
   export default {
     name: 'DashboardCoreView',
-    components: { Overlay },
+    components: {
+      Overlay,
+    },
     // components: {
     //   DashboardCoreFooter: () => import('./Footer'),
     // },

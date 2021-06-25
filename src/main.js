@@ -12,10 +12,9 @@ import axiosInstance from './plugins/axios'
 import VueToast from 'vue-toast-notification'
 import 'vue-toast-notification/dist/theme-sugar.css'
 import VueConfirmDialog from 'vue-confirm-dialog'
-import VueLoading from 'vue-loading-overlay'
-import 'vue-loading-overlay/dist/vue-loading.css'
 import VueMask from 'v-mask'
 import VuePersianDatetimePicker from 'vue-persian-datetime-picker'
+
 
 Vue.use(VueMask)
 Vue.use(VueConfirmDialog)
@@ -24,13 +23,6 @@ Vue.component('date-picker', VuePersianDatetimePicker);
 
 Vue.use(VueToast, {
   position: 'top',
-})
-
-Vue.use(VueLoading, {
-  width: 80,
-  height: 80,
-  backgroundColor: '#eee',
-  color: 'blue',
 })
 
 Vue.use(VueCookies)
