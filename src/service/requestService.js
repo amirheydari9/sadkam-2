@@ -44,6 +44,13 @@ export function requestService () {
     return await axiosInstance.patch('/request/status', status)
   }
 
+  const getListInProgress = async (page,size) => {
+    return await axiosInstance.get(`/request/find/byStatus/inProgress/true?page=${page}&count=${size}`)
+  }
+  const getListFinished = async (page,size) => {
+    return await axiosInstance.get(`/request/find/byStatus/inProgress/false?page=${page}&count=${size}`)
+  }
+
   const calculateCost = async (requestId) => {
     try {
       return await axiosInstance.get(`/request/calculateCost/${requestId}`)
@@ -63,6 +70,8 @@ export function requestService () {
     assignRequestToBrokerage,
     setStatusOfRequest,
     unAssignRequestToBrokerage,
+    getListInProgress,
+    getListFinished,
     calculateCost,
   }
 }

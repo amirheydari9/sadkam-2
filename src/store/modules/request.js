@@ -12,6 +12,8 @@ export const state = {
   confirmed: [],
   working: [],
   completed: [],
+  inProgress: [],
+  finished: [],
 }
 
 export const mutations = {
@@ -42,6 +44,12 @@ export const mutations = {
   SET_COMPLETED (state, payload) {
     state.completed = payload
   },
+  SET_LIST_IN_PROGRESS (state, payload) {
+    state.inProgress = payload
+  },
+  SET_LIST_FINISHED (state, payload) {
+    state.finished = payload
+  },
 }
 
 export const getters = {
@@ -71,6 +79,26 @@ export const getters = {
   },
   getCompleted (state) {
     return state.completed
+  },
+  getListInProgress (state) {
+    state.inProgress.forEach(item => {
+      if (item.episode.parent.episodeCountType === 'single') {
+        item.faProductType = 'فیلم'
+      } else {
+        item.faProductType = `سریال  - فصل ${item.episode.seasonNumber} - قسمت ${item.episode.episodeNumber}`
+      }
+    })
+    return state.inProgress
+  },
+  getListFinished (state) {
+    state.finished.forEach(item => {
+      if (item.episode.parent.episodeCountType === 'single') {
+        item.faProductType = 'فیلم'
+      } else {
+        item.faProductType = `سریال  - فصل ${item.episode.seasonNumber} - قسمت ${item.episode.episodeNumber}`
+      }
+    })
+    return state.finished
   },
 
 }
@@ -129,7 +157,6 @@ export const actions = {
     }
   },
 
-
   async fetchAssessmentListByStatus ({ commit }, payload) {
     try {
       const { data } = await requestService().getAssessmentListByStatus(payload.status, payload.page, payload.size)
@@ -177,6 +204,25 @@ export const actions = {
   async setStatusOfRequest (context, status) {
     try {
       return await requestService().setStatusOfRequest(status)
+    } catch (e) {
+      console.log(e)
+    }
+  },
+
+  async fetchListInProgress ({ commit }, payload) {
+    try {
+      const { data } = await requestService().getListInProgress(payload.page, payload.size)
+      commit('SET_LIST_IN_PROGRESS', data.data.items)
+      return data
+    } catch (e) {
+      console.log(e)
+    }
+  },
+  async fetchListFinished ({ commit }, payload) {
+    try {
+      const { data } = await requestService().getListFinished(payload.page, payload.size)
+      commit('SET_LIST_FINISHED', data.data.items)
+      return data
     } catch (e) {
       console.log(e)
     }
