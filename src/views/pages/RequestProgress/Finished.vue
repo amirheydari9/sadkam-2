@@ -104,8 +104,12 @@
             value: 'description',
           },
           {
-            text: 'ارجاع شده به',
+            text: 'ایجاد شده توسط',
             value: 'organization.title',
+          },
+          {
+            text: 'ارجاع شده به',
+            value: 'assignedTo.title',
           },
           {
             text: 'عملیات',
