@@ -150,8 +150,8 @@
           title: 'درخواست ارزیابی',
           icon: 'mdi-flash-outline',
           to: '/request',
-          roles: ['USER_MANAGER'],
-          organizationTypes: ['SECRETARIAT', 'PLATFORM', 'BROKERAGE'],
+          roles: ['ORDERS'],
+          organizationTypes: ['PLATFORM'],
           isSuperAdmin: false,
         },
         // {
