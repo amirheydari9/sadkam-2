@@ -1,9 +1,20 @@
 import store from '../store/store'
 
 export function permission () {
+    // const can = (permission) => {
+    //     if (store.getters.getCurrentUser) {
+    //         return store.getters.getCurrentUser.organizationRoles.indexOf(permission) !== -1
+    //     } else {
+    //         return false
+    //     }
+    // }
+    //
     const can = (permission) => {
         if (store.getters.getCurrentUser) {
-            return store.getters.getCurrentUser.organizationRoles.indexOf(permission) !== -1
+          return (
+            permission.roles.some(role => store.getters.getCurrentUser.organizationRoles.includes(role)) &&
+            permission.organizationTypes.indexOf(store.getters.getCurrentUser.organizationType) > -1
+          )
         } else {
             return false
         }

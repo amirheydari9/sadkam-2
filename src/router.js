@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import { authService } from './service/authService'
-// import { permission } from './plugins/permission'
 import store from './store/store'
+import { permission } from '@/plugins/permission'
 
 Vue.use(Router)
 
@@ -52,7 +52,10 @@ const routes = new Router({
           path: '/users',
           component: () => import('@/views/pages/User/Index.vue'),
           meta: {
-            permission: 'USER_MANAGER',
+            permission: {
+              roles: ['USER_MANAGER'],
+              organizationTypes: ['SECRETARIAT', 'PLATFORM', 'BROKERAGE'],
+            },
           },
         },
         {
@@ -60,7 +63,10 @@ const routes = new Router({
           path: '/organizations',
           component: () => import('@/views/pages/Organization/Index.vue'),
           meta: {
-            isSuperAdmin: true,
+            permission: {
+              roles: ['USER_MANAGER'],
+              organizationTypes: ['SECRETARIAT'],
+            },
           },
         },
         {
@@ -68,7 +74,10 @@ const routes = new Router({
           path: '/products',
           component: () => import('@/views/pages/Product/Index.vue'),
           meta: {
-            permission: 'ORDERS',
+            permission: {
+              roles: ['ORDERS'],
+              organizationTypes: ['SECRETARIAT', 'PLATFORM'],
+            },
           },
         },
         {
@@ -76,7 +85,10 @@ const routes = new Router({
           path: '/episodes',
           component: () => import('@/views/pages/Episode/Index.vue'),
           meta: {
-            permission: 'ORDERS',
+            permission: {
+              roles: ['ORDERS'],
+              organizationTypes: ['SECRETARIAT', 'PLATFORM'],
+            },
           },
         },
         // {
@@ -91,16 +103,22 @@ const routes = new Router({
           name: 'Request',
           path: '/request',
           component: () => import('@/views/pages/Request/Index.vue'),
-          // meta: {
-          //   hasAssessmentRequestPermission: true,
-          // },
+          meta: {
+            permission: {
+              roles: ['ORDERS'],
+              organizationTypes: ['PLATFORM'],
+            },
+          },
         },
         {
           name: 'ViewRequest',
           path: '/viewRequest',
           component: () => import('@/views/pages/ViewRequest/Index.vue'),
           meta: {
-            permission: 'ORDERS',
+            permission: {
+              roles: ['ORDERS'],
+              organizationTypes: ['SECRETARIAT'],
+            },
           },
         },
         {
@@ -108,18 +126,33 @@ const routes = new Router({
           path: '/requestProgress',
           component: () => import('@/views/pages/RequestProgress/Index.vue'),
           meta: {
-            permission: 'ORDERS',
+            permission: {
+              roles: ['ORDERS'],
+              organizationTypes: ['PLATFORM', 'BROKERAGE'],
+            },
           },
         },
         {
           name: 'Ticket',
           path: '/ticket',
           component: () => import('@/views/pages/Ticket/Index.vue'),
+          meta: {
+            permission: {
+              roles: ['USER_MANAGER', 'FINANCIAL', 'ORDERS'],
+              organizationTypes: ['SECRETARIAT', 'PLATFORM', 'BROKERAGE'],
+            },
+          },
         },
         {
           name: 'StaticData',
           path: '/staticData',
           component: () => import('@/views/pages/StaticData/Index.vue'),
+          meta: {
+            permission: {
+              roles: ['ORDERS'],
+              organizationTypes: ['SECRETARIAT'],
+            },
+          },
           beforeEnter: async (to, from, next) => {
             await store.dispatch('staticData/fetchRulesList')
             next()
@@ -141,7 +174,6 @@ routes.beforeEach(async (to, from, next) => {
   }
   if ((to.meta.guest || to.matched.some(parent => parent.meta.guest)) &&
     authService().existToken()) {
-    console.log('hi')
     return next({ name: 'Panel' })
   }
 
@@ -149,15 +181,14 @@ routes.beforeEach(async (to, from, next) => {
     !authService().existToken()) {
     return next({ name: 'Login' })
   }
-  //
-  // if (store.getters.getCurrentUser && to.meta.permission) {
-  //   if (permission().can(to.meta.permission)) {
-  //     return next()
-  //   } else {
-  //     await store.dispatch('logout')
-  //     return next({ name: 'Login' })
-  //   }
-  // }
+
+  if (to.meta.permission) {
+    if (permission().can(to.meta.permission)) {
+      return next()
+    } else {
+      await store.dispatch('logout')
+    }
+  }
   //
   // if (store.getters.getCurrentUser && to.meta.isSuperAdmin) {
   //   if (permission().isSuperAdmin()) {
