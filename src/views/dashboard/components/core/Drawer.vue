@@ -64,7 +64,7 @@
         <!--        </base-item-group>-->
 
         <base-item
-          v-if="canShowLink(item.roles,item.organizationTypes,item.isSuperAdmin)"
+          v-if="canShowLink(item.roles,item.organizationTypes)"
           :key="`item-${i}`"
           :item="item"
         />
@@ -111,7 +111,6 @@
           to: '/',
           roles: [],
           organizationTypes: [],
-          isSuperAdmin: false,
         },
         {
           title: 'مدیریت کاربران',
@@ -119,16 +118,13 @@
           to: '/users',
           roles: ['USER_MANAGER'],
           organizationTypes: ['SECRETARIAT', 'PLATFORM', 'BROKERAGE'],
-          isSuperAdmin: false,
         },
-
         {
           title: 'مدیریت سازمان ها',
           icon: 'mdi-office-building',
           to: '/organizations',
-          roles: ['USER_MANAGER', 'FINANCIAL', 'ORDERS'],
+          roles: ['USER_MANAGER'],
           organizationTypes: ['SECRETARIAT'],
-          isSuperAdmin: true,
         },
         {
           title: 'مدیریت محتوا',
@@ -136,7 +132,6 @@
           to: '/products',
           roles: ['ORDERS'],
           organizationTypes: ['SECRETARIAT', 'PLATFORM'],
-          isSuperAdmin: false,
         },
         {
           title: 'مدیریت اپیزودها',
@@ -144,7 +139,6 @@
           to: '/episodes',
           roles: ['ORDERS'],
           organizationTypes: ['SECRETARIAT', 'PLATFORM'],
-          isSuperAdmin: false,
         },
         {
           title: 'درخواست ارزیابی',
@@ -152,7 +146,6 @@
           to: '/request',
           roles: ['ORDERS'],
           organizationTypes: ['PLATFORM'],
-          isSuperAdmin: false,
         },
         // {
         //   title: 'درخواست ارزیابی 1',
@@ -166,7 +159,6 @@
           to: '/viewRequest',
           roles: ['ORDERS'],
           organizationTypes: ['SECRETARIAT'],
-          isSuperAdmin: false,
         },
         {
           title: 'پیشرفت درخواست ارزیابی',
@@ -174,7 +166,6 @@
           to: '/requestProgress',
           roles: ['ORDERS'],
           organizationTypes: ['PLATFORM', 'BROKERAGE'],
-          isSuperAdmin: false,
         },
         {
           title: 'مدیریت تیکت',
@@ -182,7 +173,6 @@
           to: '/ticket',
           roles: ['USER_MANAGER', 'FINANCIAL', 'ORDERS'],
           organizationTypes: ['SECRETARIAT', 'PLATFORM', 'BROKERAGE'],
-          isSuperAdmin: false,
         },
         {
           title: 'مدیریت اطلاعات پایه',
@@ -190,7 +180,6 @@
           to: '/staticData',
           roles: ['ORDERS'],
           organizationTypes: ['SECRETARIAT'],
-          isSuperAdmin: false,
         },
       ],
     }),
@@ -226,14 +215,7 @@
           title: this.$t(item.title),
         }
       },
-      canShowLink (roles, organizationTypes, isSuperAdmin) {
-        if (isSuperAdmin) {
-          if (this.currentUser.organizationRoles.length === 3 && this.currentUser.organizationType === 'SECRETARIAT') {
-            return true
-          } else {
-            return false
-          }
-        }
+      canShowLink (roles, organizationTypes) {
         if (roles.length === 0 && organizationTypes.length === 0) return true
         return (
           roles.some(role => this.currentUser.organizationRoles.includes(role)) &&
