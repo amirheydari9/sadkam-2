@@ -55,7 +55,7 @@
         <template
           v-else
         >
-          <p style="color: red">شما دسترسی ایجاد درخواست ارزیابی را ندارید</p>
+          <p style="color: red; font-weight: bold">شما دسترسی ایجاد درخواست ارزیابی را ندارید</p>
         </template>
       </template>
       <!--      <template v-if="!requestInfoObject && canUploadFile">-->
@@ -70,7 +70,7 @@
       <!--          درخواست ارزیابی-->
       <!--        </v-btn>-->
       <!--      </template>-->
-      <template />
+      <template/>
     </v-col>
   </v-tab-item>
 </template>

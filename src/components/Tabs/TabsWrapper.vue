@@ -7,6 +7,7 @@
     <v-card>
       <dialog-headline title="مدیریت درخواست"/>
       <v-card-text>
+        <p style="color: red; font-weight: bold" v-if="request.files.length === 0">حداقل یک فایل بارگذاری نمایید</p>
         <v-tabs
           v-model="tabsMenu"
           class="mt-5"
